@@ -1,0 +1,52 @@
+body {
+    font-family: georgia, serif;
+    font-size: 12px;
+}
+h1 {
+    font-family: arial-narrow, arial, sans-serif;
+    color: #FF9900;
+}
+
+h2 {
+    font-family: arial-narrow, arial, sans-serif;
+    color: #007FAC;
+}
+table {
+    width: 50%;
+}
+th {
+    color: #007FAC;
+    font-family:verdana, arial, helvetica, sans-serif;
+    font-weight: bold;
+    text-align: center;
+    background-color: #eee;
+    padding: 2px 5px 2px 5px;
+}
+td {
+    line-height: 12px;
+    text-align: left;
+}
+td.Pass {
+    text-align: center;
+    background: #00f000;
+    color: #ffffff;
+}
+td.Fail {
+    text-align: center;
+    background: #f00000;
+    color: #ffffff;
+}
+td.LinePass {
+    font-family: courier;
+    font-size: 12px;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+}
+td.LineFail {
+    font-family: courier;
+    font-size: 12px;
+    text-align: left;
+    background: #f00000;
+    color: #ffffff;
+}

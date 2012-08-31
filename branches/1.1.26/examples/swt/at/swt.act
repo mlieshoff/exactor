@@ -1,0 +1,10 @@
+# Simple example of a SWT
+# acceptance test.
+
+OpenApplication
+InputText           txtNum1      "2"
+InputText           txtNum2      "3"
+CheckValueOfText    txtResult    ""
+ClickButton         btnCalculate
+CheckValueOfText    txtResult    "5"
+CloseApplication

@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
+<title>Exactor</title>
+<style type="text/css" media="all">@import "style.css";</style>
+</head>
+
+<body>
+
+<div id="Header">
+	<a href="http://www.exoftware.com">exoftware.com</a>
+</div>
+
+<div id="Content">
+	<h1>Installation</h1>
+	<h2>Getting Exactor</h2>
+	<p>Exactor is hosted at SourceForge and both binary and source distributions can be downloaded from the <a href="https://sourceforge.net/projects/exactor/">SourceForge project</a>.</p>
+	<p>If you want to get the latest version of Exactor you can checkout the source from the <a href="http://sourceforge.net/cvs/?group_id=114923">CVS respository</a></p>
+
+	<h2>System Requirements</h2>
+	<p>Exactor has been built and tested using JDK version 1.4.2. A JDK of this version or above is required to run the Exactor framework.</p>
+
+	<h2>Installing Exactor</h2>
+	<p>The binary distribution of Exactor expands to the following directory structure; </p>
+	<pre><code>
+    exactor
+       +--- bin   // contains batch file wrapper scripts
+       |
+       +--- docs  // documentation
+       |      +--- api      // javadoc for framework classes
+       |      |
+       |      +--- examples // source code for example projects
+       |
+       +--- lib   // exactor jars and dependant libraries
+    </code></pre>
+    <p>Only the <code>bin</code> and <code>lib</code> directories are required to run Exactor.</p>
+    <p>To install Exactor, select a directory and expand the distribution to there.</p>
+    <p>The chosen directory will be referred to as EXACTOR_HOME</p>
+
+    <h2>Setup</h2>
+    <p>Before you can run Exactor there is some initial setup required.</p>
+    <ul>
+      <li>Add the <code>EXACTOR_HOME\bin</code> directory to your path</li>
+      <li>Ensure that the <code>JAVA_HOME\bin</code> directory is on your path</li>
+      <li>Alternatively specify a <code>JAVA_HOME</code> environment variable pointing to the JDK installation directory.</li>
+    </ul>
+    <p>For Windows systems the following commands are used to setup the environment, substituting the directory names for the directories you have installed Exactor and the JDK.</p>
+    <pre><code>
+    C:\>set JAVA_HOME=c:\jdk1.4.2
+    C:\>set PATH=%PATH%;c:\exactor\bin
+   </code></pre>
+
+    <h2>Building Exactor</h2>
+    </p>
+    <p>If you downloaded the source distribution you will need to build Exactor before using it.</p>
+    <p>Exactor is build using the ANT build tool. You will need a copy of ANT installed to build Exactor.</p>
+    <p>Version 1.6.1 of ANT was used in the development of Exactor.</p>
+    <p>After you have expanded the source distribution you are ready to build Exactor. To build Exactor change to the installation directory and type the following at the command line; </p>
+    <pre><code>
+    C:\exactor>build clean all
+    </code></pre>
+    <p>This will create two additional directories, <code>build</code> and <code>dist</code>.</p>
+    <p>In the <code>dist</code> directory you will find a zip file <code>exactor-BUILD-bin.zip</code>, where BUILD is the current build number.</p>
+    <p>Take this zip file and follow the instuctions for installing Exactor above.</p>
+
+    <h2>Dependencies</h2>
+    <p>Exactor makes use of a number of other libraries to provide some of its functionality, the tables below highlight these dependencies and when they are required.</p>
+    <p>The dependant jars should be on the CLASSPATH when Exactor is run, the batch file wrapper script handles this, but it is important if you are running Exactor using the <code>com.exoftware.exactor.Runner</code> class.</p>
+    <p>All of the required libraries are available in the <code>EXACTOR_HOME\lib</code> directory.</p>
+    <table cellspacing="0">
+      <tr>
+        <th>Core Framework</th>
+        <th>Web Commands</th>
+        <th>SWT Commands</th>
+      </tr>
+      <tr>
+        <td>exactor.jar</td>
+        <td>web-commands.jar</td>
+        <td>swt-commands.jar</td>
+      </tr>
+      <tr>
+        <td>junit.jar</td>
+        <td>jwebunit-1.2.jar</td>
+        <td>swt.jar</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>httpunit-1.5.4.jar</td>
+        <td>swt-awt-win32-3044.dll</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>js-1.5R4.1.jar</td>
+        <td>swt-win32-3044.dll</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>nekohtml-0.8.1.jar</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>xercesImpl-2.6.2.jar</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>xml-apis-1.0.b2.jar</td>
+        <td>&nbsp;</td>
+      </tr>
+    </table>
+    <p><strong>Note:</strong> the swt dlls need to be available on the Java library path, typically this means placing them in the working directory or somewhere specified in the PATH environment variable. Again the batch file wrapper script handles this.</p>
+</div>
+
+<div id="Menu">
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="gettingstarted.html">Documentation</a>
+            <ul>
+            <li><a href="gettingstarted.html">Getting Started</a></li>
+            <li><a href="installation.html">Installation</a></li>
+            <li><a href="LICENCE">Licence</a></li>
+            <li><a href="commands.html">Commands</a></li>
+            <li><a href="examples.html">Examples</a></li>
+            <li><a href="api/index.html">Exactor API</a></li>
+            </ul>
+        </li>
+        <li><a href="download.html">Download</a></li>
+    </ul>
+    <a href="http://sourceforge.net">
+        <img src="http://sourceforge.net/sflogo.php?group_id=114923&amp;type=2" width="125" height="37" border="0" alt="SourceForge.net Logo" />
+    </a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,3 @@
+Map Sleep "Pause $0"
+Sleep               1000
+AnotherMockCommand

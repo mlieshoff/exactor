@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
+<title>Exactor</title>
+<style type="text/css" media="all">@import "style.css";</style>
+</head>
+
+<body>
+
+<div id="Header">
+	<a href="http://www.exoftware.com">exoftware.com</a>
+</div>
+
+<div id="Content">
+	<h1>Getting Started</h1>
+	<h2>Create a test script</h2>
+	<p>The format for Exactor test scripts is plain ascii text.</p>
+	<p>A script is a series of commands that are interpreted by the framework to invoke Java classes written by programmers to carry out the command.</p>
+	<p>Below is an example of a script to test a simple calculator application;</p>
+    <pre><code>
+    # Simple example of a calculator
+    # acceptance test.
+
+    # Test zero initially
+    StartCalculator
+    CheckResultEquals    0
+
+    # Test addition
+    Add                  4    5    1
+    CheckResultEquals   10
+
+    # Test subtraction
+    Subtract             6
+    CheckResultEquals    4
+    Subtract             1    2
+    CheckResultEquals    1
+
+    # more tests...
+    </code></pre>
+    <p>Lines beginning with the hash character <code>'#'</code>, are comments and are ignored by the framework</p>
+    <p>Commands are specified one per line starting at the left hand side of the script, any parameters required by the command are supplied next, seperated by whitespace, i.e. spaces or tabs.</p>
+    <p>The script should be saved with an extension of ".act", although not strictly necessary it enables the script runner to pick up multiple files in a directory.</p>
+
+    <h2>Create Commands</h2>
+    <p>To enable the script to run, programmers must create commands that match the command name in the script.</p>
+    <p>Commands are java classes that extend <code>com.exoftware.exactor.Command</code> and override the <code>execute</code> method to perform the required action.</p>
+    <p>Below is an example of a command class implementing the <code>CheckResultEquals</code> command in the above script;</p>
+    <pre><code>
+    package acceptance;
+
+    import com.exoftware.exactor.Command;
+    import calculator.Calculator;
+
+    public class CheckResultEquals extends Command
+    {
+        public void execute() throws Exception
+        {
+            assertEquals( getParameter( 0 ).intValue(), Calculator.getResult() );
+        }
+    }
+    </code></pre>
+
+    <h2>Run Exactor</h2>
+    <p>When you have created command classes for all the commands in the script you can run the script to determine the results.</p>
+    <p>To run the script, or multiple scripts in a directory, run the framework class <code>com.exoftware.exactor.Runner</code> passing the name of the file or directory as an argument, as shown below, assuming the script above was saved as "calculator.act".</p>
+    <p>Ensure that the framework classes (including any dependant libraries e.g. <code>junit.jar</code>), your command classes and any application classes are available on the CLASSPATH.</p>
+    <pre><code>
+    C:\>java com.exoftware.exactor.Runner calculator.act
+    </code></pre>
+    <p>If the script executes successfully you should see the following output;</p>
+    <pre><code>
+    ExecutionSet started
+        started: calculator.act
+            OK: StartCalculator
+            OK: CheckResultEquals
+            OK: Add
+            OK: CheckResultEquals
+            OK: Subtract
+            OK: CheckResultEquals
+            OK: Subtract
+            OK: CheckResultEquals
+        ended: calculator.act
+
+    Scripts run: 1
+    Failures: 0
+    Errors: 0
+    </code></pre>
+
+    <h2>Batch Runner Wrapper</h2>
+    <p>Exactor provides batch file wrapper to the <code>com.exoftware.exactor.Runner</code> class that takes care of adding all the required libraries to the CLASSPATH.</p>
+    <p>The format of the command is,</p>
+    <pre><code>exactor [options] [file|directory]</code></pre>
+    <p>The only option currently supported is <code>-lib &lt;path&gt;</code> where path is a list of directories and/or files to be added to the CLASSPATH.</p>
+    <p>Each entry should be separated by the usual platform path separator character, in Windows this is the semicolon <code>';'</code> character, and the
+    whole list should be enclosed in quotes, e.g. <code>"path1;path2"</code>.</p>
+    <p>All files in the <code>lib</code> directory of EXACTOR_HOME are automatically added to the CLASSPATH.</p>
+    <p>Optionally a file or directory name can also be supplied to the script, if none is supplied the script uses the current directory.</p>
+    <p>If a file name is supplied, only that file is run.</p>
+    <p>If a directory name is supplied the <code>Runner</code> class will search the specified directory and all subdirectories for acceptance test scripts, i.e. files with an extension of <code>.act</code>.</p>
+    <p>To run the above calculator example assuming that the command and application classes are in a subdirectory <code>classes</code> of the current directory and the script is in a subdirectory <code>at</code>, the following command would be run;</p>
+    <pre><code>
+    C:\>exactor -lib classes at\calculator.act
+    </code></pre>
+    <p>The output would be the same as shown above. </p>
+</div>
+
+<div id="Menu">
+	<ul>
+	<li><a href="index.html">Home</a></li>
+	<li><a href="gettingstarted.html">Documentation</a>
+	    <ul>
+		<li><a href="gettingstarted.html">Getting Started</a></li>
+		<li><a href="installation.html">Installation</a></li>
+		<li><a href="LICENCE">Licence</a></li>
+		<li><a href="commands.html">Commands</a></li>
+		<li><a href="examples.html">Examples</a></li>
+		<li><a href="api/index.html">Exactor API</a></li>
+	    </ul>
+	</li>
+	<li><a href="download.html">Download</a></li>
+	</ul>
+    <a href="http://sourceforge.net">
+        <img src="http://sourceforge.net/sflogo.php?group_id=114923&amp;type=2" width="125" height="37" border="0" alt="SourceForge.net Logo" />
+    </a>
+</div>
+
+</body>
+</html>

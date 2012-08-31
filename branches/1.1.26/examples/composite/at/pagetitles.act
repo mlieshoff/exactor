@@ -1,0 +1,5 @@
+# Simple script showing the
+# use of composite commands
+
+CheckPageTitle http://www.google.com            Google
+CheckPageTitle http://www.ibiblio.org/javafaq   "Cafe au Lait Java News and Resources"
