@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
+<title>Exactor</title>
+<style type="text/css" media="all">@import "style.css";</style>
+</head>
+
+<body>
+
+<div id="Header">
+	<a href="http://www.exoftware.com">exoftware.com</a>
+</div>
+
+<div id="Content">
+	<h1>Examples</h1>
+	<p>Exactor comes bundled with four example applications to demonstrate its use. </p>
+    <ul>
+      <li>Composite, demonstrates the use of composite commands.</li>
+      <li>Simple, a simple example intracting with a calculator application.</li>
+      <li>SWT, an example using the bundled SWT commands.</li>
+      <li>Web, an example using the bundled web commands.</li>
+    </ul>
+
+	<h2>Running the examples</h2>
+	<p>All of the examples are located in the <code>docs\examples</code> directory of the Exactor distribution.</p>
+	<p>To run the web example, which only use commands from the framework, simply change to the directory containing the example and invoke the Exactor batch file wrapper, e.g.</p>
+    <pre><code>
+    C:\>cd %EXACTOR_HOME%\docs\examples\web
+    C:\>exactor at
+    </code></pre>
+    <p>If the scritps run successfully you should see the following output;</p>
+    <pre><code>
+    ExecutionSet started
+        started: google-search.act
+                OK: SetBaseUrl
+                OK: BeginAt
+                OK: CheckTitleEquals
+                OK: CheckLinkPresentWithText
+                OK: SetFormElement
+                OK: Submit
+                OK: CheckTitleEquals
+        ended: google-search.act
+
+    Scripts run: 1
+    Failures: 0
+    Errors: 0
+    </code></pre>
+    <p>To run the simple, composite and swt examples, which define their own commands and code, Exactor must be invoked with the <code>-lib</code> option to tell the framework where to find the appropriate commands and classes.</p>
+    <p>For the simple example this would be as shown below;</p>
+    <pre><code>
+    C:\>cd %EXACTOR_HOME%\docs\examples\simple
+    C:\>exactor -lib classes at
+    </code></pre>
+    <p>If the scripts run successfully you should see the following output;</p>
+    <pre><code>
+    ExecutionSet started
+        started: calculator.act
+            OK: StartCalculator
+            OK: CheckResultEquals
+            OK: Add
+            OK: CheckResultEquals
+            OK: Subtract
+            OK: CheckResultEquals
+            OK: Subtract
+            OK: CheckResultEquals
+        ended: calculator.act
+
+    Scripts run: 1
+    Failures: 0
+    Errors: 0
+    </code></pre>
+</div>
+
+<div id="Menu">
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="gettingstarted.html">Documentation</a>
+            <ul>
+            <li><a href="gettingstarted.html">Getting Started</a></li>
+            <li><a href="installation.html">Installation</a></li>
+            <li><a href="LICENCE">Licence</a></li>
+            <li><a href="commands.html">Commands</a></li>
+            <li><a href="examples.html">Examples</a></li>
+            <li><a href="api/index.html">Exactor API</a></li>
+            </ul>
+        </li>
+        <li><a href="download.html">Download</a></li>
+    </ul>
+    <a href="http://sourceforge.net">
+        <img src="http://sourceforge.net/sflogo.php?group_id=114923&amp;type=2" width="125" height="37" border="0" alt="SourceForge.net Logo" />
+    </a>
+</div>
+
+</body>
+</html>

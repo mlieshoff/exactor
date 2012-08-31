@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
+<title>Exactor</title>
+<style type="text/css" media="all">@import "style.css";</style>
+</head>
+
+<body>
+
+<div id="Header">
+	<a href="http://www.exoftware.com">exoftware.com</a>
+</div>
+
+<div id="Content">
+	<h1>Commands</h1>
+	<p>Commands are the way that programmers extend the Exactor framework to automate acceptance tests against their own applications.</p>
+	<h2>Basic Commands</h2>
+	<p>A command is created by extending the framework class <code>com.exoftware.exactor.Command</code>.</p>
+	<p>By default the command will fail with a message indicating that no implementation has been provided.</p>
+	<p>To make a command do something useful the programmer must override the <code>execute</code> method to perform whatever actions or checks are required by the command.</p>
+
+	<h2>Checking values with asserts</h2>
+	<p>The framework <code>Command</code> class extends JUnit's <code>junit.framework.Assert</code>, therefore all of the methods of <code>Assert</code> are available for use in commands. These asserts can be used to perform any required checks.</p>
+	<p>An assertion failure results in an <code>AssertionFailedError</code> being thrown. The framework catches these errors and reports them as failures in the script.</p>
+	<p>Any other exceptions are caught by the framework and reported as errors in the script.</p>
+
+	<h2>Parameters</h2>
+	<p>Commands will normally require additional information to do anything useful. This additional information is typically supplied to the command as parameters in the test script.</p>
+	<p>The <code>Command</code> class provides access to the parameters supplied to the command in the script using the <code>getParameter</code> method, which takes a zero based integer index indicating the position of the parameter to access.</p>
+	<p>The <code>Parameter</code> class returned has methods, <code>intValue</code>, <code>doubleValue</code> and <code>booleanValue</code> to convert parameters supplied to the script into various primitive types.</p>
+
+	<h2>Storing values for other commands</h2>
+	<p>It may be necessary for a number of commands to share information to carry out their actions.</p>
+	<p>The framework provides two levels of context that commands can use to store values that can be accessed by other commands.</p>
+	<p>The <code>Script</code> containing the command (accessable via the <code>getScript</code> method on <code>Command</code>) has a context map that is available to all commands in the same script.</p>
+	<p>The <code>ExecutionSet</code> has a context map that is available to all commands in all scripts in a particular run, i.e. a global context.</p>
+	<p>The context maps are simply instances of <code>java.util.Map</code> accessed by the <code>getContext</code> methods on <code>Script</code> and <code>ExecutionSet</code>.</p>
+
+	<h2>Combining Commands with Composites</h2>
+	<p>If you find that your scripts repeat the same sequence of commands you can create a composite command that contains the repeated commands and call the composite command in your scripts.</p>
+	<p>A composite command is simply a script file with the usual <code>.act</code> extension located on the CLASSPATH.</p>
+	<p>A composite command is referenced by the name of the <code>.act</code> file, excluding the extension. For example a compsite command defined in the file <code>SomeCommand.act</code> would be referenced by a script as <code>SomeCommand</code>.</p>
+	<p>As part of your project build process you may need to explicitly copy <code>.act</code> files into a location specified on the CLASSPATH</p>
+
+	<h2>Placeholder Parameters</h2>
+	<p>Composite commands may require parameters just as basic commands do.</p>
+	<p>Parameters are supplied to the composite in the same way as a basic command by putting them after the command name in the script file.</p>
+	<p>For the composite to make use of the parameters the composite command can use placeholder parameters to refer to the positional index of the supplied script parameters.</p>
+	<p>Placeholder parameters are defined using the dollar sign <code>'$'</code> followed by the positional index of the parameter, e.g. <code>$0</code> refers to the first parameter passed to the composite, <code>$1</code> the second, and so on.</p>
+	<p>For example consider the composite command <code>SomeCommand</code> defined as follows;</p>
+    <pre><code>
+    FirstCommand    $0 $1
+    SecondCommand   $1
+    </code></pre>
+    <p>If the <code>SomeCommand</code> composite is referenced in another script the parameters supplied will be substituted for the placeholder parameters in <code>SomeCommand</code> as shown below;</p>
+    <pre><code>
+    SomeCommand Hello World
+    SomeCommand Goodbye "Cruel World"
+    </code></pre>
+    <p>In the first call to the composite <code>SomeCommand</code>, <code>$0</code> is replaced by 'Hello' and <code>$1</code> is replaced by 'World'.</p>
+    <p>In the second call, <code>$0</code> is replaced by 'Goodbye' and <code>$1</code> by 'Cruel World'.</p>
+
+    <h2>Commands Provided by Exactor</h2>
+    <p>The Exactor distribution comes with a set of commands for scripting interations with web based and SWT client based applications, see <a href="api/index.html">API Docs</a> for more details.</p>
+</div>
+
+<div id="Menu">
+    <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="gettingstarted.html">Documentation</a>
+        <ul>
+        <li><a href="gettingstarted.html">Getting Started</a></li>
+        <li><a href="installation.html">Installation</a></li>
+        <li><a href="LICENCE">Licence</a></li>
+        <li><a href="commands.html">Commands</a></li>
+        <li><a href="examples.html">Examples</a></li>
+        <li><a href="api/index.html">Exactor API</a></li>
+        </ul>
+    </li>
+    <li><a href="download.html">Download</a></li>
+    </ul>
+    <a href="http://sourceforge.net">
+        <img src="http://sourceforge.net/sflogo.php?group_id=114923&amp;type=2" width="125" height="37" border="0" alt="SourceForge.net Logo" />
+    </a>
+</div>
+
+</body>
+</html>

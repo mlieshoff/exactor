@@ -1,0 +1,4 @@
+LoadAbbotAliases
+
+AbbotLaunch "example.AWTCode" "main" "[]" ""
+AbbotTerminate

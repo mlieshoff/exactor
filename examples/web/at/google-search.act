@@ -1,0 +1,10 @@
+# Example using the framework supplied
+# web commands
+
+SetBaseUrl                  http://www.google.com
+BeginAt                     /
+CheckTitleEquals            Google
+CheckLinkPresentWithText    Groups
+SetFormElement              q       Exoftware
+Submit                      btnG
+CheckTitleEquals            "Exoftware - Google Search "
