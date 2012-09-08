@@ -41,12 +41,12 @@ import java.lang.annotation.Target;
 
 /**
  *
- * @author mlieshoff
+ * @author Michael Lieshoff
  */
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Param {
-    ParameterType settings() default ParameterType.MANDATORY;
+    ParameterType type() default ParameterType.MANDATORY;
     Class<? extends Enum> namespace();
     String name();
 }

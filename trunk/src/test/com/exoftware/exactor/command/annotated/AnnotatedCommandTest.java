@@ -39,7 +39,7 @@ import junit.framework.TestCase;
 
 /**
  *
- * @author mlieshoff
+ * @author Michael Lieshoff
  */
 public class AnnotatedCommandTest extends TestCase {
 
@@ -59,6 +59,16 @@ public class AnnotatedCommandTest extends TestCase {
         assertEquals("hello", fooCommand.getParameterByName("mandatoryString").stringValue());
     }
 
+    public void testAddNotNamedParameter() throws Exception {
+        FooCommand fooCommand = new FooCommand();
+        try {
+            fooCommand.addParameter(new Parameter("hello"));
+            fail();
+        } catch (IllegalArgumentException e) {
+            //
+        }
+    }
+
     public void testGetParameterMember() throws Exception {
         FooCommand fooCommand = new FooCommand();
         fooCommand.addParameter(new Parameter("mandatoryString=hello"));
@@ -66,7 +76,7 @@ public class AnnotatedCommandTest extends TestCase {
         assertEquals("hello", fooCommand.getMandatoryString());
     }
 
-    public void testGetParameterMemberFailsBecauseParameterNotExists() throws Exception {
+    public void testGetMandatoryParameterMemberFailsBecauseParameterNotExists() throws Exception {
         FooCommand fooCommand = new FooCommand();
         try {
             fooCommand.setUp();
@@ -74,6 +84,13 @@ public class AnnotatedCommandTest extends TestCase {
         } catch (IllegalArgumentException e) {
             //
         }
+    }
+
+    public void testGetOptionalMissedParameterMember() throws Exception {
+        FooCommand fooCommand = new FooCommand();
+        fooCommand.addParameter(new Parameter("mandatoryString=hello"));
+        fooCommand.setUp();
+        assertEquals("hello", fooCommand.getMandatoryString());
     }
 
 }
