@@ -36,29 +36,37 @@ package com.exoftware.exactor.command.annotated;
 
 /**
  *
- * @author mlieshoff
+ * @author Michael Lieshoff
  */
 public enum FooNamespace implements ParameterDefinition {
-    MANDATORY_STRING(new Resolver<String>() {
+    MANDATORY_STRING(new String[]{"mandatoryString"}, new Resolver<String>() {
         @Override
         public String resolve(ParameterType parameterType, AnnotatedCommand command) {
             return command.getParameterByName("mandatoryString").stringValue();
         }
+    }),
+    OPTIONAL_STRING(new String[]{"optionalString"}, new Resolver<String>() {
+        @Override
+        public String resolve(ParameterType parameterType, AnnotatedCommand command) {
+            return command.getParameterByName("optionalString").stringValue();
+        }
     });
 
-    private Resolver _resolver;
+    private String[] parameterNames;
+    private Resolver resolver;
 
-    private FooNamespace(Resolver resolver) {
-        _resolver = resolver;
+    private FooNamespace(String[] parameterNames, Resolver resolver) {
+        this.parameterNames = parameterNames;
+        this.resolver = resolver;
     }
 
     @Override
     public String[] getParameterNames() {
-        return new String[]{"mandatoryString"};
+        return parameterNames;
     }
 
     public Object resolve(ParameterType parameterType, AnnotatedCommand command) {
-        return _resolver.resolve(parameterType, command);
+        return resolver.resolve(parameterType, command);
     }
 
 }

@@ -36,17 +36,24 @@ package com.exoftware.exactor.command.annotated;
 
 /**
  *
- * @author mlieshoff
+ * @author Michael Lieshoff
  */
 public class FooCommand extends AnnotatedCommand {
     @Param(namespace = FooNamespace.class, name = "MANDATORY_STRING")
     private String mandatoryString;
+    @Param(namespace = FooNamespace.class, name = "OPTIONAL_STRING", type=ParameterType.OPTIONAL)
+    private String optionalString;
 
     public void execute() throws Exception {
+        setUp();
     }
 
     public String getMandatoryString() {
         return mandatoryString;
+    }
+
+    public String getOptionalString() {
+        return optionalString;
     }
 
 }

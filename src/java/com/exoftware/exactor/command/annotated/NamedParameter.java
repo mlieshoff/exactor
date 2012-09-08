@@ -38,7 +38,7 @@ import com.exoftware.exactor.Parameter;
 
 /**
  *
- * @author mlieshoff
+ * @author Michael Lieshoff
  */
 public class NamedParameter extends Parameter {
 
