@@ -40,6 +40,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * This anotation defines a parameter annotation to annotate named parameters in command
+ * classes.
  *
  * @author Michael Lieshoff
  */

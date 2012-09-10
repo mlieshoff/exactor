@@ -35,8 +35,9 @@
 package com.exoftware.exactor.command.annotated;
 
 /**
+ * This enum defines parameter types.
  *
- * @author mlieshoff
+ * @author Michael Lieshoff
  */
 public enum ParameterType {
     OPTIONAL,

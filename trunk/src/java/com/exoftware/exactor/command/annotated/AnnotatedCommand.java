@@ -89,10 +89,12 @@ import java.util.Set;
  * <pre>
  * <code>
  *     public class CalculatorCommand extends AnnotatedCommand {
- *         @Param(namespace = CalculatorNamespace.class, name = "METHOD")
+ *         @Param(namespace = CalculatorNamespace.class, type=ParameterType.MANDATORY, name = "METHOD")
  *         private CalculatorMethod method;
  *         @Param(namespace = CalculatorNamespace.class, name = "x")
  *         private int x;
+ *         @Param(namespace = CalculatorNamespace.class, name = "y")
+ *         private int y;
  *         @Param(namespace = CalculatorNamespace.class, name = "y")
  *         private int y;
  *     }
