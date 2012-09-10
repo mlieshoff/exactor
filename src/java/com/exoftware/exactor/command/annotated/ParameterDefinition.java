@@ -36,7 +36,7 @@ package com.exoftware.exactor.command.annotated;
 
 /**
  *
- * @author mlieshoff
+ * @author Michael Lieshoff
  */
 public interface ParameterDefinition {
     String[] getParameterNames();

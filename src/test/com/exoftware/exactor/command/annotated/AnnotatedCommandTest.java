@@ -93,4 +93,12 @@ public class AnnotatedCommandTest extends TestCase {
         assertEquals("hello", fooCommand.getMandatoryString());
     }
 
+    public void testGetParameterMemberWithUseOfReplacement() throws Exception {
+        System.setProperty("foo", "bar");
+        FooCommand fooCommand = new FooCommand();
+        fooCommand.addParameter(new Parameter("mandatoryString=[foo]"));
+        fooCommand.setUp();
+        assertEquals(System.getProperty("foo"), fooCommand.getMandatoryString());
+    }
+
 }

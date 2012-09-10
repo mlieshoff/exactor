@@ -35,8 +35,11 @@
 package com.exoftware.exactor.command.annotated;
 
 /**
+ * This interface defines a resolver. A resolver's job is to resolve command parameters to a
+ * concrete object of type T.
  *
- * @author mlieshoff
+ *
+ * @author Michael Lieshoff
  */
 public interface Resolver<T> {
     T resolve(ParameterType parameterType, AnnotatedCommand command);

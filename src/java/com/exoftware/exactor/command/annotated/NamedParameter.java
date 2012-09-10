@@ -37,6 +37,7 @@ package com.exoftware.exactor.command.annotated;
 import com.exoftware.exactor.Parameter;
 
 /**
+ * This class defines a named parameter.
  *
  * @author Michael Lieshoff
  */
