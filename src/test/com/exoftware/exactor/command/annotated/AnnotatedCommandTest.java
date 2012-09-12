@@ -37,6 +37,8 @@ package com.exoftware.exactor.command.annotated;
 import com.exoftware.exactor.Parameter;
 import junit.framework.TestCase;
 
+import java.util.Collection;
+
 /**
  *
  * @author Michael Lieshoff
@@ -51,6 +53,12 @@ public class AnnotatedCommandTest extends TestCase {
     public void testParameterWasNotRegistered() {
         FooCommand fooCommand = new FooCommand();
         assertFalse(fooCommand.isParameterRegistered("bla"));
+    }
+
+    public void testHasParameter() {
+        FooCommand fooCommand = new FooCommand();
+        fooCommand.addParameter(new Parameter("mandatoryString=hello"));
+        assertTrue(fooCommand.hasParameter("mandatoryString"));
     }
 
     public void testAddParameter() throws Exception {
@@ -99,6 +107,18 @@ public class AnnotatedCommandTest extends TestCase {
         fooCommand.addParameter(new Parameter("mandatoryString=[foo]"));
         fooCommand.setUp();
         assertEquals(System.getProperty("foo"), fooCommand.getMandatoryString());
+    }
+
+    public void testGetParameters() throws Exception {
+        FooCommand fooCommand = new FooCommand();
+        fooCommand.addParameter(new Parameter("mandatoryString=hello"));
+        fooCommand.setUp();
+        Collection<NamedParameter> actual = fooCommand.getNamedParameters();
+        assertEquals(2, actual.size());
+        NamedParameter namedParameter = actual.iterator().next();
+        assertEquals("mandatoryString", namedParameter.getName());
+        assertEquals("hello", namedParameter.stringValue());
+
     }
 
 }

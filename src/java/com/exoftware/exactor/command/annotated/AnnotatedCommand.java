@@ -36,9 +36,11 @@ package com.exoftware.exactor.command.annotated;
 
 import com.exoftware.exactor.Command;
 import com.exoftware.exactor.Parameter;
+import com.exoftware.exactor.ValueType;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -139,9 +141,6 @@ public class AnnotatedCommand extends Command {
                         && param.type() == ParameterType.MANDATORY) {
                     throw new IllegalArgumentException(String.format(
                             "parameter '%s' is not set but was mandatory!", name));
-                } else if (getParameterByName(name) == null
-                        && param.type() == ParameterType.OPTIONAL) {
-                    addParameter(new Parameter(name + "=EMPTY"));
                 }
             }
             Object value = parameterDefinition.resolve(param.type(), this);
@@ -171,9 +170,9 @@ public class AnnotatedCommand extends Command {
     }
 
     private String getValue(String value) {
-        if ("NULL".equals(value)) {
+        if (ValueType.NULL.name().equals(value)) {
             return null;
-        } else if ("EMPTY".equals(value)) {
+        } else if (ValueType.EMPTY.name().equals(value)) {
             return "";
         }
         return value;
@@ -182,4 +181,13 @@ public class AnnotatedCommand extends Command {
     public Parameter getParameterByName(String parameterName) {
         return namedParameters.get(parameterName);
     }
+
+    public boolean hasParameter(String name) {
+        return namedParameters.containsKey(name);
+    }
+
+    public Collection<NamedParameter> getNamedParameters() {
+        return namedParameters.values();
+    }
+
 }
