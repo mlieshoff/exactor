@@ -34,34 +34,47 @@
  *****************************************************************/
 package com.exoftware.exactor.command.annotated;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  *
  * @author Michael Lieshoff
  */
 public enum FooNamespace implements ParameterDefinition {
-    MANDATORY_STRING(new String[]{"mandatoryString"}, new Resolver<String>() {
+    MANDATORY_STRING(Arrays.asList("mandatoryString"), new Resolver<String, AnnotatedCommand>() {
         @Override
         public String resolve(ParameterType parameterType, AnnotatedCommand command) {
             return command.getParameterByName("mandatoryString").stringValue();
         }
+
+        @Override
+        public List<String> getParameterNames() {
+            return Arrays.asList("mandatoryString");
+        }
     }),
-    OPTIONAL_STRING(new String[]{"optionalString"}, new Resolver<String>() {
+    OPTIONAL_STRING(Arrays.asList("optionalString"), new Resolver<String, AnnotatedCommand>() {
         @Override
         public String resolve(ParameterType parameterType, AnnotatedCommand command) {
             return command.getParameterByName("optionalString").stringValue();
         }
+
+        @Override
+        public List<String> getParameterNames() {
+            return Arrays.asList("optionalString");
+        }
     });
 
-    private String[] parameterNames;
+    private List<String> parameterNames;
     private Resolver resolver;
 
-    private FooNamespace(String[] parameterNames, Resolver resolver) {
+    private FooNamespace(List<String> parameterNames, Resolver resolver) {
         this.parameterNames = parameterNames;
         this.resolver = resolver;
     }
 
     @Override
-    public String[] getParameterNames() {
+    public List<String> getParameterNames() {
         return parameterNames;
     }
 

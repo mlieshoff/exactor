@@ -34,11 +34,13 @@
  *****************************************************************/
 package com.exoftware.exactor.command.annotated;
 
+import java.util.List;
+
 /**
  *
  * @author Michael Lieshoff
  */
 public interface ParameterDefinition {
-    String[] getParameterNames();
-    Object resolve(ParameterType settings, AnnotatedCommand annotatedCommand);
+    List<String> getParameterNames();
+    <T> T resolve(ParameterType settings, AnnotatedCommand annotatedCommand);
 }
