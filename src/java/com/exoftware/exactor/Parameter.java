@@ -108,6 +108,31 @@ public class Parameter
     }
 
     /**
+     * Returns the string value splitted by regexp of the parameter, with any substitutions replaced.
+     * A substitution is a value enclosed in square brackets, e.g. <code>[xxx]</code>, where <code>xxx</code>
+     * represents a key in either the script or execution set context for the command owning this parameter.
+     * For example, as the execution set context contains all of the System properties, the following code
+     * would display <code>Windows XP</code> on a Windows XP machine.;
+     * <pre>
+     * <code>
+     * Parameter p = new Parameter("[os.name]");
+     * p.setCommand(myCommand);
+     * System.out.println(p.splittedString("[,]")); // comma separated
+     * </code>
+     * </pre>
+     *
+     * @return the string value of the parameter.
+     */
+    public String[] splittedString(String regexp) {
+        if(getCommand() == null) {
+            return value.split(regexp);
+        }
+        String result = replaceSubstitutions(value, getCommand().getScript().getContext());
+        result = replaceSubstitutions(result, getCommand().getScript().getExecutionSet().getContext());
+        return result.split(regexp);
+    }
+
+    /**
      * Check whether the parameter value represents a number.
      *
      * @return <code>true</code> if the parameter represents a number, otherwise
@@ -144,6 +169,23 @@ public class Parameter
             throw new NumberFormatException( "For input string: \"" + stringValue() + "\"" );
         }
         return result;
+    }
+
+    /**
+     * Returns the long value of the parameter.
+     * Behaves the same as <code>Long.parseLong</code>.
+     *
+     * @return the long value of the parameter.
+     *
+     * @throws NumberFormatException if the parameter value is not a number.
+     * @see Long#parseLong(String)
+     */
+    public long longValue() {
+        try {
+            return Long.parseLong(stringValue());
+        } catch(NumberFormatException e) {
+            throw new NumberFormatException( "For input string: \"" + stringValue() + "\"" );
+        }
     }
 
     /**
@@ -235,4 +277,5 @@ public class Parameter
             restartReplacementFrom = result.indexOf( SUBSTITUTION_START, subStart ) + 1;
         return restartReplacementFrom;
     }
+
 }
