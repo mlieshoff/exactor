@@ -92,6 +92,21 @@ public class TestParameter extends TestCase
         assertFalse( parameter.booleanValue() );
     }
 
+    public void testLongValue() {
+        command.addParameter(new Parameter("4711"));
+        assertEquals(4711L, command.getParameter(0).longValue());
+    }
+
+    public void testLongValueOfNonLongParameter() {
+        assertFalse(parameter.isNumeric());
+        try {
+            parameter.longValue();
+            fail( "NumberFormatException not thrown" );
+        } catch(NumberFormatException e) {
+            assertEquals("For input string: \"hello\"", e.getMessage());
+        }
+    }
+
     public void testSetNullCommand()
     {
         try
@@ -217,6 +232,14 @@ public class TestParameter extends TestCase
         parameter.setCommand( command );
 
         assertEquals( "abc12gh3456kl[m][]", parameter.stringValue() );
+    }
+
+    public void testSplittedValue() {
+        parameter = new Parameter("a,b,c");
+        String[] array = parameter.splittedString("[,]");
+        assertEquals("a", array[0]);
+        assertEquals("b", array[1]);
+        assertEquals("c", array[2]);
     }
 
 }
