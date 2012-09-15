@@ -34,8 +34,9 @@
  *****************************************************************/
 package com.exoftware.exactor.command.annotated;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+
+import com.exoftware.exactor.*;
 
 /**
  *
@@ -56,7 +57,8 @@ public enum FooNamespace implements ParameterDefinition {
     OPTIONAL_STRING(Arrays.asList("optionalString"), new Resolver<String, AnnotatedCommand>() {
         @Override
         public String resolve(ParameterType parameterType, AnnotatedCommand command) {
-            return command.getParameterByName("optionalString").stringValue();
+            Parameter parameter = command.getParameterByName("optionalString");
+            return parameter != null ? parameter.stringValue() : null;
         }
 
         @Override

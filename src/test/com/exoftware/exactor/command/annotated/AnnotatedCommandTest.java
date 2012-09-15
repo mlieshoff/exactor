@@ -34,7 +34,8 @@
  *****************************************************************/
 package com.exoftware.exactor.command.annotated;
 
-import com.exoftware.exactor.Parameter;
+import com.exoftware.exactor.*;
+
 import junit.framework.TestCase;
 
 import java.util.Collection;
@@ -114,7 +115,7 @@ public class AnnotatedCommandTest extends TestCase {
         fooCommand.addParameter(new Parameter("mandatoryString=hello"));
         fooCommand.setUp();
         Collection<NamedParameter> actual = fooCommand.getNamedParameters();
-        assertEquals(2, actual.size());
+        assertEquals(1, actual.size());
         NamedParameter namedParameter = actual.iterator().next();
         assertEquals("mandatoryString", namedParameter.getName());
         assertEquals("hello", namedParameter.stringValue());
