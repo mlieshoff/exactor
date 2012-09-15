@@ -45,7 +45,6 @@ public class FooCommand extends AnnotatedCommand {
     private String mandatoryString;
     @Param(namespace = FooNamespace.class, name = "OPTIONAL_STRING", type=ParameterType.OPTIONAL)
     private String optionalString;
-    private List<NamedParameter> _namedParameters;
 
     public void execute() throws Exception {
         setUp();
