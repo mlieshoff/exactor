@@ -39,56 +39,48 @@ import java.io.FileNotFoundException;
 /**
  * @author Brian Swan
  */
-public class TestRunner extends ExecutionSetListenerTestCase
-{
+public class TestRunner extends ExecutionSetListenerTestCase {
     private Runner runner;
 
-    public void testCreateWithNonExistantFile()
-    {
-        try
-        {
-            new Runner( "junk" );
-            fail( "FileNotFoundException not thrown" );
-        }
-        catch( FileNotFoundException e )
-        {
-            assertEquals( "No such file or directory: junk", e.getMessage() );
+    public void testCreateWithNonExistantFile() {
+        try {
+            new Runner("junk");
+            fail("FileNotFoundException not thrown");
+        } catch (FileNotFoundException e) {
+            assertEquals("No such file or directory: junk", e.getMessage());
         }
     }
 
-    public void testRunWithEmptyFile() throws Exception
-    {
-        runner = new Runner( Constants.DATA_DIR + "empty.act" );
-        runner.addListener( this );
+    public void testRunWithEmptyFile() throws Exception {
+        runner = new Runner(Constants.DATA_DIR + "empty.act");
+        runner.addListener(this);
         runner.run();
-        assertEquals( 1, executionSetStartedCount );
-        assertEquals( 1, executionStartedCount );
-        assertEquals( 0, commandStartedCount );
-        assertEquals( 0, commandEndedCount );
-        assertEquals( 1, executionEndedCount );
-        assertEquals( 1, executionSetEndedCount );
+        assertEquals(1, executionSetStartedCount);
+        assertEquals(1, executionStartedCount);
+        assertEquals(0, commandStartedCount);
+        assertEquals(0, commandEndedCount);
+        assertEquals(1, executionEndedCount);
+        assertEquals(1, executionSetEndedCount);
     }
 
-    public void testRunWithSingleCommandFile() throws Exception
-    {
-        runner = new Runner( Constants.DATA_DIR + "single.act" );
-        runner.addListener( this );
+    public void testRunWithSingleCommandFile() throws Exception {
+        runner = new Runner(Constants.DATA_DIR + "single.act");
+        runner.addListener(this);
         runner.run();
-        assertEquals( 1, executionSetStartedCount );
-        assertEquals( 1, executionStartedCount );
-        assertEquals( "single.act", scriptStartedParameter.getName() );
-        assertEquals( 1, commandStartedCount );
-        assertTrue( commandedStartedParameter instanceof MockCommand );
-        assertEquals( 1, commandEndedCount );
-        assertEquals( 1, executionEndedCount );
-        assertEquals( 1, executionSetEndedCount );
+        assertEquals(1, executionSetStartedCount);
+        assertEquals(1, executionStartedCount);
+        assertEquals("single.act", scriptStartedParameter.getName());
+        assertEquals(1, commandStartedCount);
+        assertTrue(commandedStartedParameter instanceof MockCommand);
+        assertEquals(1, commandEndedCount);
+        assertEquals(1, executionEndedCount);
+        assertEquals(1, executionSetEndedCount);
     }
 
-    public void testBaseDir() throws Exception
-    {
-        runner = new Runner( Constants.DATA_DIR );
-        assertEquals( Constants.DATA_DIR, runner.getBaseDir() );
-        runner = new Runner( Constants.DATA_DIR + "single.act" );
-        assertEquals( Constants.DATA_DIR, runner.getBaseDir() );
+    public void testBaseDir() throws Exception {
+        runner = new Runner(Constants.DATA_DIR);
+        assertEquals(Constants.DATA_DIR, runner.getBaseDir());
+        runner = new Runner(Constants.DATA_DIR + "single.act");
+        assertEquals(Constants.DATA_DIR, runner.getBaseDir());
     }
 }

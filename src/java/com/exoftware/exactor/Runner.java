@@ -44,42 +44,46 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
- * Class to run scripts from a file or directory.
- * Script files are plain text files with the extension <code>.act</code>.
- * The format of the script files is as follows;
- * <pre><code>
+ * Class to run scripts from a file or directory. Script files are plain text files with the
+ * extension <code>.act</code>. The format of the script files is as follows;
+ *
+ * <pre>
+ * <code>
  *    # a comment line
  *    CommandName [param 1] [param 2] ... [param n]
  *    AnotherCommand
- * </code></pre>
- * Command names are mapped to instances of the <code>Command</code> class by looking for a class with the
- * same name on the classpath.
+ * </code>
+ * </pre>
+ *
+ * Command names are mapped to instances of the <code>Command</code> class by looking for a
+ * class with the same name on the classpath.
  *
  * @author Brian Swan
  */
-public class Runner
-{
+public class Runner {
     private final File file;
     private final ExecutionSet executionSet;
     private String baseDir;
 
     /**
-     * Main entry point. Expected argument is the name of a script file or a directory containing script files.
+     * Main entry point. Expected argument is the name of a script file or a directory
+     * containing script files.
      *
      * @param args the command line arguments.
      */
-    public static void main( String[] args )
-    {
-        try
-        {
-            Runner runner = new Runner( args[0] );
-            runner.addListener( new SimpleListener() );
-            runner.addListener( new HtmlOutputListener( runner.getBaseDir() ) );
+    public static void main(String[] args) {
+        try {
+            SimpleListener simpleListener = new SimpleListener();
+            Runner runner = new Runner(args[0]);
+            runner.addListener(new SimpleListener());
+            runner.addListener(new HtmlOutputListener(runner.getBaseDir()));
             runner.run();
-        }
-        catch( IOException e )
-        {
-            System.out.println( e.getMessage() );
+            if (simpleListener.errorsOccured()) {
+                System.exit(1);
+            }
+            System.exit(0);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -90,17 +94,16 @@ public class Runner
      *
      * @throws FileNotFoundException if the specified filename is not a file or directory name.
      */
-    public Runner( String fileName ) throws FileNotFoundException
-    {
-        this.file = new File( fileName );
+    public Runner(String fileName) throws FileNotFoundException {
+        this.file = new File(fileName);
         this.executionSet = new ExecutionSet();
-        if( !file.exists() )
-            throw new FileNotFoundException( "No such file or directory: " + fileName );
-        this.baseDir = setBaseDir( this.file );
+        if (!file.exists()) {
+            throw new FileNotFoundException("No such file or directory: " + fileName);
+        }
+        this.baseDir = setBaseDir(this.file);
     }
 
-    private String setBaseDir( File file )
-    {
+    private String setBaseDir(File file) {
         return file.isDirectory() ? file.getAbsolutePath() : file.getParent();
     }
 
@@ -109,34 +112,33 @@ public class Runner
      *
      * @param listener the listener to add.
      */
-    public void addListener( ExecutionSetListener listener )
-    {
-        executionSet.addListener( listener );
+    public void addListener(ExecutionSetListener listener) {
+        executionSet.addListener(listener);
     }
 
     /**
      * Run the script, or all the scripts if the runner was created with a directory name.
      */
-    public void run()
-    {
-        ScriptParser parser = new ScriptParser( executionSet );
-        File[] scriptFiles = FileCollector.filesWithExtension( file, ExecutionSet.SCRIPT_EXTENSION );
-        for( int i = 0; i < scriptFiles.length; i++ )
-            executionSet.addScript( parser.parse( scriptFiles[i] ) );
+    public void run() {
+        ScriptParser parser = new ScriptParser(executionSet);
+        File[] scriptFiles = FileCollector.filesWithExtension(file,
+                ExecutionSet.SCRIPT_EXTENSION);
+        for (int i = 0; i < scriptFiles.length; i++) {
+            executionSet.addScript(parser.parse(scriptFiles[i]));
+        }
         executionSet.execute();
     }
 
     /**
-     * Returns the base directory of the runner. The base directory is the directory
-     * passed the constructor, or if a file was supplied, the parent directory of the file.
+     * Returns the base directory of the runner. The base directory is the directory passed the
+     * constructor, or if a file was supplied, the parent directory of the file.
      *
      * @return the base directory of the runner.
      */
-    public String getBaseDir()
-    {
-        if( !baseDir.endsWith( File.separator ) )
+    public String getBaseDir() {
+        if (!baseDir.endsWith(File.separator)) {
             return baseDir + File.separator;
-
+        }
         return baseDir;
     }
 }

@@ -46,13 +46,12 @@ import java.io.PrintWriter;
 import java.io.Writer;
 
 /**
- * A simple listener, outputs to a <code>PrintStream</code>.
- * By default the listener outputs to <code>System.out</code>.
+ * A simple listener, outputs to a <code>PrintStream</code>. By default the listener outputs to
+ * <code>System.out</code>.
  *
  * @author Brian Swan
  */
-public class SimpleListener implements ExecutionSetListener
-{
+public class SimpleListener implements ExecutionSetListener {
     private static final String INDENT = "\t";
 
     protected int compositeLevel = 0;
@@ -64,9 +63,8 @@ public class SimpleListener implements ExecutionSetListener
     /**
      * Create a new <code>SimpleListener</code> outputing to <code>System.out</code>.
      */
-    public SimpleListener()
-    {
-        this( new OutputStreamWriter( System.out ) );
+    public SimpleListener() {
+        this(new OutputStreamWriter(System.out));
     }
 
     /**
@@ -74,99 +72,89 @@ public class SimpleListener implements ExecutionSetListener
      *
      * @param output the writer to output to.
      */
-    public SimpleListener( Writer output )
-    {
-        this( new PrintWriter( output, true ), new ExecutionSummary() );
+    public SimpleListener(Writer output) {
+        this(new PrintWriter(output, true), new ExecutionSummary());
     }
 
-    public SimpleListener( Writer output, ExecutionSummary summary )
-    {
-        this.output = new PrintWriter( output, true );
+    public SimpleListener(Writer output, ExecutionSummary summary) {
+        this.output = new PrintWriter(output, true);
         this.summary = summary;
     }
 
-    public void executionSetStarted( ExecutionSet es )
-    {
+    public void executionSetStarted(ExecutionSet es) {
         summary.executionStarted();
-        output( "ExecutionSet started", 0 );
+        output("ExecutionSet started", 0);
     }
 
-    public void executionSetEnded( ExecutionSet es )
-    {
+    public void executionSetEnded(ExecutionSet es) {
         outputNewLine();
-        output( "Scripts run: " + summary.getScriptsRunCount(), 0 );
-        output( "Failures: " + summary.getFailureCount(), 0 );
-        output( "Errors: " + summary.getErrorCount(), 0 );
+        output("Scripts run: " + summary.getScriptsRunCount(), 0);
+        output("Failures: " + summary.getFailureCount(), 0);
+        output("Errors: " + summary.getErrorCount(), 0);
         outputNewLine();
-        output( "Duration: " + summary.getElapsedTimeSeconds() + "s", 0 );
+        output("Duration: " + summary.getElapsedTimeSeconds() + "s", 0);
     }
 
-    public void scriptStarted( Script s )
-    {
-        summary.scriptStarted( s );
+    public void scriptStarted(Script s) {
+        summary.scriptStarted(s);
         currentScript = s;
-        output( "started: " + s.getName(), 1 );
+        output("started: " + s.getName(), 1);
     }
 
-    public void scriptEnded( Script s )
-    {
-        output( "ended: " + s.getName(), 1 );
+    public void scriptEnded(Script s) {
+        output("ended: " + s.getName(), 1);
     }
 
-    public void commandStarted( Command c )
-    {
-        if( c instanceof Composite )
+    public void commandStarted(Command c) {
+        if (c instanceof Composite)
             compositeLevel++;
     }
 
-    public void commandEnded( Command c, Throwable t )
-    {
-        if( c instanceof Composite )
+    public void commandEnded(Command c, Throwable t) {
+        if (c instanceof Composite)
             compositeLevel--;
 
-        if( compositeLevel == 0 )
-            outputCommandResult( c, t );
+        if (compositeLevel == 0)
+            outputCommandResult(c, t);
     }
 
-    protected void outputCommandResult( Command c, Throwable t )
-    {
-        summary.commandEnded( c, t );
-        if( t == null )
-            output( "OK: " + formattedCommand( c ), 2 );
-        else if( t instanceof AssertionFailedError )
-        {
-            output( "Failed: " + getErrorLocation( c ), 2 );
-            output( t.getMessage(), 3 );
-        }
-        else
-        {
-            output( "Error: " + getErrorLocation( c ), 2 );
-            output( t.getMessage(), 3 );
-            t.printStackTrace( output );
+    protected void outputCommandResult(Command c, Throwable t) {
+        summary.commandEnded(c, t);
+        if (t == null) {
+            output("OK: " + formattedCommand(c), 2);
+        } else if (t instanceof AssertionFailedError) {
+            output("Failed: " + getErrorLocation(c), 2);
+            output(t.getMessage(), 3);
+        } else {
+            output("Error: " + getErrorLocation(c), 2);
+            output(t.getMessage(), 3);
+            t.printStackTrace(output);
             outputNewLine();
         }
     }
 
-    private String getErrorLocation( Command c )
-    {
-        return c.getName() + " (" + currentScript.getAbsolutePath() + ":" + c.getLineNumber() + ")";
+    private String getErrorLocation(Command c) {
+        return c.getName() + " (" + currentScript.getAbsolutePath() + ":" + c.getLineNumber()
+                + ")";
     }
 
-    private void outputNewLine()
-    {
+    private void outputNewLine() {
         output.println();
     }
 
-    protected void output( String message, int indentLevel )
-    {
-        for( int i = 0; i < indentLevel; i++ )
-            output.print( INDENT );
-
-        output.println( message );
+    protected void output(String message, int indentLevel) {
+        for (int i = 0; i < indentLevel; i++) {
+            output.print(INDENT);
+        }
+        output.println(message);
     }
 
-    private String formattedCommand( Command c )
-    {
+    private String formattedCommand(Command c) {
         return (c.getName() + " " + c.parametersAsString()).trim();
     }
+
+    public boolean errorsOccured() {
+        return (summary.getErrorCount() + summary.getFailureCount()) > 0;
+    }
+
 }
