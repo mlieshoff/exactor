@@ -1,0 +1,121 @@
+#summary How to get started with exactor
+#labels Featured
+
+
+Getting Started
+Create a test script
+
+The format for Exactor test scripts is plain ascii text.
+
+A script is a series of commands that are interpreted by the framework to invoke Java classes written by programmers to carry out the command.
+
+Below is an example of a script to test a simple calculator application;
+
+
+    # Simple example of a calculator
+    # acceptance test.
+
+    # Test zero initially
+    StartCalculator
+    CheckResultEquals    0
+
+    # Test addition
+    Add                  4    5    1
+    CheckResultEquals   10
+
+    # Test subtraction
+    Subtract             6
+    CheckResultEquals    4
+    Subtract             1    2
+    CheckResultEquals    1
+
+    # more tests...
+    
+
+Lines beginning with the hash character '#', are comments and are ignored by the framework
+
+Commands are specified one per line starting at the left hand side of the script, any parameters required by the command are supplied next, seperated by whitespace, i.e. spaces or tabs.
+
+The script should be saved with an extension of ".act", although not strictly necessary it enables the script runner to pick up multiple files in a directory.
+Create Commands
+
+To enable the script to run, programmers must create commands that match the command name in the script.
+
+Commands are java classes that extend com.exoftware.exactor.Command and override the execute method to perform the required action.
+
+Below is an example of a command class implementing the CheckResultEquals command in the above script;
+
+
+    package acceptance;
+
+    import com.exoftware.exactor.Command;
+    import calculator.Calculator;
+
+    public class CheckResultEquals extends Command
+    {
+        public void execute() throws Exception
+        {
+            assertEquals( getParameter( 0 ).intValue(), Calculator.getResult() );
+        }
+    }
+    
+
+Run Exactor
+
+When you have created command classes for all the commands in the script you can run the script to determine the results.
+
+To run the script, or multiple scripts in a directory, run the framework class com.exoftware.exactor.Runner passing the name of the file or directory as an argument, as shown below, assuming the script above was saved as "calculator.act".
+
+Ensure that the framework classes (including any dependant libraries e.g. junit.jar), your command classes and any application classes are available on the CLASSPATH.
+
+
+    C:\>java com.exoftware.exactor.Runner calculator.act
+    
+
+If the script executes successfully you should see the following output;
+
+
+    ExecutionSet started
+        started: calculator.act
+            OK: StartCalculator
+            OK: CheckResultEquals
+            OK: Add
+            OK: CheckResultEquals
+            OK: Subtract
+            OK: CheckResultEquals
+            OK: Subtract
+            OK: CheckResultEquals
+        ended: calculator.act
+
+    Scripts run: 1
+    Failures: 0
+    Errors: 0
+    
+
+Batch Runner Wrapper
+
+Exactor provides batch file wrapper to the com.exoftware.exactor.Runner class that takes care of adding all the required libraries to the CLASSPATH.
+
+The format of the command is,
+
+exactor [options] [file|directory]
+
+The only option currently supported is -lib <path> where path is a list of directories and/or files to be added to the CLASSPATH.
+
+Each entry should be separated by the usual platform path separator character, in Windows this is the semicolon ';' character, and the whole list should be enclosed in quotes, e.g. "path1;path2".
+
+All files in the lib directory of EXACTOR_HOME are automatically added to the CLASSPATH.
+
+Optionally a file or directory name can also be supplied to the script, if none is supplied the script uses the current directory.
+
+If a file name is supplied, only that file is run.
+
+If a directory name is supplied the Runner class will search the specified directory and all subdirectories for acceptance test scripts, i.e. files with an extension of .act.
+
+To run the above calculator example assuming that the command and application classes are in a subdirectory classes of the current directory and the script is in a subdirectory at, the following command would be run;
+
+
+    C:\>exactor -lib classes at\calculator.act
+    
+
+The output would be the same as shown above.
