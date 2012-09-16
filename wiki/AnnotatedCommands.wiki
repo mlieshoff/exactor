@@ -1,4 +1,5 @@
 #summary Commands using annotation for parameters
+#labels Featured
 
 = Annotated commands =
 
@@ -16,6 +17,49 @@ public class OrderBookCommand {
 }}}
 
 This is the class for doing something with a book. There is a member *userId*, an object of type book and one optional member called *tracking*.
+
+There is an enum class called *FooParameters* act as namespace for the annotated parameter. The name *USER_ID* refers to an enum constant in the defined namespace class.
+
+{{{
+public enum FooParameters implements ParameterDefinition {
+    BOOK(Arrays.asList("isbn", "title"), new Resolver<Book, AnnotatedCommand>() {
+        @Override
+        public Book resolve(ParameterType parameterType, AnnotatedCommand command) {
+            Book book = new Book();
+            book.setIsbn(command.getParameterByName("isbn").stringValue());
+            book.seTitle(command.getParameterByName("title").stringValue());
+            return book;
+        }
+
+        @Override
+        public List<String> getParameterNames() {
+            return Arrays.asList("isbn", "title");
+        }
+    }),
+    TRACK(Arrays.asList("tracking"), new Resolver<Boolean, AnnotatedCommand>() {
+        @Override
+        public Boolean resolve(ParameterType parameterType, AnnotatedCommand command) {
+            return command.getParameterByName("tracking").booleanValue();
+        }
+
+        @Override
+        public List<String> getParameterNames() {
+            return Arrays.asList("tracking");
+        }
+    }),
+    USER_ID(Arrays.asList("user"), new Resolver<Boolean, AnnotatedCommand>() {
+        @Override
+        public Integer resolve(ParameterType parameterType, AnnotatedCommand command) {
+            return command.getParameterByName("user").intValue();
+        }
+
+        @Override
+        public List<String> getParameterNames() {
+            return Arrays.asList("user");
+        }
+    });
+}
+}}}
 
 Our acceptance test looks like following:
 
