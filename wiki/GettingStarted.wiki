@@ -2,8 +2,8 @@
 #labels Featured
 
 
-Getting Started
-Create a test script
+= Getting Started =
+== Create a test script ==
 
 The format for Exactor test scripts is plain ascii text.
 
@@ -11,7 +11,7 @@ A script is a series of commands that are interpreted by the framework to invoke
 
 Below is an example of a script to test a simple calculator application;
 
-
+{{{
     # Simple example of a calculator
     # acceptance test.
 
@@ -30,7 +30,7 @@ Below is an example of a script to test a simple calculator application;
     CheckResultEquals    1
 
     # more tests...
-    
+}}}  
 
 Lines beginning with the hash character '#', are comments and are ignored by the framework
 
@@ -45,7 +45,7 @@ Commands are java classes that extend com.exoftware.exactor.Command and override
 
 Below is an example of a command class implementing the CheckResultEquals command in the above script;
 
-
+{{{
     package acceptance;
 
     import com.exoftware.exactor.Command;
@@ -58,9 +58,9 @@ Below is an example of a command class implementing the CheckResultEquals comman
             assertEquals( getParameter( 0 ).intValue(), Calculator.getResult() );
         }
     }
-    
+}}}
 
-Run Exactor
+== Run Exactor ==
 
 When you have created command classes for all the commands in the script you can run the script to determine the results.
 
@@ -68,13 +68,13 @@ To run the script, or multiple scripts in a directory, run the framework class c
 
 Ensure that the framework classes (including any dependant libraries e.g. junit.jar), your command classes and any application classes are available on the CLASSPATH.
 
-
+{{{
     C:\>java com.exoftware.exactor.Runner calculator.act
-    
+}}} 
 
 If the script executes successfully you should see the following output;
 
-
+{{{
     ExecutionSet started
         started: calculator.act
             OK: StartCalculator
@@ -90,15 +90,15 @@ If the script executes successfully you should see the following output;
     Scripts run: 1
     Failures: 0
     Errors: 0
-    
+ }}}   
 
-Batch Runner Wrapper
+== Batch Runner Wrapper ==
 
 Exactor provides batch file wrapper to the com.exoftware.exactor.Runner class that takes care of adding all the required libraries to the CLASSPATH.
 
 The format of the command is,
 
-exactor [options] [file|directory]
+{{{exactor [options] [file|directory]}}}
 
 The only option currently supported is -lib <path> where path is a list of directories and/or files to be added to the CLASSPATH.
 
@@ -114,8 +114,8 @@ If a directory name is supplied the Runner class will search the specified direc
 
 To run the above calculator example assuming that the command and application classes are in a subdirectory classes of the current directory and the script is in a subdirectory at, the following command would be run;
 
-
+{{{
     C:\>exactor -lib classes at\calculator.act
-    
+}}}  
 
 The output would be the same as shown above.
