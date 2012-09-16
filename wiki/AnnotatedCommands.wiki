@@ -13,6 +13,16 @@ public class OrderBookCommand {
    private Book book;
    @Param(namespace=FooParameters.class, name="TRACK", type=ParameterType.OPTIONAL)
    private boolean tracking;
+
+    public void execute() throws Exception {
+        setUp();
+        if (tracking) {
+            ...
+        }
+        if (user >= 1000) {
+            ...
+        }
+    }
 }
 }}}
 
@@ -64,4 +74,11 @@ public enum FooParameters implements ParameterDefinition {
 Our acceptance test looks like following:
 
 {{{
+BookOrderCommand title=lala isbn=test1234 user=4711
+}}}
+
+or with tracking enabled:
+
+{{{
+BookOrderCommand title=lala isbn=test1234 user=4711 tracking=true
 }}}
