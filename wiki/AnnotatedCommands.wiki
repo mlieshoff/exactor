@@ -1,0 +1,23 @@
+#summary Commands using annotation for parameters
+
+= Annotated commands =
+
+Command classes can define parameters with assigned annotations. The inherited class *AnnotatedCommand* resolves and set this parameters by calling a method named *setUp()*. Manually resolving is not more necessary.
+
+{{{
+public class OrderBookCommand {
+   @Param(namespace=FooParameters.class, name="USER_ID")
+   private int user;
+   @Param(namespace=FooParameters.class, name="BOOK")
+   private Book book;
+   @Param(namespace=FooParameters.class, name="TRACK", type=ParameterType.OPTIONAL)
+   private boolean tracking;
+}
+}}}
+
+This is the class for doing something with a book. There is a member *userId*, an object of type book and one optional member called *tracking*.
+
+Our acceptance test looks like following:
+
+{{{
+}}}
