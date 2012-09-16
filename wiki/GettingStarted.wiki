@@ -100,7 +100,7 @@ The format of the command is,
 
 {{{exactor [options] [file|directory]}}}
 
-The only option currently supported is -lib <path> where path is a list of directories and/or files to be added to the CLASSPATH.
+The only option currently supported is -lib [path] where path is a list of directories and/or files to be added to the CLASSPATH.
 
 Each entry should be separated by the usual platform path separator character, in Windows this is the semicolon ';' character, and the whole list should be enclosed in quotes, e.g. "path1;path2".
 
