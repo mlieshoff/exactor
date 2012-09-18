@@ -1,0 +1,305 @@
+<?xml version="1.0"?>
+<project name="exactor" default="all">
+    <description>EXACTOR project.</description>
+  
+
+    <!-- ===================================
+    ========================================
+            Property, path & task      
+            definitions.                
+    ========================================
+    ==================================== -->
+    <property file="version.properties"/>
+    <property name="build.number" value="${major}.${minor}.${build}"/>
+    <property name="src.dir" location="src"/>
+    <property name="src.java.dir" location="${src.dir}/java"/>
+    <property name="excluded" value="**/GenerateCommandsDoclet.java"/>
+    <property name="src.test.dir" location="${src.dir}/test"/>
+    <property name="lib.dir" location="lib"/>
+    <property name="scripts.dir" location="scripts"/>
+    <property name="examples.dir" location="examples"/>
+    <property name="docs.dir" location="docs"/>
+    <property name="build.dir" location="build"/>
+    <property name="build.classes.dir" location="${build.dir}/classes"/>
+    <property name="build.classes.java.dir" location="${build.classes.dir}/java"/>
+    <property name="build.classes.test.dir" location="${build.classes.dir}/test"/>
+    <property name="reports.dir" location="${build.dir}/reports"/>
+    <property name="reports.junit.dir" location="${reports.dir}/junit"/>
+    <property name="dist.root" location="dist"/>
+    <property name="dist.dir" location="${dist.root}/${ant.project.name}-${build.number}"/>
+    <property name="dist.lib.dir" location="${dist.dir}/lib"/>
+    <property name="dist.bin.dir" location="${dist.dir}/bin"/>
+    <property name="dist.docs.dir" location="${dist.dir}/docs"/>
+    <property name="dist.examples.dir" location="${dist.dir}/examples"/>
+    <property name="dist.scripts.dir" location="${dist.dir}/scripts"/>
+    <property name="dist.src.dir" location="${dist.dir}/src"/>
+    <path id="compile.classpath">
+        <pathelement location="${build.classes.java.dir}"/>
+        <pathelement location="${build.classes.test.dir}"/>
+        <pathelement location="${lib.dir}/junit.jar"/>
+        <pathelement location="${lib.dir}/jwebunit-1.2.jar"/>
+        <pathelement location="${lib.dir}/httpunit-1.5.4.jar"/>
+        <pathelement location="${lib.dir}/nekohtml.jar"/>
+        <pathelement location="${lib.dir}/xercesImpl-2.6.2.jar"/>
+        <pathelement location="${lib.dir}/xml-apis-1.0.b2.jar"/>
+        <pathelement location="${lib.dir}/swt.jar"/>
+        <pathelement location="${lib.dir}/abbot.jar"/>
+        <pathelement location="${lib.dir}/jdom.jar"/>
+    </path>
+
+    <!-- ===================================
+    ========================================
+            Main target definitions.
+         (All main targets must include
+          the description attribute.)                
+        Three blank lines between targets
+        makes it easier to see individual
+        targets.
+    ========================================
+    ==================================== -->
+    <target name="all" depends="compile, test, javadocs, dist" description="Build and test everything; create a distribution."/>
+
+
+
+    <target name="clean" description="Delete all generated files and directories.">
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.root}"/>
+        <delete file="swt-awt-win32-3044.dll"/>
+        <delete file="swt-win32-3044.dll"/>
+        <delete dir="${examples.dir}/simple/classes"/>
+        <delete dir="${examples.dir}/swt/classes"/>
+    </target>
+
+
+
+    <target name="compile" description="Compile the code.">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${build.classes.dir}"/>
+        <mkdir dir="${build.classes.java.dir}"/>
+        <mkdir dir="${build.classes.test.dir}"/>
+        <mkdir dir="${examples.dir}/simple/classes"/>
+        <mkdir dir="${examples.dir}/swt/classes"/>
+
+        <!-- compile source files -->
+        <javac srcdir="${src.java.dir}"
+            destdir="${build.classes.java.dir}"
+            classpathref="compile.classpath"
+            debug="on"
+            deprecation="on"
+            includeAntRuntime="no"
+            excludes="${excluded}"/>
+        <!-- copy resources -->
+        <copy todir="${build.classes.java.dir}">
+            <fileset dir="${src.java.dir}" includes="**/*.css"/>
+        </copy>
+
+        <!-- compile test files -->
+        <javac srcdir="${src.test.dir}"
+            destdir="${build.classes.test.dir}"
+            classpathref="compile.classpath"
+            debug="on"
+            deprecation="on"
+            includeAntRuntime="no"/>
+        <copy todir="${build.classes.test.dir}">
+	        <fileset dir="${src.test.dir}" includes="**/*.act"/>
+        </copy>
+
+        <!-- compile example projects -->
+        <javac srcdir="${examples.dir}/simple/src"
+            destdir="${examples.dir}/simple/classes"
+            classpathref="compile.classpath"
+            debug="on"
+            deprecation="on"
+            includeAntRuntime="no"/>
+
+        <javac srcdir="${examples.dir}/swt/src"
+            destdir="${examples.dir}/swt/classes"
+            classpathref="compile.classpath"
+            debug="on"
+            deprecation="on"
+            includeAntRuntime="no"/>
+
+        <!-- copy .act file for composite example -->
+        <copy todir="${examples.dir}/composite/classes">
+	        <fileset dir="${examples.dir}/composite/src" includes="**/*.act"/>
+        </copy>
+    </target>
+
+
+
+    <target name="dist" depends="test, dist-bin, dist-src" description="Produce the distributables.">
+        <!-- increment the build number -->
+        <propertyfile file="version.properties" comment="Build number auto-incremented by build process">
+            <entry key="major" type="int" value="${major}" default="1"/>
+            <entry key="minor" type="int" value="${minor}" default="0"/>
+            <entry key="build" type="int" default="0" operation="+"/>
+        </propertyfile>
+    </target>
+
+
+    
+    <target name="distclean" description="Clean up the distribution files only.">
+        <delete dir="${dist.root}"/>
+    </target>
+
+
+
+    <target name="javadocs" description="Generate the Javadoc pages.">
+        <javadoc destdir="${dist.docs.dir}/api"
+            sourcepath="${src.java.dir}"
+            classpathref="compile.classpath"
+            packagenames="com.exoftware.exactor, com.exoftware.exactor.command.web, com.exoftware.exactor.command.swt"
+            failOnError="false"
+            overview="${src.dir}/overview.html"
+            public="true">
+            <group title="Exactor core" packages="com.exoftware.exactor"/>
+            <group title="Exactor commands" packages="com.exoftware.exactor.command.web:com.exoftware.exactor.command.swt"/>  
+        </javadoc>
+    </target>
+
+
+
+    <target name="test" depends="compile" description="Run the unit tests.">
+        <mkdir dir="${reports.dir}"/>
+        <mkdir dir="${reports.junit.dir}"/>
+
+        <copy todir=".">
+            <fileset dir="${lib.dir}">
+                <include name="**/*.dll"/>
+            </fileset>
+        </copy>
+
+        <junit printsummary="no"
+            errorProperty="test.failed"
+            failureProperty="test.failed"
+            fork="on">
+            <classpath refid="compile.classpath"/>
+            <formatter type="xml"/>
+            <test name="${testcase}" if="testcase"/>
+            <batchtest todir="${reports.junit.dir}" unless="testcase">
+                <fileset dir="${build.classes.test.dir}" includes="**/Test*.class" excludes="**/*AbstractTest.class, **/*$*.class"/>
+            </batchtest>
+        </junit>
+
+        <junitreport todir="${reports.junit.dir}">
+            <fileset dir="${reports.junit.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${reports.junit.dir}"/>
+        </junitreport>
+
+        <fail if="test.failed">Unit tests failed.  Check log or reports for details</fail>
+    </target>
+
+    
+    
+    <target name="dist-bin">
+        <!-- optional packages -->
+        <property name="web.package" value="com/exoftware/exactor/command/web/"/>
+        <property name="swt.package" value="com/exoftware/exactor/command/swt/"/>
+        <property name="abbot.package" value="com/exoftware/exactor/command/abbot/"/>
+        <property name="swing.package" value="com/exoftware/exactor/command/swing/"/>
+
+        <mkdir dir="${dist.dir}"/>
+
+        <!-- bin contents -->
+        <copy todir="${dist.bin.dir}">
+            <fileset dir="${scripts.dir}"/>
+        </copy>
+
+        <!-- lib contents -->
+        <copy todir="${dist.lib.dir}">
+            <fileset dir="${lib.dir}"/>
+        </copy>
+
+        <!-- exactor.jar -->
+        <jar destfile="${dist.lib.dir}/${ant.project.name}.jar"
+            basedir="${build.classes.java.dir}"
+            excludes="${web.package},${swt.package},${abbot.package},${swing.package}"/>
+       
+        <!-- web-commands.jar -->
+        <jar destfile="${dist.lib.dir}/web-commands.jar"
+            basedir="${build.classes.java.dir}"
+            includes="${web.package}**/*.*"/>
+
+        <!-- swt-commands.jar -->
+        <jar destfile="${dist.lib.dir}/swt-commands.jar"
+            basedir="${build.classes.java.dir}"
+            includes="${swt.package}**/*.*"/>
+
+        <!-- abbot-commands.jar -->
+        <jar destfile="${dist.lib.dir}/abbot-commands.jar"
+            basedir="${build.classes.java.dir}"
+            includes="${abbot.package}**/*.*"/>
+
+        <!-- swing-commands.jar -->
+        <jar destfile="${dist.lib.dir}/swing-commands.jar"
+            basedir="${build.classes.java.dir}"
+            includes="${swing.package}**/*.*"/>
+
+        <!-- example projects -->
+        <copy todir="${dist.docs.dir}/examples" includeemptydirs="true">
+            <fileset dir="${examples.dir}"/>
+        </copy>
+
+        <!-- project docs -->
+        <copy todir="${dist.docs.dir}" includeemptydirs="true">
+            <fileset dir="${docs.dir}"/>
+        </copy>
+
+        <!-- update release details -->
+        <replace file="${dist.docs.dir}/download.html" token="@release@" value="${ant.project.name}-${build.number}"/>
+
+        <!-- create binary distribution zip file -->
+        <zip destfile="${dist.root}/${ant.project.name}-${build.number}-bin.zip"
+             basedir="${dist.root}"
+             includes="${ant.project.name}-${build.number}/"
+             excludes="${ant.project.name}*.zip"/>
+    </target>
+    
+    
+    
+    <target name="dist-src">
+        <delete dir="${dist.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+
+        <!-- project docs -->
+        <copy todir="${dist.docs.dir}" includeemptydirs="true">
+            <fileset dir="${docs.dir}"/>
+        </copy>
+
+        <!-- update release details -->
+        <replace file="${dist.docs.dir}/download.html" token="@release@" value="${ant.project.name}-${build.number}"/>
+
+        <!-- example projects -->
+        <copy todir="${dist.examples.dir}" includeemptydirs="true">
+            <fileset dir="${examples.dir}"/>
+        </copy>
+
+        <!-- lib contents -->
+        <copy todir="${dist.lib.dir}">
+            <fileset dir="${lib.dir}"/>
+        </copy>
+
+        <!-- scripts -->
+        <copy todir="${dist.scripts.dir}">
+            <fileset dir="${scripts.dir}"/>
+        </copy>
+
+        <!-- source -->
+        <copy todir="${dist.src.dir}">
+            <fileset dir="${src.dir}"/>
+        </copy>
+
+        <!-- build files -->
+        <copy todir="${dist.dir}">
+            <fileset dir="." includes="build.bat, build.xml, version.properties"/> 
+        </copy>
+
+        <!-- create source distribution zip file -->
+        <zip destfile="${dist.root}/${ant.project.name}-${build.number}-src.zip"
+             basedir="${dist.root}"
+             includes="${ant.project.name}-${build.number}/"
+             excludes="${ant.project.name}*.zip"/>
+    </target>
+</project>
