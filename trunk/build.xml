@@ -12,7 +12,7 @@
     <property file="version.properties"/>
     <property name="build.number" value="${major}.${minor}.${build}"/>
     <property name="src.dir" location="src"/>
-    <property name="src.java.dir" location="${src.dir}/java"/>
+    <property name="src.java.dir" location="/"/>
     <property name="excluded" value="**/GenerateCommandsDoclet.java"/>
     <property name="src.test.dir" location="${src.dir}/test"/>
     <property name="lib.dir" location="lib"/>
@@ -90,7 +90,7 @@
             excludes="${excluded}"/>
         <!-- copy resources -->
         <copy todir="${build.classes.java.dir}">
-            <fileset dir="${src.java.dir}" includes="**/*.css"/>
+            <fileset dir="/" includes="**/*.css"/>
         </copy>
 
         <!-- compile test files -->
