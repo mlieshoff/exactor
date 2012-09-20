@@ -34,9 +34,10 @@
  *****************************************************************/
 package com.exoftware.exactor.command.annotated;
 
-import java.util.*;
+import com.exoftware.exactor.Parameter;
 
-import com.exoftware.exactor.*;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  *
@@ -50,6 +51,11 @@ public enum FooNamespace implements ParameterDefinition {
         }
 
         @Override
+        public boolean validate(ParameterType parameterType, AnnotatedCommand command) {
+            return false;  //To change body of implemented methods use File | Settings | File Templates.
+        }
+
+        @Override
         public List<String> getParameterNames() {
             return Arrays.asList("mandatoryString");
         }
@@ -59,6 +65,11 @@ public enum FooNamespace implements ParameterDefinition {
         public String resolve(ParameterType parameterType, AnnotatedCommand command) {
             Parameter parameter = command.getParameterByName("optionalString");
             return parameter != null ? parameter.stringValue() : null;
+        }
+
+        @Override
+        public boolean validate(ParameterType parameterType, AnnotatedCommand command) {
+            return false;  //To change body of implemented methods use File | Settings | File Templates.
         }
 
         @Override

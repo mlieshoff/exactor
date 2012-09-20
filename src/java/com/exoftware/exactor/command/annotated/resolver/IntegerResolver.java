@@ -32,18 +32,24 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************/
-package com.exoftware.exactor.command.annotated;
+package com.exoftware.exactor.command.annotated.resolver;
 
-import java.util.List;
+import com.exoftware.exactor.command.annotated.AnnotatedCommand;
 
 /**
- * This interface defines a resolver. A resolver's job is to resolve command parameters to a
- * concrete object of type T.
+ * This class defines a resolver for a parameter field of type integer.
  *
  * @author Michael Lieshoff
  */
-public interface Resolver<T, X extends AnnotatedCommand> {
-    T resolve(ParameterType parameterType, X command);
-    boolean validate(ParameterType parameterType, X command);
-    List<String> getParameterNames();
+public class IntegerResolver extends SingleFieldResolver<Integer, AnnotatedCommand>{
+
+    public IntegerResolver(String field) {
+        super(field);
+    }
+
+    @Override
+    public Integer resolveIntern(AnnotatedCommand command) {
+        return command.getParameterByName(getField()).intValue();
+    }
+
 }
