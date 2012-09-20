@@ -32,18 +32,26 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************/
-package com.exoftware.exactor.command.annotated;
+package com.exoftware.exactor.command.annotated.resolver;
 
-import java.util.List;
+import com.exoftware.exactor.command.annotated.AnnotatedCommand;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- * This interface defines a resolver. A resolver's job is to resolve command parameters to a
- * concrete object of type T.
+ * This class defines a resolver for a parameter field of type set of string.
  *
  * @author Michael Lieshoff
  */
-public interface Resolver<T, X extends AnnotatedCommand> {
-    T resolve(ParameterType parameterType, X command);
-    boolean validate(ParameterType parameterType, X command);
-    List<String> getParameterNames();
+public class StringSetResolver extends SingleFieldResolver<Set<String>, AnnotatedCommand> {
+    public StringSetResolver(String parameterName) {
+        super(parameterName);
+    }
+
+    @Override
+    public Set<String> resolveIntern(AnnotatedCommand command) {
+        return new HashSet<String>(Arrays.asList(command.getParameterByName(getField()).splittedString("[,]")));
+    }
 }

@@ -32,18 +32,53 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************/
-package com.exoftware.exactor.command.annotated;
+package com.exoftware.exactor.command.annotated.resolver;
 
+import com.exoftware.exactor.command.annotated.AnnotatedCommand;
+import com.exoftware.exactor.command.annotated.ParameterType;
+import com.exoftware.exactor.command.annotated.Resolver;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
- * This interface defines a resolver. A resolver's job is to resolve command parameters to a
- * concrete object of type T.
+ * This abstract class defines a basic resolver.
  *
  * @author Michael Lieshoff
  */
-public interface Resolver<T, X extends AnnotatedCommand> {
-    T resolve(ParameterType parameterType, X command);
-    boolean validate(ParameterType parameterType, X command);
-    List<String> getParameterNames();
+public abstract class AbstractResolver<T, X extends AnnotatedCommand> implements Resolver<T, X> {
+    private List<String> _parameterNames;
+
+    public AbstractResolver() {
+        _parameterNames = new ArrayList<String>();
+    }
+
+    public AbstractResolver(String parameterNames) {
+        _parameterNames = Arrays.asList(parameterNames.split("[,]"));
+    }
+
+    public List<String> getParameterNames() {
+        return _parameterNames;
+    }
+
+    @Override
+    public T resolve(ParameterType parameterType, X command) {
+        List<String> problems = new ArrayList<String>();
+        for (String paramName : getParameterNames()) {
+            if (!command.hasParameter(paramName)) {
+                problems.add(paramName + "<BR/>");
+            }
+        }
+        if (validate(parameterType, command)) {
+            return resolveIntern(command);
+        } else {
+            if (parameterType == ParameterType.MANDATORY) {
+                throw new IllegalStateException(problems.toString());
+            }
+            return null;
+        }
+    }
+
+    public abstract T resolveIntern(X command);
 }
