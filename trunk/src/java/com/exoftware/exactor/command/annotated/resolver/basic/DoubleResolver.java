@@ -32,27 +32,25 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************/
-package com.exoftware.exactor.command.annotated.resolver;
+package com.exoftware.exactor.command.annotated.resolver.basic;
 
 import com.exoftware.exactor.command.annotated.AnnotatedCommand;
+import com.exoftware.exactor.command.annotated.resolver.SingleFieldResolver;
 
 /**
- * This class defines a resolver for a parameter field of type class.
+ * This class defines a resolver for a parameter field of type double.
  *
  * @author Michael Lieshoff
  */
-public class ClassResolver extends SingleFieldResolver<Class, AnnotatedCommand> {
+public class DoubleResolver extends SingleFieldResolver<Double, AnnotatedCommand>{
 
-    public ClassResolver(String field) {
+    public DoubleResolver(String field) {
         super(field);
     }
 
     @Override
-    public Class resolveIntern(AnnotatedCommand command) {
-        try {
-            return Class.forName(command.getParameterByName(getField()).stringValue());
-        } catch (ClassNotFoundException e) {
-            throw new IllegalStateException(e);
-        }
+    public Double resolveIntern(AnnotatedCommand command) {
+        return command.getParameterByName(getField()).doubleValue();
     }
+
 }

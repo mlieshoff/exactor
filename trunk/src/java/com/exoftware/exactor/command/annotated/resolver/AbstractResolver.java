@@ -37,6 +37,7 @@ package com.exoftware.exactor.command.annotated.resolver;
 import com.exoftware.exactor.command.annotated.AnnotatedCommand;
 import com.exoftware.exactor.command.annotated.ParameterType;
 import com.exoftware.exactor.command.annotated.Resolver;
+import com.exoftware.util.Require;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,6 +56,8 @@ public abstract class AbstractResolver<T, X extends AnnotatedCommand> implements
     }
 
     public AbstractResolver(String parameterNames) {
+        Require.condition(parameterNames != null, "parameter names cannot be null!");
+        Require.condition(parameterNames.length() > 0, "parameter names cannot be empty!");
         _parameterNames = Arrays.asList(parameterNames.split("[,]"));
     }
 
