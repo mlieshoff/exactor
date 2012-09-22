@@ -32,25 +32,27 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************/
-package com.exoftware.exactor.command.annotated.resolver;
+package com.exoftware.exactor.command.annotated.resolver.basic;
 
 import com.exoftware.exactor.command.annotated.AnnotatedCommand;
-
-import java.util.Arrays;
-import java.util.List;
+import com.exoftware.exactor.command.annotated.resolver.SingleFieldResolver;
 
 /**
- * This class defines a resolver for a parameter field of type list of string.
+ * This class defines a resolver for a parameter field of type enum.
  *
  * @author Michael Lieshoff
  */
-public class StringListResolver extends SingleFieldResolver<List<String>, AnnotatedCommand> {
-    public StringListResolver(String parameterName) {
-        super(parameterName);
+public class EnumResolver extends SingleFieldResolver<Enum, AnnotatedCommand> {
+
+    private Class clazz;
+
+    public EnumResolver(Class clazz, String field) {
+        super(field);
+        this.clazz = clazz;
     }
 
     @Override
-    public List<String> resolveIntern(AnnotatedCommand command) {
-        return Arrays.asList(command.getParameterByName(getField()).splittedString("[,]"));
+    public Enum resolveIntern(AnnotatedCommand command) {
+        return Enum.valueOf(clazz, command.getParameterByName(getField()).stringValue());
     }
 }

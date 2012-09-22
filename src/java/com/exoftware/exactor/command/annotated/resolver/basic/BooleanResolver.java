@@ -32,24 +32,25 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************/
-package com.exoftware.exactor.command.annotated.resolver;
+package com.exoftware.exactor.command.annotated.resolver.basic;
 
 import com.exoftware.exactor.command.annotated.AnnotatedCommand;
+import com.exoftware.exactor.command.annotated.resolver.SingleFieldResolver;
 
 /**
- * This class defines a resolver for a parameter field of type string.
+ * This class defines a resolver for a parameter field of type boolean.
  *
  * @author Michael Lieshoff
  */
-public class StringResolver extends SingleFieldResolver<String, AnnotatedCommand> {
+public class BooleanResolver extends SingleFieldResolver<Boolean, AnnotatedCommand>{
 
-    public StringResolver(String field) {
+    public BooleanResolver(String field) {
         super(field);
     }
 
     @Override
-    public String resolveIntern(AnnotatedCommand command) {
-        return command.getParameterByName(getField()).stringValue();
+    public Boolean resolveIntern(AnnotatedCommand command) {
+        return command.getParameterByName(getField()).booleanValue();
     }
 
 }

@@ -32,26 +32,27 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************/
-package com.exoftware.exactor.command.annotated.resolver;
+package com.exoftware.exactor.command.annotated.resolver.collection;
 
 import com.exoftware.exactor.command.annotated.AnnotatedCommand;
+import com.exoftware.exactor.command.annotated.resolver.SingleFieldResolver;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- * This class defines a resolver for a parameter field of type enum.
+ * This class defines a resolver for a parameter field of type set of string.
  *
  * @author Michael Lieshoff
  */
-public class EnumResolver extends SingleFieldResolver<Enum, AnnotatedCommand> {
-
-    private Class clazz;
-
-    public EnumResolver(Class clazz, String field) {
-        super(field);
-        this.clazz = clazz;
+public class StringSetResolver extends SingleFieldResolver<Set<String>, AnnotatedCommand> {
+    public StringSetResolver(String parameterName) {
+        super(parameterName);
     }
 
     @Override
-    public Enum resolveIntern(AnnotatedCommand command) {
-        return Enum.valueOf(clazz, command.getParameterByName(getField()).stringValue());
+    public Set<String> resolveIntern(AnnotatedCommand command) {
+        return new HashSet<String>(Arrays.asList(command.getParameterByName(getField()).splittedString("[,]")));
     }
 }
