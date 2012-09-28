@@ -36,7 +36,13 @@ package com.exoftware.util;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.StringTokenizer;
+import java.util.Vector;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 
@@ -50,6 +56,8 @@ public class ClassFinder
 {
     public static final String PACKAGE_SEPARATOR = ".";
     public static final char PACKAGE_SEPARATOR_CHAR = '.';
+    private static String[] packages;
+    private static HashSet<String> cachedPackages = new HashSet<String>();
 
     /**
      * Attempts to find the named class in the cache if not it looks on the supplied classpath and caches the answer
@@ -60,27 +68,25 @@ public class ClassFinder
      *
      * @return the class with the supplied name, or <code>null</code> if no matching class can be found.
      */
-    public static Class findClass( String name, String classPath )
-    {
-        String[] packages = getPackagesFromPath( classPath );
-
-        for( int i = 0; i < packages.length; i++ )
-        {
-            Class result = getClassForName( packages[i] + name );
-            if( result != null )
-                return result;
+    public static Class findClass(String name, String classPath) {
+        initializePackagesIfNeccessary(classPath);
+        Class cachedClass = tryToGetClassFromCachedPackages(name);
+        if (cachedClass == null) {
+            return getClassFromPackages(name);
         }
-        return null;
+        return cachedClass;
     }
 
-    private static Class getClassForName( String className )
-    {
-        try
-        {
-            return Class.forName( className );
+    private static void initializePackagesIfNeccessary(String classPath) {
+        if (packages == null) {
+            packages = getPackagesFromPath(classPath);
         }
-        catch( ClassNotFoundException ignored )
-        {
+    }
+
+    private static Class getClassForName(String className) {
+        try {
+            return Class.forName( className );
+        } catch(ClassNotFoundException ignored) {
             return null;
         }
     }
@@ -179,4 +185,28 @@ public class ClassFinder
 
         return result;
     }
+
+    private static Class tryToGetClassFromCachedPackages(String name) {
+        if (cachedPackages.size() > 0) {
+            for (String packageName : cachedPackages) {
+                Class result = getClassForName(packageName + name);
+                if (result != null) {
+                    return result;
+                }
+            }
+        }
+        return null;
+    }
+
+    private static Class getClassFromPackages(String name) {
+        for (int i = 0; i < packages.length; i++) {
+            Class result = getClassForName(packages[i] + name);
+            if (result != null) {
+                cachedPackages.add(packages[i]);
+                return result;
+            }
+        }
+        return null;
+    }
+
 }
