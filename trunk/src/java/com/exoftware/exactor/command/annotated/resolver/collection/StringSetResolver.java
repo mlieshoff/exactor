@@ -38,8 +38,8 @@ import com.exoftware.exactor.command.annotated.AnnotatedCommand;
 import com.exoftware.exactor.command.annotated.resolver.SingleFieldResolver;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * This class defines a resolver for a parameter field of type set of string.
@@ -53,6 +53,6 @@ public class StringSetResolver extends SingleFieldResolver<Set<String>, Annotate
 
     @Override
     public Set<String> resolveIntern(AnnotatedCommand command) {
-        return new HashSet<String>(Arrays.asList(command.getParameterByName(getField()).splittedString("[,]")));
+        return new TreeSet<String>(Arrays.asList(command.getParameterByName(getField()).splittedString("[,]")));
     }
 }
