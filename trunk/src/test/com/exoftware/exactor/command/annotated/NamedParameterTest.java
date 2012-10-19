@@ -34,49 +34,51 @@
  *****************************************************************/
 package com.exoftware.exactor.command.annotated;
 
-import com.exoftware.exactor.Parameter;
+import junit.framework.TestCase;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
- * This class defines a named parameter.
+ * This class is a test for class NamedParameter.
  *
  * @author Michael Lieshoff
  */
-public class NamedParameter extends Parameter {
+public class NamedParameterTest extends TestCase {
 
-    private String name;
+    private NamedParameter namedNullParameter = new NamedParameter("name", null);
+    private NamedParameter namedParameter = new NamedParameter("name", "a,b,c");
 
-    public NamedParameter(String name, String value) {
-        super(value);
-        this.name = name;
+    public void testGetSetName() {
+        NamedParameter parameter = new NamedParameter("name", "lala");
+        assertEquals("name", parameter.getName());
+        parameter.setName("abc");
+        assertEquals("abc", parameter.getName());
     }
 
-    @Override
-    public String stringValue() {
-        if (value != null) {
-            return super.stringValue();
-        }
-        return null;
+    public void testToString() {
+        assertEquals("name=a,b,c", namedParameter.toString());
     }
 
-    @Override
-    public String[] splittedString(String regexp) {
-        if (value != null) {
-            return super.splittedString(regexp);
-        }
-        return null;
+    public void testToStringWithNull() {
+        assertEquals("name=null", namedNullParameter.toString());
     }
 
-    public String getName() {
-        return name;
+    public void testStringValue() {
+        assertEquals("a,b,c", namedParameter.stringValue());
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void testStringValueWithNull() {
+        assertNull(namedNullParameter.stringValue());
     }
 
-    @Override
-    public String toString() {
-        return String.format("%s=%s", name, stringValue());
+    public void testSplittedString() {
+        List<String> expected = Arrays.asList("a,b,c".split("[,]"));
+        assertEquals(expected, Arrays.asList(namedParameter.splittedString("[,]")));
+    }
+
+    public void testSplittedStringWithNull() {
+        assertNull(namedNullParameter.splittedString("[,]"));
     }
 
 }
