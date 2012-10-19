@@ -47,7 +47,7 @@ public class Parameter
     private static final String SUBSTITUTION_START = "[";
     private static final String SUBSTITUTION_END = "]";
 
-    private final String value;
+    protected final String value;
     private Command command;
 
     /**
