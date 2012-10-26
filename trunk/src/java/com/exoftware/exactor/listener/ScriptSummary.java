@@ -92,10 +92,18 @@ public class ScriptSummary
         return lineSummaries;
     }
 
-    public void commandEnded( Command command, Throwable throwable )
-    {
+    public void commandEnded(Command command, Throwable throwable) {
         passed &= throwable == null;
-        if( command.getLineNumber() > 0 && command.getLineNumber() <= lineSummaries.length )
-            lineSummaries[command.getLineNumber() - 1].commandEnded( throwable );
+        if (command.getLineNumber() > 0 && command.getLineNumber() <= lineSummaries.length) {
+            lineSummaries[command.getLineNumber() - 1].commandEnded(command.getExecutionTime(), throwable);
+        }
+    }
+
+    public long getExecutionTime() {
+        long executionTime = 0;
+        for (LineSummary lineSummary : lineSummaries) {
+            executionTime += lineSummary.getExecutionTime();
+        }
+        return executionTime;
     }
 }

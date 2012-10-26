@@ -41,8 +41,8 @@ public class TestHtmlOutputBuilder extends TestCase
     {
         String expected = "<h2>Summary</h2>" + NL +
                 "<table>" + NL +
-                "<tr><th>Run</th><th>Failures</th><th>Errors</th><th>Time</th></tr>" + NL +
-                "<tr><td>0</td><td>0</td><td>0</td><td>0s</td></tr>" + NL +
+                "<tr><th>Run</th><th>Failures</th><th>Errors</th><th>Time</th><th>Test time in ms</th></tr>" + NL +
+                "<tr><td>0</td><td>0</td><td>0</td><td>0s</td><td class=\"Time\">0</td></tr>" + NL +
                 "</table>" + NL;
         ExecutionSummary executionSummary = new ExecutionSummary()
         {
@@ -57,7 +57,7 @@ public class TestHtmlOutputBuilder extends TestCase
     public void testBuildPassingPackageSummaryRow()
     {
         PackageSummary summary = new PackageSummary( "MyTests" );
-        String expected = "<tr><td><a href=\"#MyTests\">MyTests</a></td><td>0</td><td>0</td><td>0</td><td class=\"Pass\">Pass</td></tr>" + NL;
+        String expected = "<tr><td><a href=\"#MyTests\">MyTests</a></td><td>0</td><td>0</td><td>0</td><td class=\"Pass\">Pass</td><td class=\"Time\">0</td></tr>" + NL;
         assertEquals( expected, builder.buildPackageSummaryRow( summary ) );
     }
 
@@ -68,7 +68,7 @@ public class TestHtmlOutputBuilder extends TestCase
         MockCommand command = new MockCommand();
         summary.scriptStarted( s );
         summary.commandEnded( command, new Exception( "An Error" ) );
-        String expected = "<tr><td><a href=\"#multiplefiles\">multiplefiles</a></td><td>1</td><td>0</td><td>1</td><td class=\"Fail\">Fail</td></tr>" + NL;
+        String expected = "<tr><td><a href=\"#multiplefiles\">multiplefiles</a></td><td>1</td><td>0</td><td>1</td><td class=\"Fail\">Fail</td><td class=\"Time\">0</td></tr>" + NL;
         assertEquals( expected, builder.buildPackageSummaryRow( summary ) );
     }
 
@@ -77,8 +77,8 @@ public class TestHtmlOutputBuilder extends TestCase
         PackageSummary[] summaries = new PackageSummary[]{new PackageSummary( "MyTests" )};
         String expected = "<h2>Packages</h2>" + NL +
                 "<table>" + NL +
-                "<tr><th>Name</th><th>Run</th><th>Failures</th><th>Errors</th><th>Result</th></tr>" + NL +
-                "<tr><td><a href=\"#MyTests\">MyTests</a></td><td>0</td><td>0</td><td>0</td><td class=\"Pass\">Pass</td></tr>" + NL +
+                "<tr><th>Name</th><th>Run</th><th>Failures</th><th>Errors</th><th>Result</th><th>Time in ms</th></tr>" + NL +
+                "<tr><td><a href=\"#MyTests\">MyTests</a></td><td>0</td><td>0</td><td>0</td><td class=\"Pass\">Pass</td><td class=\"Time\">0</td></tr>" + NL +
                 "</table>" + NL;
         assertEquals( expected, builder.buildPackageSummaryTable( summaries ) );
     }
@@ -86,7 +86,7 @@ public class TestHtmlOutputBuilder extends TestCase
     public void testBuildPassingScriptSummaryRow()
     {
         ScriptSummary summary = new ScriptSummary( new File( Constants.pathToTestFile( "single.act" ) ) );
-        String expected = "<tr><td><a href=\"#single\">single</a></td><td class=\"Pass\">Pass</td></tr>" + NL;
+        String expected = "<tr><td><a href=\"#single\">single</a></td><td class=\"Pass\">Pass</td><td class=\"Time\">0</td></tr>" + NL;
         assertEquals( expected, builder.buildScriptSummaryRow( summary ) );
     }
 
@@ -94,7 +94,7 @@ public class TestHtmlOutputBuilder extends TestCase
     {
         ScriptSummary summary = new ScriptSummary( new File( Constants.pathToTestFile( "single.act" ) ) );
         summary.commandEnded( new MockCommand(), new Exception( "An error" ) );
-        String expected = "<tr><td><a href=\"#single\">single</a></td><td class=\"Fail\">Fail</td></tr>" + NL;
+        String expected = "<tr><td><a href=\"#single\">single</a></td><td class=\"Fail\">Fail</td><td class=\"Time\">0</td></tr>" + NL;
         assertEquals( expected, builder.buildScriptSummaryRow( summary ) );
     }
 
@@ -105,8 +105,8 @@ public class TestHtmlOutputBuilder extends TestCase
         summary.commandEnded( new MockCommand(), null );
         String expected = "<h2 id=\"MyTests\">MyTests</h2>" + NL +
                 "<table>" + NL +
-                "<tr><th>Name</th><th>Result</th></tr>" + NL +
-                "<tr><td><a href=\"#single\">single</a></td><td class=\"Pass\">Pass</td></tr>" + NL +
+                "<tr><th>Name</th><th>Result</th><th>Time in ms</th></tr>" + NL +
+                "<tr><td><a href=\"#single\">single</a></td><td class=\"Pass\">Pass</td><td class=\"Time\">0</td></tr>" + NL +
                 "</table>" + NL;
         assertEquals( expected, builder.buildScriptSummaryTable( summary ) );
     }
@@ -122,13 +122,13 @@ public class TestHtmlOutputBuilder extends TestCase
         summary2.commandEnded( new MockCommand(), new MockException( "An Error" ) );
         String expected = "<h2 id=\"MyTests\">MyTests</h2>" + NL +
                 "<table>" + NL +
-                "<tr><th>Name</th><th>Result</th></tr>" + NL +
-                "<tr><td><a href=\"#single\">single</a></td><td class=\"Pass\">Pass</td></tr>" + NL +
+                "<tr><th>Name</th><th>Result</th><th>Time in ms</th></tr>" + NL +
+                "<tr><td><a href=\"#single\">single</a></td><td class=\"Pass\">Pass</td><td class=\"Time\">0</td></tr>" + NL +
                 "</table>" + NL +
                 "<h2 id=\"MyOtherTests\">MyOtherTests</h2>" + NL +
                 "<table>" + NL +
-                "<tr><th>Name</th><th>Result</th></tr>" + NL +
-                "<tr><td><a href=\"#single\">single</a></td><td class=\"Fail\">Fail</td></tr>" + NL +
+                "<tr><th>Name</th><th>Result</th><th>Time in ms</th></tr>" + NL +
+                "<tr><td><a href=\"#single\">single</a></td><td class=\"Fail\">Fail</td><td class=\"Time\">0</td></tr>" + NL +
                 "</table>" + NL;
         assertEquals( expected, builder.buildScriptSummaryTables( summaries ) );
     }
@@ -136,22 +136,22 @@ public class TestHtmlOutputBuilder extends TestCase
     public void testBuildPassingLineSummaryRow()
     {
         LineSummary summary = new LineSummary( "MockCommand 1  2" );
-        String expected = "<tr><td>1</td><td class=\"LinePass\">MockCommand 1  2</td><td>OK</td></tr>" + NL;
+        String expected = "<tr><td>1</td><td class=\"LinePass\">MockCommand 1  2</td><td>OK</td><td class=\"Time\">0</td></tr>" + NL;
         assertEquals( expected, builder.buildLineSummaryRow( 1, summary ) );
     }
 
     public void testBuildFailingLineSummaryRow()
     {
         LineSummary summary = new LineSummary( "MockCommand 1  2" );
-        summary.commandEnded( new MockException( "An Error" ) );
-        String expected = "<tr><td>1</td><td class=\"LineFail\">MockCommand 1  2</td><td>An Error" + NL + "stacktrace</td></tr>" + NL;
+        summary.commandEnded( new MockCommand().getExecutionTime(), new MockException( "An Error" ) );
+        String expected = "<tr><td>1</td><td class=\"LineFail\">MockCommand 1  2</td><td>An Error" + NL + "stacktrace</td><td class=\"Time\">0</td></tr>" + NL;
         assertEquals( expected, builder.buildLineSummaryRow( 1, summary ) );
     }
 
     public void testBuildBlankLineSummaryRow()
     {
         LineSummary summary = new LineSummary( "" );
-        String expected = "<tr><td>1</td><td class=\"LinePass\">&nbsp;</td><td>OK</td></tr>" + NL;
+        String expected = "<tr><td>1</td><td class=\"LinePass\">&nbsp;</td><td>OK</td><td class=\"Time\">0</td></tr>" + NL;
         assertEquals( expected, builder.buildLineSummaryRow( 1, summary ) );
     }
 
@@ -160,8 +160,8 @@ public class TestHtmlOutputBuilder extends TestCase
         ScriptSummary summary = new ScriptSummary( new File( Constants.pathToTestFile( "single.act" ) ) );
         String expected = "<h2 id=\"single\">single</h2>" + NL +
                 "<table>" + NL +
-                "<tr><th>Line</th><th>Command</th><th>Result</th></tr>" + NL +
-                "<tr><td>0</td><td class=\"LinePass\">MockCommand</td><td>OK</td></tr>" + NL +
+                "<tr><th>Line</th><th>Command</th><th>Result</th><th>Time in ms</th></tr>" + NL +
+                "<tr><td>0</td><td class=\"LinePass\">MockCommand</td><td>OK</td><td class=\"Time\">0</td></tr>" + NL +
                 "</table>" + NL;
         assertEquals( expected, builder.buildLineSummaryTable( summary ) );
     }
@@ -179,13 +179,13 @@ public class TestHtmlOutputBuilder extends TestCase
         summary.commandEnded( command, new MockException( "An Error" ) );
         String expected = "<h2 id=\"single\">single</h2>" + NL +
                 "<table>" + NL +
-                "<tr><th>Line</th><th>Command</th><th>Result</th></tr>" + NL +
-                "<tr><td>0</td><td class=\"LinePass\">MockCommand</td><td>OK</td></tr>" + NL +
+                "<tr><th>Line</th><th>Command</th><th>Result</th><th>Time in ms</th></tr>" + NL +
+                "<tr><td>0</td><td class=\"LinePass\">MockCommand</td><td>OK</td><td class=\"Time\">0</td></tr>" + NL +
                 "</table>" + NL +
                 "<h2 id=\"single\">single</h2>" + NL +
                 "<table>" + NL +
-                "<tr><th>Line</th><th>Command</th><th>Result</th></tr>" + NL +
-                "<tr><td>0</td><td class=\"LineFail\">MockCommand</td><td>An Error" + NL + "stacktrace</td></tr>" + NL +
+                "<tr><th>Line</th><th>Command</th><th>Result</th><th>Time in ms</th></tr>" + NL +
+                "<tr><td>0</td><td class=\"LineFail\">MockCommand</td><td>An Error" + NL + "stacktrace</td><td class=\"Time\">0</td></tr>" + NL +
                 "</table>" + NL;
         assertEquals( expected, builder.buildLineSummaryTables( summaries ) );
     }

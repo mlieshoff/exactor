@@ -167,12 +167,12 @@ public class ExecutionSet
      *
      * @param c the started command.
      */
-    public void fireCommandStarted( Command c )
-    {
-        Require.condition( c != null, "Command cannot be null" );
-
-        for( Iterator i = listeners.iterator(); i.hasNext(); )
-            ((ExecutionSetListener) i.next()).commandStarted( c );
+    public void fireCommandStarted(Command c) {
+        Require.condition(c != null, "Command cannot be null");
+        c.setStartTime(System.currentTimeMillis());
+        for(Iterator i = listeners.iterator(); i.hasNext();) {
+            ((ExecutionSetListener) i.next()).commandStarted(c);
+        }
     }
 
     /**
@@ -181,12 +181,12 @@ public class ExecutionSet
      * @param c the ended command
      * @param t the reason the commanded ended or <code>null</code>.
      */
-    public void fireCommandEnded( Command c, Throwable t )
-    {
-        Require.condition( c != null, "Command cannot be null" );
-
-        for( Iterator i = listeners.iterator(); i.hasNext(); )
-            ((ExecutionSetListener) i.next()).commandEnded( c, t );
+    public void fireCommandEnded(Command c, Throwable t) {
+        Require.condition(c != null, "Command cannot be null");
+        c.setEndTime(System.currentTimeMillis());
+        for (Iterator i = listeners.iterator(); i.hasNext();) {
+            ((ExecutionSetListener) i.next()).commandEnded(c, t);
+        }
     }
 
     /**

@@ -34,6 +34,7 @@
  *****************************************************************/
 package com.exoftware.exactor.listener;
 
+import com.exoftware.exactor.MockCommand;
 import junit.framework.TestCase;
 import junit.framework.AssertionFailedError;
 import com.exoftware.exactor.Constants;
@@ -59,22 +60,25 @@ public class TestLineSummary extends TestCase
 
     public void testCommandEndedWithFailure()
     {
-        summary.commandEnded( new AssertionFailedError( "Command Failed" ) );
+        summary.commandEnded( new MockCommand().getExecutionTime(), new AssertionFailedError( "Command Failed" ) );
         assertFalse( summary.hasPassed() );
         assertEquals( "Command Failed", summary.getErrorText() );
+        assertEquals(0, summary.getExecutionTime());
     }
 
     public void testCommandEndedWithError()
     {
-        summary.commandEnded( new MockException( "An error" ) );
+        summary.commandEnded( new MockCommand().getExecutionTime(), new MockException( "An error" ) );
         assertFalse( summary.hasPassed() );
         assertEquals( "An error" + Constants.NEW_LINE + "stacktrace", summary.getErrorText() );
+        assertEquals(0, summary.getExecutionTime());
     }
 
     public void testCommandEndedSuccess()
     {
-        summary.commandEnded( null );
+        summary.commandEnded( new MockCommand().getExecutionTime(), null );
         assertTrue( summary.hasPassed() );
         assertEquals( "", summary.getErrorText() );
+        assertEquals(0, summary.getExecutionTime());
     }
 }

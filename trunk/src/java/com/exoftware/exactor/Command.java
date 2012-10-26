@@ -81,6 +81,8 @@ public class Command extends Assert
     private Script script = new Script();
     private int lineNumber = 0;
     private String name = "";
+    private long endTime;
+    private long startTime;
 
     /**
      * Add a parameter to the command.
@@ -315,4 +317,17 @@ public class Command extends Assert
         return FileUtilities.resolveLocation( fileName,
                 new File( getScript().getAbsolutePath() ).getParentFile().getAbsolutePath() );
     }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
+    }
+
+    public long getExecutionTime() {
+        return endTime - startTime;
+    }
+
 }

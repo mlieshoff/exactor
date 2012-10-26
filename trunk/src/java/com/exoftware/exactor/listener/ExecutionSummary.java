@@ -54,7 +54,7 @@ public class ExecutionSummary
     private int errorCount;
     private String packageBase;
     private long startTime;
-    private Map packageSummaries = new LinkedHashMap();
+    private Map<String, PackageSummary> packageSummaries = new LinkedHashMap<String, PackageSummary>();
     private PackageSummary currentSummary;
 
     public ExecutionSummary()
@@ -72,15 +72,14 @@ public class ExecutionSummary
         startTime = getCurrentTime();
     }
 
-    public void scriptStarted( Script s )
-    {
-        String packageName = packageForScript( s, packageBase );
-        if( !packageSummaries.containsKey( packageName ) )
-            packageSummaries.put( packageName, new PackageSummary( packageName ) );
-
-        currentSummary = (PackageSummary) packageSummaries.get( packageName );
-        currentSummary.scriptStarted( s );
-        runCount++;
+    public void scriptStarted(Script s) {
+        String packageName = packageForScript(s, packageBase);
+        if (!packageSummaries.containsKey(packageName)) {
+            packageSummaries.put(packageName, new PackageSummary(packageName));
+        }
+        currentSummary = packageSummaries.get(packageName);
+        currentSummary.scriptStarted(s);
+        runCount ++;
     }
 
     public void commandEnded( Command c, Throwable t )
@@ -114,9 +113,8 @@ public class ExecutionSummary
         return (getCurrentTime() - startTime) / 1000;
     }
 
-    public PackageSummary[] getPackageSummaries()
-    {
-        return (PackageSummary[]) packageSummaries.values().toArray( new PackageSummary[packageSummaries.size()] );
+    public PackageSummary[] getPackageSummaries() {
+        return packageSummaries.values().toArray(new PackageSummary[packageSummaries.size()]);
     }
 
     protected long getCurrentTime()
@@ -133,5 +131,13 @@ public class ExecutionSummary
             return result.substring( 0, result.length() - 1 );
 
         return result;
+    }
+
+    public long getExecutionTime() {
+        long executionTime = 0;
+        for (Map.Entry<String, PackageSummary> entry : packageSummaries.entrySet()) {
+            executionTime += entry.getValue().getExecutionTime();
+        }
+        return executionTime;
     }
 }

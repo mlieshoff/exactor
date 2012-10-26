@@ -64,12 +64,12 @@ public class TestScriptSummary extends TestCase
         assertEquals( "MockCommand", summary.getLineSummaries()[0].getLine() );
     }
 
-    public void testCommandEndedWithFailure()
-    {
-        command.setLineNumber( 1 );
-        summary.commandEnded( command, new AssertionFailedError( "A failure" ) );
-        assertFalse( summary.hasPassed() );
-        assertFalse( summary.getLineSummaries()[0].hasPassed() );
+    public void testCommandEndedWithFailure() {
+        command.setLineNumber(1);
+        summary.commandEnded(command, new AssertionFailedError("A failure"));
+        assertFalse(summary.hasPassed());
+        assertFalse(summary.getLineSummaries()[0].hasPassed());
+        assertEquals(0, summary.getExecutionTime());
     }
 
     public void testFailedCommandFollowedByPassingCommand()
