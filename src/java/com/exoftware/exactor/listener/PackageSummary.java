@@ -2,16 +2,15 @@ package com.exoftware.exactor.listener;
 
 import com.exoftware.exactor.Command;
 import com.exoftware.exactor.Script;
+import junit.framework.AssertionFailedError;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.AssertionFailedError;
-
 public class PackageSummary
 {
-    private List scriptSummaries = new ArrayList();
+    private List<ScriptSummary> scriptSummaries = new ArrayList<ScriptSummary>();
     private final String packageName;
     private ScriptSummary currentSummary;
     private int failureCount;
@@ -44,7 +43,7 @@ public class PackageSummary
 
     public ScriptSummary[] getScriptSummaries()
     {
-        return (ScriptSummary[]) scriptSummaries.toArray( new ScriptSummary[scriptSummaries.size()] );
+        return scriptSummaries.toArray( new ScriptSummary[scriptSummaries.size()] );
     }
 
     public String getPackageName()
@@ -66,5 +65,13 @@ public class PackageSummary
             errorCount++;
 
         currentSummary.commandEnded( command, throwable );
+    }
+
+    public long getExecutionTime() {
+        long executionTime = 0;
+        for (ScriptSummary scriptSummary : scriptSummaries) {
+            executionTime += scriptSummary.getExecutionTime();
+        }
+        return executionTime;
     }
 }

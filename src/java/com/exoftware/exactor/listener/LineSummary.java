@@ -36,8 +36,8 @@ package com.exoftware.exactor.listener;
 
 import junit.framework.AssertionFailedError;
 
-import java.io.StringWriter;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 
 /**
  * @author Brian Swan
@@ -49,6 +49,7 @@ public class LineSummary
     private String line;
     private boolean passed = true;
     private String errorText = "";
+    private long _executionTime = 0;
 
     public LineSummary( String line )
     {
@@ -70,14 +71,14 @@ public class LineSummary
         return errorText;
     }
 
-    public void commandEnded( Throwable throwable )
-    {
-        if( throwable instanceof AssertionFailedError )
+    public void commandEnded(long executionTime, Throwable throwable) {
+        if (throwable instanceof AssertionFailedError) {
             errorText = throwable.getMessage();
-        else if( throwable != null )
-            errorText = throwable.getMessage() + NEW_LINE + stackTraceString( throwable );
-
+        } else if (throwable != null) {
+            errorText = throwable.getMessage() + NEW_LINE + stackTraceString(throwable);
+        }
         passed = throwable == null;
+        _executionTime = executionTime;
     }
 
     private String stackTraceString( Throwable throwable )
@@ -86,5 +87,9 @@ public class LineSummary
         throwable.printStackTrace( new PrintWriter( w ) );
         w.flush();
         return w.getBuffer().toString();
+    }
+
+    public long getExecutionTime() {
+        return _executionTime;
     }
 }

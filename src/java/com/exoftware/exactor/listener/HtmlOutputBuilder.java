@@ -15,21 +15,21 @@ public class HtmlOutputBuilder
     private static final String TABLE_FOOTER = "</table>" + NL;
     private static final String SUMMARY_TABLE = "<h2>Summary</h2>" + NL +
             TABLE_HEADER +
-            "<tr><th>Run</th><th>Failures</th><th>Errors</th><th>Time</th></tr>" + NL +
-            "<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}s</td></tr>" + NL +
+            "<tr><th>Run</th><th>Failures</th><th>Errors</th><th>Time</th><th>Test time in ms</th></tr>" + NL +
+            "<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}s</td><td class=\"Time\">{4}</td></tr>" + NL +
             TABLE_FOOTER;
-    private static final String PACKAGE_SUMMARY_ROW = "<tr><td><a href=\"#{0}\">{0}</a></td><td>{1}</td><td>{2}</td><td>{3}</td><td class=\"{4}\">{4}</td></tr>" + NL;
+    private static final String PACKAGE_SUMMARY_ROW = "<tr><td><a href=\"#{0}\">{0}</a></td><td>{1}</td><td>{2}</td><td>{3}</td><td class=\"{4}\">{4}</td><td class=\"Time\">{5}</td></tr>" + NL;
     private static final String PACKAGE_SUMMARY_TABLE_HEADER = "<h2>Packages</h2>" + NL +
             TABLE_HEADER +
-            "<tr><th>Name</th><th>Run</th><th>Failures</th><th>Errors</th><th>Result</th></tr>" + NL;
-    private static final String SCRIPT_SUMMARY_ROW = "<tr><td><a href=\"#{0}\">{0}</a></td><td class=\"{1}\">{1}</td></tr>" + NL;
+            "<tr><th>Name</th><th>Run</th><th>Failures</th><th>Errors</th><th>Result</th><th>Time in ms</th></tr>" + NL;
+    private static final String SCRIPT_SUMMARY_ROW = "<tr><td><a href=\"#{0}\">{0}</a></td><td class=\"{1}\">{1}</td><td class=\"Time\">{2}</td></tr>" + NL;
     private static final String SCRIPT_SUMMARY_TABLE_HEADER = "<h2 id=\"{0}\">{0}</h2>" + NL +
             TABLE_HEADER +
-            "<tr><th>Name</th><th>Result</th></tr>" + NL;
-    private static final String LINE_SUMMARY_ROW = "<tr><td>{0}</td><td class=\"{1}\">{2}</td><td>{3}</td></tr>" + NL;
+            "<tr><th>Name</th><th>Result</th><th>Time in ms</th></tr>" + NL;
+    private static final String LINE_SUMMARY_ROW = "<tr><td>{0}</td><td class=\"{1}\">{2}</td><td>{3}</td><td class=\"Time\">{4}</td></tr>" + NL;
     private static final String LINE_SUMMARY_TABLE_HEADER = "<h2 id=\"{0}\">{0}</h2>" + NL +
             TABLE_HEADER +
-            "<tr><th>Line</th><th>Command</th><th>Result</th></tr>" + NL;
+            "<tr><th>Line</th><th>Command</th><th>Result</th><th>Time in ms</th></tr>" + NL;
     private static final String HTML_HEADER = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">" + NL +
             "<html xmlns=\"http://www.w3.org/1999/xhtml\">" + NL +
             "<head>" + NL +
@@ -42,25 +42,25 @@ public class HtmlOutputBuilder
             "</html>";
 
 
-    public String buildSummaryTable( ExecutionSummary executionSummary )
-    {
-        Object[] data = new Object[4];
-        data[0] = new Integer( executionSummary.getScriptsRunCount() );
-        data[1] = new Integer( executionSummary.getFailureCount() );
-        data[2] = new Integer( executionSummary.getErrorCount() );
-        data[3] = new Long( executionSummary.getElapsedTimeSeconds() );
-        return MessageFormat.format( SUMMARY_TABLE, data );
+    public String buildSummaryTable(ExecutionSummary executionSummary) {
+        Object[] data = new Object[5];
+        data[0] = new Integer(executionSummary.getScriptsRunCount());
+        data[1] = new Integer(executionSummary.getFailureCount());
+        data[2] = new Integer(executionSummary.getErrorCount());
+        data[3] = new Long(executionSummary.getElapsedTimeSeconds());
+        data[4] = time(executionSummary.getExecutionTime());
+        return MessageFormat.format(SUMMARY_TABLE, data);
     }
 
-    public String buildPackageSummaryRow( PackageSummary summary )
-    {
-        Object[] data = new Object[5];
+    public String buildPackageSummaryRow(PackageSummary summary) {
+        Object[] data = new Object[6];
         data[0] = summary.getPackageName();
-        data[1] = new Integer( summary.getScriptsRunCount() );
-        data[2] = new Integer( summary.getFailureCount() );
-        data[3] = new Integer( summary.getErrorCount() );
-        data[4] = passValue( summary.hasPassed() );
-        return MessageFormat.format( PACKAGE_SUMMARY_ROW, data );
+        data[1] = new Integer(summary.getScriptsRunCount());
+        data[2] = new Integer(summary.getFailureCount());
+        data[3] = new Integer(summary.getErrorCount());
+        data[4] = passValue(summary.hasPassed());
+        data[5] = time(summary.getExecutionTime());
+        return MessageFormat.format(PACKAGE_SUMMARY_ROW, data);
     }
 
     public String buildPackageSummaryTable( PackageSummary[] summaries )
@@ -73,12 +73,12 @@ public class HtmlOutputBuilder
         return result.toString();
     }
 
-    public String buildScriptSummaryRow( ScriptSummary summary )
-    {
-        Object[] data = new Object[2];
+    public String buildScriptSummaryRow(ScriptSummary summary) {
+        Object[] data = new Object[3];
         data[0] = summary.getName();
         data[1] = passValue( summary.hasPassed() );
-        return MessageFormat.format( SCRIPT_SUMMARY_ROW, data );
+        data[2] = time(summary.getExecutionTime());
+        return MessageFormat.format(SCRIPT_SUMMARY_ROW, data);
     }
 
     public String buildScriptSummaryTable( PackageSummary summary )
@@ -93,14 +93,13 @@ public class HtmlOutputBuilder
         return result.toString();
     }
 
-    public String buildLineSummaryRow( int lineNumber, LineSummary summary )
-    {
-        Object[] data = new Object[4];
-        data[0] = new Integer( lineNumber );
-        data[1] = passValue( summary.getErrorText() );
-        data[2] = lineText( summary.getLine() );
-        data[3] = resultText( summary.getErrorText() );
-
+    public String buildLineSummaryRow(int lineNumber, LineSummary summary) {
+        Object[] data = new Object[5];
+        data[0] = new Integer(lineNumber);
+        data[1] = passValue(summary.getErrorText());
+        data[2] = lineText(summary.getLine());
+        data[3] = resultText(summary.getErrorText());
+        data[4] = time(summary.getExecutionTime());
         return MessageFormat.format( LINE_SUMMARY_ROW, data );
     }
 
@@ -112,6 +111,10 @@ public class HtmlOutputBuilder
     private String resultText( String errorText )
     {
         return errorText.length() == 0 ? RESULT_OK : errorText;
+    }
+
+    private String time(long time) {
+        return String.valueOf(time);
     }
 
     private String passValue( boolean b )

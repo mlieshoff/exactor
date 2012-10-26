@@ -12,7 +12,7 @@ h2 {
     color: #007FAC;
 }
 table {
-    width: 50%;
+    width: 75%;
 }
 th {
     color: #007FAC;
@@ -49,4 +49,8 @@ td.LineFail {
     text-align: left;
     background: #f00000;
     color: #ffffff;
+}
+td.Time {
+    line-height: 12px;
+    text-align: right;
 }
