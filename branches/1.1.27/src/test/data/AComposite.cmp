@@ -1,0 +1,4 @@
+# A composite command is a script
+# that can be used as a command
+MockCommand     $0  $1
+SampleCommand   $1

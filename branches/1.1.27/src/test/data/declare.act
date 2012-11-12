@@ -1,0 +1,2 @@
+Declare Command java.lang.String
+Declare MockCommand com.exoftware.exactor.MockCommand
