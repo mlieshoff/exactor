@@ -112,7 +112,7 @@ public class AnnotatedCommand extends Command {
 
     public AnnotatedCommand() {
         Class<?> clazz = this.getClass();
-        for (Field field : clazz.getDeclaredFields()) {
+        for (Field field : getAllFields(clazz)) {
             for(Annotation annotation : field.getDeclaredAnnotations()) {
                 if (annotation instanceof Param) {
                     Param param = (Param) annotation;
@@ -126,6 +126,19 @@ public class AnnotatedCommand extends Command {
         }
     }
 
+    private Set<Field> getAllFields(Class<?> clazz) {
+        Set<Field> fields = new HashSet<Field>();
+        addAllFieldsIfExists(clazz.getSuperclass(), fields);
+        addAllFieldsIfExists(clazz, fields);
+        return fields;
+    }
+
+    private void addAllFieldsIfExists(Class<?> clazz, Set<Field> fields) {
+        for (Field field : clazz.getDeclaredFields()) {
+            fields.add(field);
+        }
+    }
+
     private ParameterDefinition getParameterDefinition(Param param) {
         return (ParameterDefinition) Enum.valueOf(param.namespace(), param.name());
     }
@@ -136,17 +149,26 @@ public class AnnotatedCommand extends Command {
             Field field = entry.getValue();
             field.setAccessible(true);
             ParameterDefinition parameterDefinition = getParameterDefinition(param);
-            for (String name : parameterDefinition.getParameterNames()) {
-                if (getParameterByName(name) == null
-                        && param.type() == ParameterType.MANDATORY) {
-                    throw new IllegalArgumentException(String.format(
-                            "parameter '%s' is not set but was mandatory!", name));
-                }
+            checkSettingOfMandatoryParams(parameterDefinition, param);
+            setField(parameterDefinition, param, field);
+        }
+    }
+
+    private void checkSettingOfMandatoryParams(ParameterDefinition parameterDefinition, Param param) {
+        for (String name : parameterDefinition.getParameterNames()) {
+            if (getParameterByName(name) == null
+                    && param.type() == ParameterType.MANDATORY) {
+                throw new IllegalArgumentException(String.format(
+                        "parameter '%s' is not set but was mandatory!", name));
             }
-            Object value = parameterDefinition.resolve(param.type(), this);
-            if (value != null) {
-                field.set(this, value);
-            }
+        }
+    }
+
+    private void setField(ParameterDefinition parameterDefinition, Param param, Field field)
+            throws IllegalAccessException {
+        Object value = parameterDefinition.resolve(param.type(), this);
+        if (value != null) {
+            field.set(this, value);
         }
     }
 
