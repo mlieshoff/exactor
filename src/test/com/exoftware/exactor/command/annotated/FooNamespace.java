@@ -60,6 +60,23 @@ public enum FooNamespace implements ParameterDefinition {
             return Arrays.asList("mandatoryString");
         }
     }),
+    OPTIONAL_INT(Arrays.asList("optionalInt"), new Resolver<Integer, AnnotatedCommand>() {
+        @Override
+        public Integer resolve(ParameterType parameterType, AnnotatedCommand command) {
+            Parameter parameter = command.getParameterByName("optionalInt");
+            return parameter != null ? parameter.intValue() : null;
+        }
+
+        @Override
+        public boolean validate(ParameterType parameterType, AnnotatedCommand command) {
+            return false;  //To change body of implemented methods use File | Settings | File Templates.
+        }
+
+        @Override
+        public List<String> getParameterNames() {
+            return Arrays.asList("optionalString");
+        }
+    }),
     OPTIONAL_STRING(Arrays.asList("optionalString"), new Resolver<String, AnnotatedCommand>() {
         @Override
         public String resolve(ParameterType parameterType, AnnotatedCommand command) {

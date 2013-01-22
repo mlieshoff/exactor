@@ -122,4 +122,21 @@ public class AnnotatedCommandTest extends TestCase {
 
     }
 
+    public void testGetInheritedMember() throws Exception {
+        FooInheritCommand fooInheritCommand = new FooInheritCommand();
+        fooInheritCommand.addParameter(new Parameter("mandatoryString=hello"));
+        fooInheritCommand.addParameter(new Parameter("optionalInt=4711"));
+        fooInheritCommand.setUp();
+        assertEquals("hello", fooInheritCommand.getMandatoryString());
+        assertEquals(4711, fooInheritCommand.getOptionalInt());
+    }
+
+    public void testGetInheritedOptionalMember() throws Exception {
+        FooInheritCommand fooInheritCommand = new FooInheritCommand();
+        fooInheritCommand.addParameter(new Parameter("mandatoryString=hello"));
+        fooInheritCommand.setUp();
+        assertEquals("hello", fooInheritCommand.getMandatoryString());
+        assertEquals(1004711, fooInheritCommand.getOptionalInt());
+    }
+
 }
