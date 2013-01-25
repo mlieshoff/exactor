@@ -37,6 +37,7 @@ package com.exoftware.exactor.command.annotated;
 import com.exoftware.exactor.Command;
 import com.exoftware.exactor.Parameter;
 import com.exoftware.exactor.ValueType;
+import com.sun.xml.internal.ws.util.StringUtils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -178,7 +179,7 @@ public class AnnotatedCommand extends Command {
 
     public void addParameter(Parameter parameter) {
         String value = parameter.stringValue();
-        String[] array = value.split("[=]");
+        String[] array = computeParameterValue(value);
         if (array.length == 2) {
             value = getValue(array[1]);
             NamedParameter namedParameter = new NamedParameter(array[0], value);
@@ -189,6 +190,17 @@ public class AnnotatedCommand extends Command {
                     "parameter '%s' is not a named parameter and cannot be used in an "
                     + "annotated command!", value));
         }
+    }
+
+    private String[] computeParameterValue(String value) {
+        int indexFirstEquals = value.indexOf("=");
+        if (indexFirstEquals <= 0) {
+            throw new IllegalArgumentException(String.format("value '%s' is not a named parameter!" , value));
+        }
+        return new String[]{
+                value.substring(0, indexFirstEquals),
+                value.substring(indexFirstEquals + 1, value.length()).replace("\\=", "="),
+        };
     }
 
     private String getValue(String value) {
