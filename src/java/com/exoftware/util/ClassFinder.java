@@ -209,4 +209,8 @@ public class ClassFinder
         return null;
     }
 
+    static void clear() {
+        cachedPackages.clear();
+        packages = null;
+    }
 }
