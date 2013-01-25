@@ -139,4 +139,20 @@ public class AnnotatedCommandTest extends TestCase {
         assertEquals(1004711, fooInheritCommand.getOptionalInt());
     }
 
+    public void testWrongNameParameterInCommandsParameter() throws Exception {
+        try {
+            new DefectFooCommand();
+            fail();
+        } catch (IllegalArgumentException e) {
+            //
+        }
+    }
+
+    public void testParameterWithMaskedEquals() throws Exception {
+        FooCommand fooCommand = new FooCommand();
+        fooCommand.addParameter(new Parameter("mandatoryString=bla\\=hello"));
+        fooCommand.setUp();
+        assertEquals("bla=hello", fooCommand.getMandatoryString());
+    }
+
 }
