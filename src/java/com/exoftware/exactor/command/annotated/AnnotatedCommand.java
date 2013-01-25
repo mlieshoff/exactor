@@ -37,7 +37,6 @@ package com.exoftware.exactor.command.annotated;
 import com.exoftware.exactor.Command;
 import com.exoftware.exactor.Parameter;
 import com.exoftware.exactor.ValueType;
-import com.sun.xml.internal.ws.util.StringUtils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
