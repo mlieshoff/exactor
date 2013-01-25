@@ -47,6 +47,10 @@ public class TestClassFinder extends TestCase
 {
     private static final String CLASSPATH = System.getProperty( "java.class.path" );
 
+    public void setUp() {
+        ClassFinder.clear();
+    }
+
     public void testFindClassFromDirectory()
     {
         Class c = ClassFinder.findClass( "MockCommand", Constants.TEST_DIR );

@@ -190,12 +190,13 @@ public class FileCollector
         }
     }
 
-    private static boolean isIgnored( File dir, String[] ignoredDirs )
-    {
-        for( int i = 0; i < ignoredDirs.length; i++ )
-            if( dir.getName().equals( ignoredDirs[i] ) )
+    private static boolean isIgnored(File dir, String[] ignoredDirs) {
+        for(int i = 0; i < ignoredDirs.length; i++) {
+            String name = dir.getName();
+            if(name.startsWith(".") || name.equals(ignoredDirs[i])) {
                 return true;
-
+            }
+        }
         return false;
     }
 
