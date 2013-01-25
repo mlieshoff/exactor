@@ -287,14 +287,16 @@ public class ExecutionSet
     }
 
     private Command createCommandInstance(Class c) {
-        try {
-            Object result = c.newInstance();
-            if( result instanceof Command ) {
-                return (Command) result;
+        if (c != null) {
+            try {
+                Object result = c.newInstance();
+                if(result instanceof Command) {
+                    return (Command) result;
+                }
             }
-        }
-        catch(Exception ignored) {
-            ignored.printStackTrace();
+            catch(Exception ignored) {
+                ignored.printStackTrace();
+            }
         }
         return null;
     }
