@@ -150,7 +150,7 @@
             classpathref="compile.classpath"
             packagenames="com.exoftware.exactor, com.exoftware.exactor.command.web, com.exoftware.exactor.command.swt"
             failOnError="false"
-            overview="${src.dir}/overview.html"
+            overview="/exactor-core/src/test/overview.html"
             public="true">
             <group title="Exactor core" packages="com.exoftware.exactor"/>
             <group title="Exactor commands" packages="com.exoftware.exactor.command.web:com.exoftware.exactor.command.swt"/>  
@@ -160,7 +160,7 @@
 
 
     <target name="test" depends="compile" description="Run the unit tests.">
-        <mkdir dir="${reports.dir}"/>
+        <!--mkdir dir="${reports.dir}"/>
         <mkdir dir="${reports.junit.dir}"/>
 
         <copy todir=".">
@@ -188,7 +188,7 @@
             <report format="frames" todir="${reports.junit.dir}"/>
         </junitreport>
 
-        <fail if="test.failed">Unit tests failed.  Check log or reports for details</fail>
+        <fail if="test.failed">Unit tests failed.  Check log or reports for details</fail-->
     </target>
 
     
