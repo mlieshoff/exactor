@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <version>1.1.28</version>
+    <artifactId>exactor</artifactId>
+    <groupId>exactor</groupId>
+    <packaging>pom</packaging>
+    <name>exactor</name>
+    <description>exactor- </description>
+    <inceptionYear>2012</inceptionYear>
+    <developers>
+        <developer>
+            <id>michael.lieshoff (ML)</id>
+            <name>Michael Lieshoff</name>
+            <email>michaellieshoff@gmx.de</email>
+            <organization>mili.org</organization>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+        <developer>
+            <id>andoni.del.olmo (ADO)</id>
+            <name>Andoni del Olmo</name>
+            <email>andoni.delolmo@gmail.com</email>
+            <organization></organization>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+    </developers>
+    <issueManagement>
+        <system>Google Code</system>
+        <url>http://code.google.com/p/exactor/issues/list</url>
+    </issueManagement>
+    <licenses>
+        <license>
+            <name>Apache License Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
+
+    <!--mailingLists> <mailingList> <name>exactor User List</name> <subscribe>
+        </subscribe> <unsubscribe> </unsubscribe> <post> </post> <archive> </archive>
+        <otherArchives> <otherArchive> </otherArchive> </otherArchives> </mailingList>
+        </mailingLists-->
+
+    <scm>
+        <connection>scm:svn:http://exactor.googlecode.com/svn/trunk</connection>
+        <developerConnection>scm:svn:https://exactor.googlecode.com/svn/trunk</developerConnection>
+        <url>http://code.google.com/p/exactor/source/browse/#svn/trunk</url>
+    </scm>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.1.2</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.0-beta-9</version>
+                <configuration>
+                    <tagBase>https://exactor.googlecode.com/svn/tags</tagBase>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>changelog-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <version>[2.6]</version>
+                    <aggregate>false</aggregate>
+                    <excludePackageNames>*.internal*</excludePackageNames>
+                    <detectJavaApiLink>false</detectJavaApiLink>
+                    <detectLinks>false</detectLinks>
+                    <source>1.6</source>
+                    <links>
+                        <link>http://java.sun.com/j2se/1.5.0/docs/api/</link>
+                    </links>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>package-javadoc</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+        <extensions>
+            <extension>
+                <groupId>org.jvnet.wagon-svn</groupId>
+                <artifactId>wagon-svn</artifactId>
+                <version>1.9</version>
+            </extension>
+        </extensions>
+    </build>
+
+    <modules>
+        <module>exactor-core</module>
+        <module>exactor-examples</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>httpunit</groupId>
+            <artifactId>httpunit</artifactId>
+            <version>1.5.4</version>
+        </dependency>
+        <dependency>
+            <groupId>abbot</groupId>
+            <artifactId>abbot</artifactId>
+            <version>0.13.1</version>
+        </dependency>
+        <dependency>
+            <groupId>bsh</groupId>
+            <artifactId>bsh-bsf</artifactId>
+            <version>1.2b7</version>
+        </dependency>
+        <dependency>
+            <groupId>jwebunit</groupId>
+            <artifactId>jwebunit</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.phobos</groupId>
+            <artifactId>jdom</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
+    
+    <profiles>
+        <profile>
+            <id>mac</id>
+            <activation>
+                <os>
+                    <name>mac os x</name>
+                </os>
+            </activation>
+            <properties>
+                <swt.groupId>org.eclipse.swt.carbon</swt.groupId>
+                <swt.artifactId>macosx</swt.artifactId>
+            </properties>
+        </profile>
+        <profile>
+            <id>windows</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                </os>
+            </activation>
+            <properties>
+                <swt.groupId>org.eclipse.swt.win32.win32</swt.groupId>
+                <swt.artifactId>x86</swt.artifactId>
+            </properties>
+        </profile>
+        <profile>
+            <id>linux</id>
+            <activation>
+                <os>
+                    <family>linux</family>
+                </os>
+            </activation>
+            <properties>
+                <swt.groupId>org.eclipse.swt.gtk.linux</swt.groupId>
+                <swt.artifactId>x86_64</swt.artifactId>
+            </properties>
+	    <dependencies>
+		<dependency>
+		    <groupId>com.sun</groupId>
+		    <artifactId>tools</artifactId>
+		    <scope>system</scope>
+		    <systemPath>${java.home}/../lib/tools.jar</systemPath>
+		    <version>1.6.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.eclipse.swt</groupId>
+		    <artifactId>org.eclipse.swt.gtk.linux.x86_64</artifactId>
+		    <version>4.2.1</version>
+		</dependency>
+	    </dependencies>
+        </profile>
+    </profiles>    
+
+    <repositories>
+	<repository>
+	    <id>swt-repo</id>
+	    <url>https://swt-repo.googlecode.com/svn/repo/</url>
+	</repository>
+    </repositories>
+    
+    <distributionManagement>
+        <repository>
+            <id>org-mili-repo-releases</id>
+            <name>Maven Repo for org.mili (releases)</name>
+            <url>svn:https://org-mili-repo.googlecode.com/svn/maven-repo/releases</url>
+            <uniqueVersion>false</uniqueVersion>
+        </repository>
+        <snapshotRepository>
+            <id>org-mili-repo-snapshots</id>
+            <name>Maven Repo for org.mili (snapshots)</name>
+            <url>svn:https://org-mili-repo.googlecode.com/svn/maven-repo/snapshots</url>
+            <uniqueVersion>false</uniqueVersion>
+        </snapshotRepository>
+    </distributionManagement>
+</project>
