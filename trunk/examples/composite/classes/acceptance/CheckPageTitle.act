@@ -1,6 +1,0 @@
-# A composite command using
-# placeholder parameters
-
-SetBaseUrl                  $0
-BeginAt                     /
-CheckTitleEquals            $1
