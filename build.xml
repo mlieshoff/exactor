@@ -3,14 +3,12 @@
     <description>EXACTOR project.</description>
   
 
-    <!-- ===================================
-    ========================================
+    <!-- ===========================================================================
             Property, path & task      
             definitions.                
-    ========================================
-    ==================================== -->
-    <property file="version.properties"/>
-    <property name="build.number" value="${major}.${minor}.${build}"/>
+         ============================================================================ -->
+    <property name="build.number" value="1.1.28"/>
+    
     <property name="src.dir" location="src"/>
     <property name="src.java.dir" location="${src.dir}/java"/>
     <property name="excluded" value="**/GenerateCommandsDoclet.java"/>
@@ -72,61 +70,6 @@
 
 
 
-    <target name="compile" description="Compile the code.">
-        <mkdir dir="${build.dir}"/>
-        <mkdir dir="${build.classes.dir}"/>
-        <mkdir dir="${build.classes.java.dir}"/>
-        <mkdir dir="${build.classes.test.dir}"/>
-        <mkdir dir="${examples.dir}/simple/classes"/>
-        <mkdir dir="${examples.dir}/swt/classes"/>
-
-        <!-- compile source files -->
-        <javac srcdir="${src.java.dir}"
-            destdir="${build.classes.java.dir}"
-            classpathref="compile.classpath"
-            debug="on"
-            deprecation="on"
-            includeAntRuntime="no"
-            excludes="${excluded}"/>
-        <!-- copy resources -->
-        <copy todir="${build.classes.java.dir}">
-            <fileset dir="${src.java.dir}" includes="**/*.css"/>
-        </copy>
-
-        <!-- compile test files -->
-        <javac srcdir="${src.test.dir}"
-            destdir="${build.classes.test.dir}"
-            classpathref="compile.classpath"
-            debug="on"
-            deprecation="on"
-            includeAntRuntime="no"/>
-        <copy todir="${build.classes.test.dir}">
-	        <fileset dir="${src.test.dir}" includes="**/*.act"/>
-        </copy>
-
-        <!-- compile example projects -->
-        <javac srcdir="${examples.dir}/simple/src"
-            destdir="${examples.dir}/simple/classes"
-            classpathref="compile.classpath"
-            debug="on"
-            deprecation="on"
-            includeAntRuntime="no"/>
-
-        <javac srcdir="${examples.dir}/swt/src"
-            destdir="${examples.dir}/swt/classes"
-            classpathref="compile.classpath"
-            debug="on"
-            deprecation="on"
-            includeAntRuntime="no"/>
-
-        <!-- copy .act file for composite example -->
-        <copy todir="${examples.dir}/composite/classes">
-	        <fileset dir="${examples.dir}/composite/src" includes="**/*.act"/>
-        </copy>
-    </target>
-
-
-
     <target name="dist" depends="test, dist-bin, dist-src" description="Produce the distributables.">
         <!-- increment the build number -->
         <propertyfile file="version.properties" comment="Build number auto-incremented by build process">
@@ -159,40 +102,6 @@
 
 
 
-    <target name="test" depends="compile" description="Run the unit tests.">
-        <!--mkdir dir="${reports.dir}"/>
-        <mkdir dir="${reports.junit.dir}"/>
-
-        <copy todir=".">
-            <fileset dir="${lib.dir}">
-                <include name="**/*.dll"/>
-            </fileset>
-        </copy>
-
-        <junit printsummary="no"
-            errorProperty="test.failed"
-            failureProperty="test.failed"
-            fork="on">
-            <classpath refid="compile.classpath"/>
-            <formatter type="xml"/>
-            <test name="${testcase}" if="testcase"/>
-            <batchtest todir="${reports.junit.dir}" unless="testcase">
-                <fileset dir="${build.classes.test.dir}" includes="**/Test*.class" excludes="**/*AbstractTest.class, **/*$*.class"/>
-            </batchtest>
-        </junit>
-
-        <junitreport todir="${reports.junit.dir}">
-            <fileset dir="${reports.junit.dir}">
-                <include name="TEST-*.xml"/>
-            </fileset>
-            <report format="frames" todir="${reports.junit.dir}"/>
-        </junitreport>
-
-        <fail if="test.failed">Unit tests failed.  Check log or reports for details</fail-->
-    </target>
-
-    
-    
     <target name="dist-bin">
         <!-- optional packages -->
         <property name="web.package" value="com/exoftware/exactor/command/web/"/>
