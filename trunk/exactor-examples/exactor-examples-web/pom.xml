@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>exactor.examples</groupId>
+        <artifactId>exactor-examples</artifactId>
+        <version>1.1.28</version>
+    </parent>
+    <groupId>exactor.examples.web</groupId>
+    <artifactId>exactor-examples-web</artifactId>
+    <packaging>jar</packaging>
+    <name>exactor-examples-web</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>exactor.core</groupId>
+            <artifactId>exactor-core</artifactId>
+            <version>${version}</version>
+        </dependency>
+    </dependencies>
+
+</project>
