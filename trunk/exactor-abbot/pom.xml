@@ -22,6 +22,14 @@
             <artifactId>exactor-swing</artifactId>
             <version>${version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>exactor.core</groupId>
+            <artifactId>exactor-core</artifactId>
+            <version>${version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>    
     </dependencies>
 
 </project>
