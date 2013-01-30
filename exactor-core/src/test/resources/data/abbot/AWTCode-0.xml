@@ -1,4 +1,0 @@
-<AWTTestScript desc="Sample AWT Code">
-  <launch classpath="" args="[]" class="example.AWTCode" method="main"/>
-  <terminate/>
-</AWTTestScript>
