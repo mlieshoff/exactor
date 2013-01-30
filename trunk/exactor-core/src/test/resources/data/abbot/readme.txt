@@ -1,2 +1,0 @@
-The files from here were taken from Abbot and are used for testing conversions and also as a crude acceptance test i.e.
-run all the converted scripts and make certain they all pass, because they all should.
