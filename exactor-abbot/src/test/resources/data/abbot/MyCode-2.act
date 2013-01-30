@@ -1,0 +1,23 @@
+LoadAbbotAliases
+
+AbbotComponent "javax.swing.JComboBox" "JComboBox Instance" "" "" "" "" "" "My Code" "" "" "" ""
+AbbotComponent "javax.swing.JScrollPane" "JScrollPane Instance" "" "7" "My Pane" "" "" "My Code" "" "" "" ""
+AbbotComponent "javax.swing.JTable" "JTable Instance" "" "0" "JViewport Instance" "" "" "My Code" "" "" "" ""
+AbbotComponent "javax.swing.JViewport" "JViewport Instance" "" "0" "JScrollPane Instance" "" "" "My Code" "" "" "" ""
+AbbotComponent "javax.swing.JRootPane" "My Code Root Pane" "" "0" "" "" "" "My Code" "My Code Root Pane" "" "" ""
+AbbotComponent "javax.swing.JList" "My List" "My List" "" "" "" "" "My Code" "" "" "" ""
+AbbotComponent "javax.swing.JPanel" "My Pane" "My Pane" "0" "null.layeredPane" "" "" "My Code" "" "" "" ""
+AbbotComponent "javax.swing.JLayeredPane" "null.layeredPane" "null.layeredPane" "1" "My Code Root Pane" "" "" "My Code" "" "" "" ""
+AbbotLaunch "example.MyCode" "main" "[]" ""
+AbbotWait "abbot.tester.ComponentTester" "assertFrameShowing" "My Code" "" "" "" ""
+AbbotAssert "" "getSelectedItem" "" "Combo 0" "JComboBox Instance" ""
+JComboBox.SelectItem "JComboBox Instance,Combo 10"
+JComboBox.SelectItem "JComboBox Instance,Combo 15"
+JComboBox.SelectItem "JComboBox Instance,Combo 2"
+JList.SelectIndex "My List,0"
+JList.SelectIndex "My List,6"
+JList.SelectIndex "My List,1"
+JList.SelectIndex "My List,3"
+JList.SelectIndex "My List,7"
+AbbotAssert "" "getRowCount" "" "6" "JTable Instance" ""
+AbbotTerminate

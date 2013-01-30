@@ -1,0 +1,14 @@
+LoadAbbotAliases
+
+AbbotComponent "example.ArrowButton" "ArrowButton Instance" "" "" "" "" "" "Font Chooser unit test" "" "" "" ""
+AbbotComponent "javax.swing.JTextField" "JTextField Instance" "" "" "" "" "" "Font Chooser unit test" "" "" "" ""
+AbbotComponent "javax.swing.JLabel" "Sample Text" "" "1" "" "" "" "Font Chooser unit test" "The quick brown fox jumped over the lazy dog" "" "" ""
+AbbotComponent "javax.swing.JCheckBox" "bold" "" "" "" "" "" "Font Chooser unit test" "bold" "" "" ""
+AbbotComponent "javax.swing.JCheckBox" "italic" "" "" "" "" "" "Font Chooser unit test" "italic" "" "" ""
+AbbotLaunch "example.FontChooser" "main" "[]" ""
+AbbotWait "abbot.tester.ComponentTester" "assertFrameShowing" "Font Chooser unit test" "" "" "" ""
+AbbotAssert "" "getFont" "" "/.*style=plain,size=10.*/" "Sample Text" ""
+JCheckBox.Click "bold"
+JCheckBox.Click "italic"
+AbbotAssert "" "getFont" "" "/.*style=bolditalic,size=10.*/" "Sample Text" ""
+AbbotTerminate
