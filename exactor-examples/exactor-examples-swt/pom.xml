@@ -13,8 +13,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>exactor.core</groupId>
-            <artifactId>exactor-core</artifactId>
+            <groupId>exactor.swt</groupId>
+            <artifactId>exactor-swt</artifactId>
             <version>${version}</version>
         </dependency>
     </dependencies>
