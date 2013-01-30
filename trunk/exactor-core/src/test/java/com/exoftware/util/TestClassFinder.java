@@ -43,32 +43,31 @@ import junit.framework.TestCase;
  *
  * @author Brian Swan
  */
-public class TestClassFinder extends TestCase
-{
-    private static final String CLASSPATH = System.getProperty( "java.class.path" );
+public class TestClassFinder extends TestCase {
+    private static final String CLASSPATH = System.getProperty("java.class.path");
 
-    public void testFindClassFromDirectory()
-    {
-        Class c = ClassFinder.findClass( "MockCommand", Constants.TEST_DIR );
-        assertEquals( "com.exoftware.exactor.MockCommand", c.getName() );
+    public void setUp() {
+        ClassFinder.clear();
     }
 
-    public void testFindClassFromClasspathDir()
-    {
-        Class c = ClassFinder.findClass( "MockCommand", CLASSPATH );
-        assertEquals( "com.exoftware.exactor.MockCommand", c.getName() );
+    public void testFindClassFromDirectory() {
+        Class c = ClassFinder.findClass("MockCommand", Constants.TEST_DIR + "/java");
+        assertEquals("com.exoftware.exactor.MockCommand", c.getName());
     }
 
-    public void testFindClassFromClasspathJar()
-    {
-        Class c = ClassFinder.findClass( "TestCase", CLASSPATH );
-        assertEquals( "junit.framework.TestCase", c.getName() );
+    public void testFindClassFromClasspathDir() {
+        Class c = ClassFinder.findClass("MockCommand", CLASSPATH);
+        assertEquals("com.exoftware.exactor.MockCommand", c.getName());
     }
 
-    public void testFindFullyQualifiedClass()
-    {
-        Class c = ClassFinder.findClass( "com.exoftware.exactor.MockCommand", Constants.TEST_DIR );
-        assertEquals( "com.exoftware.exactor.MockCommand", c.getName() );
+    public void testFindClassFromClasspathJar() {
+        Class c = ClassFinder.findClass("TestCase", CLASSPATH);
+        assertEquals("junit.framework.TestCase", c.getName());
+    }
+
+    public void testFindFullyQualifiedClass() {
+        Class c = ClassFinder.findClass("com.exoftware.exactor.MockCommand", Constants.TEST_DIR);
+        assertEquals("com.exoftware.exactor.MockCommand", c.getName());
     }
 
 }

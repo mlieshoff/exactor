@@ -45,101 +45,89 @@ import java.io.File;
  * @author Sean Hanly
  */
 
-public class TestFileCollector extends TestCase
-{
-    private static final File BASE_DIRECTORY = new File( Constants.DATA_DIR + "multipledirs" );
-    private static final String PS = System.getProperty( "path.separator" );
+public class TestFileCollector extends TestCase {
+    private static final File BASE_DIRECTORY = new File(Constants.DATA_DIR + "multipledirs");
+    private static final String PS = System.getProperty("path.separator");
     private File[] files;
 
-    public void testFilesWithExtension()
-    {
-        files = FileCollector.filesWithExtension( BASE_DIRECTORY, ".act" );
-        assertEquals( 2, files.length );
-        assertContains( "test2.act", files );
-        assertContains( "test1.act", files );
+    public void testFilesWithExtension() {
+        files = FileCollector.filesWithExtension(BASE_DIRECTORY, ".act");
+        assertEquals(2, files.length);
+        assertContains("test2.act", files);
+        assertContains("test1.act", files);
     }
 
-    public void testFilesWithExtensionFileNotDirectory()
-    {
-        files = FileCollector.filesWithExtension( new File( BASE_DIRECTORY + Constants.FS + "dir1", "test1.act" ), ".act" );
-        assertEquals( 1, files.length );
-        assertContains( "test1.act", files );
+    public void testFilesWithExtensionFileNotDirectory() {
+        files = FileCollector.filesWithExtension(new File(BASE_DIRECTORY + Constants.FS + "dir1", "test1.act"), ".act");
+        assertEquals(1, files.length);
+        assertContains("test1.act", files);
     }
 
-    public void testFilesWithExtensionFileNotDirectoryIgnored()
-    {
-        files = FileCollector.filesWithExtension( new File( BASE_DIRECTORY + Constants.FS + "dir1", "test1.act" ), ".act", new String[] { "dir1" } );
-        assertEquals( 0, files.length );
+    public void testFilesWithExtensionFileNotDirectoryIgnored() {
+        files = FileCollector.filesWithExtension(new File(BASE_DIRECTORY + Constants.FS + "dir1", "test1.act"), ".act",
+                new String[] { "dir1" });
+        assertEquals(0, files.length);
     }
 
-    public void testFilesWithName()
-    {
-        files = FileCollector.filesWithName( BASE_DIRECTORY, "test1.act" );
-        assertEquals( 1, files.length );
-        assertEquals( "test1.act", files[0].getName() );
+    public void testFilesWithName() {
+        files = FileCollector.filesWithName(BASE_DIRECTORY, "test1.act");
+        assertEquals(1, files.length);
+        assertEquals("test1.act", files[0].getName());
     }
 
-    public void testFilesWithNameNoMatches()
-    {
-        files = FileCollector.filesWithName( BASE_DIRECTORY, "junk" );
-        assertEquals( 0, files.length );
+    public void testFilesWithNameNoMatches() {
+        files = FileCollector.filesWithName(BASE_DIRECTORY, "junk");
+        assertEquals(0, files.length);
     }
 
-    public void testFilesWithExtensionIgnoredDirectories()
-    {
-        files = FileCollector.filesWithExtension( BASE_DIRECTORY, ".act", new String[]{"dir1"} );
-        assertEquals( 1, files.length );
-        assertEquals( "test2.act", files[0].getName() );
+    public void testFilesWithExtensionIgnoredDirectories() {
+        files = FileCollector.filesWithExtension(BASE_DIRECTORY, ".act", new String[] { "dir1" });
+        assertEquals(1, files.length);
+        assertEquals("test2.act", files[0].getName());
     }
 
-    public void testFilesWithNameIgnoredDirectories()
-    {
-        files = FileCollector.filesWithName( BASE_DIRECTORY, "test2.act", new String[]{"dir1"} );
-        assertEquals( 1, files.length );
-        assertEquals( "test2.act", files[0].getName() );
+    public void testFilesWithNameIgnoredDirectories() {
+        files = FileCollector.filesWithName(BASE_DIRECTORY, "test2.act", new String[] { "dir1" });
+        assertEquals(1, files.length);
+        assertEquals("test2.act", files[0].getName());
     }
 
-    public void testFileWithNameOnPathSingleEntry()
-    {
-        files = FileCollector.filesWithName( Constants.DATA_DIR + "multipledirs", "test1.act" );
-        assertEquals( 1, files.length );
-        assertEquals( "test1.act", files[0].getName() );
+    public void testFileWithNameOnPathSingleEntry() {
+        files = FileCollector.filesWithName(Constants.DATA_DIR + "multipledirs", "test1.act");
+        assertEquals(1, files.length);
+        assertEquals("test1.act", files[0].getName());
     }
 
-    public void testFileWithNameOnPathMultipleEntries()
-    {
+    public void testFileWithNameOnPathMultipleEntries() {
         String root = Constants.DATA_DIR + "multipledirs" + Constants.FS;
         String path = root + "dir1" + PS + root + "dir2";
-        files = FileCollector.filesWithName( path, "test2.act" );
-        assertEquals( 1, files.length );
-        assertEquals( "test2.act", files[0].getName() );
+        files = FileCollector.filesWithName(path, "test2.act");
+        assertEquals(1, files.length);
+        assertEquals("test2.act", files[0].getName());
     }
 
-    public void testFindDirectories()
-    {
-        files = FileCollector.directories( new File( Constants.DATA_DIR ) );
-        assertEquals( 81, files.length );
-        assertContains( "multipledirs", files );
-        assertContains( "dir1", files );
-        assertContains( "dir2", files );
-        assertContains( "multiplefiles", files );
+    public void testFindDirectories() {
+        files = FileCollector.directories(new File(Constants.DATA_DIR));
+        assertEquals(8, files.length);
+        assertContains("multipledirs", files);
+        assertContains("dir1", files);
+        assertContains("dir2", files);
+        assertContains("multiplefiles", files);
     }
 
-    public void testFindDirectoriesWithIgnored()
-    {
-        files = FileCollector.directories( new File( Constants.DATA_DIR ), new String[] {"CVS", "dir1", "dir2"} );
-        assertEquals( 63, files.length );
-        assertContains( "multipledirs", files );
-        assertContains( "multiplefiles", files );
+    public void testFindDirectoriesWithIgnored() {
+        files = FileCollector.directories(new File(Constants.DATA_DIR), new String[] { "dir1", "dir2" });
+        assertEquals(6, files.length);
+        assertContains("multipledirs", files);
+        assertContains("multiplefiles", files);
     }
 
-    private void assertContains( String name, File[] files )
-    {
-        for( int i = 0; i < files.length; i++ )
-        {
-            if( files[i].getName().equals( name ) )
+    private void assertContains(String name, File[] files) {
+        for (int i = 0; i < files.length; i++) {
+            if (files[i].getName().equals(name)) {
                 return;
+            }
         }
-        fail( "No file named [" + name + "], found in files." );
+        fail("No file named [" + name + "], found in files.");
     }
 }
