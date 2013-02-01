@@ -59,6 +59,10 @@ public class RandomResolverTest extends TestCase {
         assertEquals("#lala#", RandomResolver.resolveRandoms("#lala#"));
     }
 
+    public void testResolveNonResolveableOtherFormat() {
+        assertEquals("0#a,1#b,2#c", RandomResolver.resolveRandoms("0#a,1#b,2#c"));
+    }
+
     public void testResolveWord() {
         String s = RandomResolver.resolveRandoms("#a_word#");
         assertFalse("#a_word#".equals(s));
