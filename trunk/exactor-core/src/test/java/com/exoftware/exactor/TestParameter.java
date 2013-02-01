@@ -2,6 +2,8 @@ package com.exoftware.exactor;
 
 import junit.framework.TestCase;
 
+import com.exoftware.exactor.command.annotated.NamedParameter;
+
 /**
  * Test class for <code>Parameter</code>.
  *
@@ -328,6 +330,20 @@ public class TestParameter extends TestCase {
         double number = command.getParameter(0).doubleValue();
         assertTrue(number >= Double.MIN_VALUE);
         assertTrue(number <= Double.MAX_VALUE);
+    }
+
+    public void testCopyParameterFromNamedParameter() {
+        parameter = new Parameter(new NamedParameter("string", "hello"));
+        assertEquals("string=hello", parameter.stringValue());
+    }
+
+    public void testFailsCopyParameterFromNamedParameter() {
+        try {
+            parameter = new Parameter((NamedParameter) null);
+            fail("IllegalArgumentException not thrown");
+        } catch (RuntimeException e) {
+            //
+        }
     }
 
 }

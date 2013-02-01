@@ -36,7 +36,9 @@ package com.exoftware.exactor;
 
 import java.util.Map;
 
+import com.exoftware.exactor.command.annotated.NamedParameter;
 import com.exoftware.util.RandomResolver;
+import com.exoftware.util.Require;
 
 /**
  * A parameter to a command. Provides convenience methods to obtain the numeric
@@ -70,6 +72,16 @@ public class Parameter {
      */
     public Parameter(String s) {
         value = s;
+    }
+
+    /**
+     * Copies a named parameter into a normal parameter.
+     *
+     * @param namedParameter named parameter to copy.
+     */
+    public Parameter(NamedParameter namedParameter) {
+        Require.condition(namedParameter != null);
+        value = namedParameter.getName() + "=" + namedParameter.originalValue();
     }
 
     /**

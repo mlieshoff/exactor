@@ -49,7 +49,7 @@ public class HtmlOutputListener implements ExecutionSetListener
 {
     private static final String DEFAULT_PACKAGE_BASE = System.getProperty( "user.dir" );
     private static final String DEFAULT_HTML = "out.html";
-    private static final String DEFAULT_STYLE_SHEET = "/style.css";
+    private static final String DEFAULT_STYLE_SHEET = "style.css";
 
     private ExecutionSummary summary;
     private Writer html;
@@ -91,7 +91,7 @@ public class HtmlOutputListener implements ExecutionSetListener
     {
         try
         {
-            writeStyleSheet( styleSheet, HtmlOutputListener.class.getResourceAsStream( DEFAULT_STYLE_SHEET ) );
+            writeStyleSheet( styleSheet, HtmlOutputListener.class.getResourceAsStream( "/" + DEFAULT_STYLE_SHEET ) );
             writeHtml( html, new HtmlOutputBuilder() );
         }
         catch( IOException e )

@@ -1,5 +1,5 @@
 /******************************************************************
- * Copyright (c) 2012, Exoftware
+ * Copyright (c) 2013, Exoftware
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or
@@ -32,61 +32,44 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************/
-package com.exoftware.exactor.command.annotated;
+package com.exoftware.exactor.command.parallelity;
 
 import com.exoftware.exactor.Parameter;
+import com.exoftware.exactor.command.annotated.AnnotatedCommand;
+import com.exoftware.exactor.command.annotated.NamedParameter;
+import com.exoftware.exactor.command.annotated.Param;
+import com.exoftware.exactor.command.annotated.ParameterType;
+import com.exoftware.exactor.parallelity.Gatling;
+import com.exoftware.exactor.parallelity.Parallelity;
 
 /**
- * This class defines a named parameter.
  *
  * @author Michael Lieshoff
  */
-public class NamedParameter extends Parameter {
-
-    private String name;
-
-    public NamedParameter(String name, String value) {
-        super(value);
-        this.name = name;
-    }
+public class Parallel extends AnnotatedCommand {
+    @Param(namespace = ParallelityParameters.class, name = "COMMAND")
+    private AnnotatedCommand command;
+    @Param(namespace = ParallelityParameters.class, name = "TURNS", type = ParameterType.OPTIONAL)
+    private int turns;
+    @Param(namespace = ParallelityParameters.class, name = "WAIT", type = ParameterType.OPTIONAL)
+    private long wait;
+    @Param(namespace = ParallelityParameters.class, name = "PAUSE", type = ParameterType.OPTIONAL)
+    private long pause;
 
     @Override
-    public String stringValue() {
-        if (value != null) {
-            return super.stringValue();
+    public void execute() throws Exception {
+        setUp();
+        for (NamedParameter parameter : getNamedParameters()) {
+            command.addParameter(new Parameter(parameter));
         }
-        return null;
-    }
+        Gatling.start(new Parallelity(command.getClass().getSimpleName(), turns, wait, pause) {
+            @Override
+            protected void runIntern() throws Exception {
+                command.setUp();
+                command.execute();
+            }
+        });
 
-    @Override
-    public String[] splittedString(String regexp) {
-        if (value != null) {
-            return super.splittedString(regexp);
-        }
-        return null;
-    }
-
-    /**
-     * Returns the original value of the parameter.
-     *
-     * @return original value of the parameter.
-     */
-    public String originalValue() {
-        return value;
-    }
-
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("%s=%s", name, stringValue());
     }
 
 }

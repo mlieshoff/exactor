@@ -1,5 +1,5 @@
 /******************************************************************
- * Copyright (c) 2012, Exoftware
+ * Copyright (c) 2013, Exoftware
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or
@@ -32,61 +32,33 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************/
-package com.exoftware.exactor.command.annotated;
+package com.exoftware.exactor.command.parallelity.resolver;
 
-import com.exoftware.exactor.Parameter;
+import com.exoftware.exactor.command.annotated.AnnotatedCommand;
+import com.exoftware.exactor.command.annotated.resolver.SingleFieldResolver;
+import com.exoftware.util.ClassFinder;
 
 /**
- * This class defines a named parameter.
  *
  * @author Michael Lieshoff
  */
-public class NamedParameter extends Parameter {
+public class CommandResolver extends SingleFieldResolver<AnnotatedCommand, AnnotatedCommand> {
 
-    private String name;
-
-    public NamedParameter(String name, String value) {
-        super(value);
-        this.name = name;
+    public CommandResolver(String field) {
+        super(field);
     }
 
     @Override
-    public String stringValue() {
-        if (value != null) {
-            return super.stringValue();
+    public AnnotatedCommand resolveIntern(AnnotatedCommand command) {
+        try {
+            String classname = command.getParameterByName(getField()).stringValue();
+            // TODO: other way to refer classpath is better
+            return (AnnotatedCommand) ClassFinder.findClass(classname, System.getProperty("java.class.path"))
+                    .newInstance();
+        } catch (InstantiationException e) {
+            throw new IllegalStateException(e);
+        } catch (IllegalAccessException e) {
+            throw new IllegalStateException(e);
         }
-        return null;
     }
-
-    @Override
-    public String[] splittedString(String regexp) {
-        if (value != null) {
-            return super.splittedString(regexp);
-        }
-        return null;
-    }
-
-    /**
-     * Returns the original value of the parameter.
-     *
-     * @return original value of the parameter.
-     */
-    public String originalValue() {
-        return value;
-    }
-
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("%s=%s", name, stringValue());
-    }
-
 }
