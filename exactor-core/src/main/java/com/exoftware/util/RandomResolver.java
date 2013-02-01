@@ -186,6 +186,10 @@ public class RandomResolver {
                 result.append(c);
             }
         }
+        if (inTag) {
+            result.append("#");
+            result.append(tag);
+        }
         return result.toString();
     }
 
