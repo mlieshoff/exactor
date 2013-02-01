@@ -1,5 +1,5 @@
 /******************************************************************
- * Copyright (c) 2012, Exoftware
+ * Copyright (c) 2013, Exoftware
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or
@@ -32,61 +32,69 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************/
-package com.exoftware.exactor.command.annotated;
-
-import com.exoftware.exactor.Parameter;
+package com.exoftware.exactor.parallelity;
 
 /**
- * This class defines a named parameter.
  *
  * @author Michael Lieshoff
  */
-public class NamedParameter extends Parameter {
-
+public abstract class Parallelity implements Runnable {
+    private volatile boolean running = false;
+    private volatile int turns = 0;
+    private int maxTurns;
+    private long wait;
+    private long pause;
     private String name;
 
-    public NamedParameter(String name, String value) {
-        super(value);
+    protected Parallelity(String name, int maxTurns, long wait, long pause) {
         this.name = name;
+        this.maxTurns = maxTurns;
+        this.wait = wait;
+        this.pause = pause;
     }
 
     @Override
-    public String stringValue() {
-        if (value != null) {
-            return super.stringValue();
+    public final void run() {
+        running = true;
+        try {
+            Thread.sleep(wait);
+        } catch (InterruptedException e) {
+            throw new IllegalStateException(e);
         }
-        return null;
-    }
-
-    @Override
-    public String[] splittedString(String regexp) {
-        if (value != null) {
-            return super.splittedString(regexp);
+        try {
+            while (running) {
+                runIntern();
+                turns ++;
+                Gatling.count(this);
+                try {
+                    Thread.sleep(pause);
+                } catch (InterruptedException e) {
+                    throw new IllegalStateException(e);
+                }
+                if (maxTurns > 0 && turns > maxTurns) {
+                    running = false;
+                }
+            }
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
         }
-        return null;
     }
 
-    /**
-     * Returns the original value of the parameter.
-     *
-     * @return original value of the parameter.
-     */
-    public String originalValue() {
-        return value;
+    protected abstract void runIntern() throws Exception;
+
+    public final void stop() {
+        running = false;
     }
 
+    public final boolean isRunning() {
+        return running;
+    }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public int getTurns() {
+        return turns;
     }
-
-    @Override
-    public String toString() {
-        return String.format("%s=%s", name, stringValue());
-    }
-
 }

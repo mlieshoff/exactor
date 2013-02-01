@@ -1,5 +1,5 @@
 /******************************************************************
- * Copyright (c) 2012, Exoftware
+ * Copyright (c) 2013, Exoftware
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or
@@ -32,61 +32,44 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************/
-package com.exoftware.exactor.command.annotated;
+package com.exoftware.exactor.command.parallelity;
 
-import com.exoftware.exactor.Parameter;
+import java.util.List;
+
+import com.exoftware.exactor.command.annotated.AnnotatedCommand;
+import com.exoftware.exactor.command.annotated.ParameterDefinition;
+import com.exoftware.exactor.command.annotated.ParameterType;
+import com.exoftware.exactor.command.annotated.Resolver;
+import com.exoftware.exactor.command.annotated.resolver.basic.IntegerResolver;
+import com.exoftware.exactor.command.annotated.resolver.basic.LongResolver;
+import com.exoftware.exactor.command.parallelity.resolver.CommandResolver;
 
 /**
- * This class defines a named parameter.
+ * This enum defines parameters for parallelity variables.
  *
  * @author Michael Lieshoff
  */
-public class NamedParameter extends Parameter {
+public enum ParallelityParameters implements ParameterDefinition {
+    COMMAND(new CommandResolver("command")),
+    PAUSE(new LongResolver("pause")),
+    TIMEOUT(new LongResolver("timeout")),
+    TURNS(new IntegerResolver("turns")),
+    WAIT(new LongResolver("wait"));
 
-    private String name;
+    private Resolver _resolver;
 
-    public NamedParameter(String name, String value) {
-        super(value);
-        this.name = name;
+    private ParallelityParameters(Resolver resolver) {
+        _resolver = resolver;
     }
 
     @Override
-    public String stringValue() {
-        if (value != null) {
-            return super.stringValue();
-        }
-        return null;
+    public List<String> getParameterNames() {
+        return _resolver.getParameterNames();
     }
 
     @Override
-    public String[] splittedString(String regexp) {
-        if (value != null) {
-            return super.splittedString(regexp);
-        }
-        return null;
-    }
-
-    /**
-     * Returns the original value of the parameter.
-     *
-     * @return original value of the parameter.
-     */
-    public String originalValue() {
-        return value;
-    }
-
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("%s=%s", name, stringValue());
+    public <T> T resolve(ParameterType parameterType, AnnotatedCommand annotatedCommand) {
+        return (T) _resolver.resolve(parameterType, annotatedCommand);
     }
 
 }

@@ -143,7 +143,7 @@ public class AnnotatedCommand extends Command {
         return (ParameterDefinition) Enum.valueOf(param.namespace(), param.name());
     }
 
-    protected void setUp() throws IllegalAccessException {
+    public void setUp() throws IllegalAccessException {
         for(Map.Entry<Param, Field> entry : registeredParameters.entrySet()) {
             Param param = entry.getKey();
             Field field = entry.getValue();

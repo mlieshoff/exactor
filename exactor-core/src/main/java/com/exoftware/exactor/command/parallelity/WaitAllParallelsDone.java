@@ -1,5 +1,5 @@
 /******************************************************************
- * Copyright (c) 2012, Exoftware
+ * Copyright (c) 2013, Exoftware
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or
@@ -32,61 +32,38 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************/
-package com.exoftware.exactor.command.annotated;
+package com.exoftware.exactor.command.parallelity;
 
-import com.exoftware.exactor.Parameter;
+import com.exoftware.exactor.command.annotated.AnnotatedCommand;
+import com.exoftware.exactor.command.annotated.Param;
+import com.exoftware.exactor.command.annotated.ParameterType;
+import com.exoftware.exactor.parallelity.Gatling;
 
 /**
- * This class defines a named parameter.
  *
  * @author Michael Lieshoff
  */
-public class NamedParameter extends Parameter {
-
-    private String name;
-
-    public NamedParameter(String name, String value) {
-        super(value);
-        this.name = name;
-    }
+public class WaitAllParallelsDone extends AnnotatedCommand {
+    @Param(namespace = ParallelityParameters.class, name = "TIMEOUT", type = ParameterType.OPTIONAL)
+    private long timeout = Long.getLong("com.exoftware.exactor.command.parallelity.WaitAllParallelsDone.timeout", 60000)
+            ;
 
     @Override
-    public String stringValue() {
-        if (value != null) {
-            return super.stringValue();
+    public void execute() throws Exception {
+        setUp();
+        boolean stoppedNormally = false;
+        for (long i = 0, stop = System.currentTimeMillis(); i < stop + timeout; i = System.currentTimeMillis()) {
+            stoppedNormally = Gatling.finished();
+            if (stoppedNormally) {
+                break;
+            }
         }
-        return null;
-    }
-
-    @Override
-    public String[] splittedString(String regexp) {
-        if (value != null) {
-            return super.splittedString(regexp);
+        if (!stoppedNormally) {
+            Gatling.stop();
+            if (!Gatling.unregisterAll()) {
+                throw new IllegalStateException("Parallels cannot be stopped!");
+            }
         }
-        return null;
+        Gatling.stats();
     }
-
-    /**
-     * Returns the original value of the parameter.
-     *
-     * @return original value of the parameter.
-     */
-    public String originalValue() {
-        return value;
-    }
-
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("%s=%s", name, stringValue());
-    }
-
 }
