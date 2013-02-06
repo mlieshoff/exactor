@@ -36,13 +36,7 @@ package com.exoftware.util;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.StringTokenizer;
-import java.util.Vector;
+import java.util.*;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 
@@ -52,8 +46,7 @@ import java.util.zip.ZipEntry;
  *
  * @author Brian Swan
  */
-public class ClassFinder
-{
+public class ClassFinder {
     public static final String PACKAGE_SEPARATOR = ".";
     public static final char PACKAGE_SEPARATOR_CHAR = '.';
     private static String[] packages;
@@ -65,7 +58,6 @@ public class ClassFinder
      *
      * @param name      the name of the class to find, e.g. <code>String</code> for <code>java.lang.String</code>
      * @param classPath the path to search. Multiple entries should be separated by the usual path separator character.
-     *
      * @return the class with the supplied name, or <code>null</code> if no matching class can be found.
      */
     public static Class findClass(String name, String classPath) {
@@ -85,104 +77,87 @@ public class ClassFinder
 
     private static Class getClassForName(String className) {
         try {
-            return Class.forName( className );
-        } catch(ClassNotFoundException ignored) {
+            return Class.forName(className);
+        } catch (ClassNotFoundException ignored) {
             return null;
         }
     }
 
-    public static String[] getPackagesFromPath( String classPath )
-    {
+    public static String[] getPackagesFromPath(String classPath) {
         List result = new ArrayList();
-        result.add( "" );
-        File[] files = filesFromPath( classPath );
-        for( int i = 0; i < files.length; i++ )
-        {
-            if( files[i].isDirectory() )
-            {
+        result.add("");
+        File[] files = filesFromPath(classPath);
+        for (int i = 0; i < files.length; i++) {
+            if (files[i].isDirectory()) {
                 List dirNames = new ArrayList();
-                addDirectoryNames( FileCollector.directories( files[i] ), dirNames );
-                result.addAll( convertToPackageNames( files[i].getAbsolutePath(), dirNames ) );
-            }
-            else // its a jar file
-            {
+                addDirectoryNames(FileCollector.directories(files[i]), dirNames);
+                result.addAll(convertToPackageNames(files[i].getAbsolutePath(), dirNames));
+            } else {
+                // its a jar file
                 List jarDirNames = new ArrayList();
-                addDirectoryNamesFromJar( files[i], jarDirNames );
-                result.addAll( convertToPackageNames( "", jarDirNames ) );
+                addDirectoryNamesFromJar(files[i], jarDirNames);
+                result.addAll(convertToPackageNames("", jarDirNames));
             }
         }
-        return (String[]) result.toArray( new String[0] );
+        return (String[]) result.toArray(new String[0]);
     }
 
-    private static File[] filesFromPath( String path )
-    {
-        StringTokenizer tokenizer = new StringTokenizer( path, File.pathSeparator );
+    private static File[] filesFromPath(String path) {
+        StringTokenizer tokenizer = new StringTokenizer(path, File.pathSeparator);
         File[] result = new File[tokenizer.countTokens()];
-        for( int i = 0; tokenizer.hasMoreTokens(); i++ )
-            result[i] = new File( tokenizer.nextToken() );
-
+        for (int i = 0; tokenizer.hasMoreTokens(); i++) {
+            result[i] = new File(tokenizer.nextToken());
+        }
         return result;
     }
 
-    private static void addDirectoryNames( File[] dirs, List dirNames )
-    {
-        for( int i = 0; i < dirs.length; i++ )
-        {
-            dirNames.add( dirs[i].getAbsolutePath() );
+    private static void addDirectoryNames(File[] dirs, List dirNames) {
+        for (int i = 0; i < dirs.length; i++) {
+            dirNames.add(dirs[i].getAbsolutePath());
         }
     }
 
-    private static void addDirectoryNamesFromJar( File jar, List jarDirNames )
-    {
-        for( Enumeration e = getJarEntries( jar ); e.hasMoreElements(); )
-        {
+    private static void addDirectoryNamesFromJar(File jar, List jarDirNames) {
+        for (Enumeration e = getJarEntries(jar); e.hasMoreElements(); ) {
             ZipEntry each = (ZipEntry) e.nextElement();
-            if( each.isDirectory() )
-                jarDirNames.add( each.getName() );
+            if (each.isDirectory()) {
+                jarDirNames.add(each.getName());
+            }
         }
-
     }
 
-    private static Enumeration getJarEntries( File jar )
-    {
-        try
-        {
-            JarFile jarFile = new JarFile( jar );
+    private static Enumeration getJarEntries(File jar) {
+        try {
+            JarFile jarFile = new JarFile(jar);
             return jarFile.entries();
-        }
-        catch( IOException e )
-        {
+        } catch (IOException e) {
             return emptyEnumeration();
         }
     }
 
-    private static Enumeration emptyEnumeration()
-    {
+    private static Enumeration emptyEnumeration() {
         return new Vector().elements();
     }
 
-    private static List convertToPackageNames( String root, List dirNames )
-    {
+    private static List convertToPackageNames(String root, List dirNames) {
         List result = new ArrayList();
-        for( Iterator i = dirNames.iterator(); i.hasNext(); )
-        {
+        for (Iterator i = dirNames.iterator(); i.hasNext(); ) {
             String each = (String) i.next();
-            String dirName = each.substring( root.length() == 0 ? 0 : root.length() + 1 );
-            result.add( toPackageName( dirName ) );
+            String dirName = each.substring(root.length() == 0 ? 0 : root.length() + 1);
+            result.add(toPackageName(dirName));
         }
         return result;
     }
 
-    public static String toPackageName( String dir )
-    {
+    public static String toPackageName(String dir) {
         char separator = '\\';
-        if( dir.indexOf( separator ) == -1 )
+        if (dir.indexOf(separator) == -1) {
             separator = '/';
-
-        String result = dir.replace( separator, PACKAGE_SEPARATOR_CHAR );
-        if( !result.endsWith( PACKAGE_SEPARATOR ) )
+        }
+        String result = dir.replace(separator, PACKAGE_SEPARATOR_CHAR);
+        if (!result.endsWith(PACKAGE_SEPARATOR)) {
             return result + PACKAGE_SEPARATOR;
-
+        }
         return result;
     }
 
@@ -213,4 +188,64 @@ public class ClassFinder
         cachedPackages.clear();
         packages = null;
     }
+
+    private static final Set<String> IGNORES = new HashSet<String>() {{
+        add("idea_rt.jar");
+        add("tools.jar");
+        add("rt.jar");
+        add("org.eclipse.swt.gtk.linux.x86_64-4.2.1.jar");
+    }};
+
+    /**
+     * Gets all classnames found in classpath libs and classes.
+     *
+     * @param classPath a specified classpath.
+     * @return all classnames found in classpath libs and classes.
+     */
+    public static Set<String> getClassnamesFromPath(String classPath) {
+        Set<String> set = new HashSet<String>();
+        File[] files = filesFromPath(classPath);
+        for (int i = 0; i < files.length; i++) {
+            String name = files[i].getName();
+            if (IGNORES.contains(name)) {
+                continue;
+            }
+            addClassnames(files[i], files[i], set);
+        }
+        return set;
+    }
+
+    private static void addClassnames(File base, File file, Set<String> set) {
+        String name = file.getName();
+        if (file.isDirectory()) {
+            for (File f : file.listFiles()) {
+                addClassnames(base, f, set);
+            }
+        } else if (name.endsWith(".jar")) {
+            addClassnamesFromJar(base, file, set);
+        } else if (name.endsWith(".class") || name.endsWith(".java")) {
+            set.add(transformFilename(base.getAbsolutePath(), file.getAbsolutePath()));
+        }
+    }
+
+    private static String transformFilename(String prefix, String filename) {
+        if (prefix != null) {
+            filename = filename.substring(prefix.length() + 1);
+        }
+        return transformFilename(filename);
+    }
+
+    private static String transformFilename(String name) {
+        return name.replace(".class", "").replace(".java", "").replace(File.separator, ".");
+    }
+
+    private static void addClassnamesFromJar(File base, File file, Set<String> set) {
+        for (Enumeration e = getJarEntries(file); e.hasMoreElements(); ) {
+            ZipEntry each = (ZipEntry) e.nextElement();
+            if (!each.isDirectory()) {
+                set.add(transformFilename(each.getName()));
+            }
+        }
+    }
+
 }

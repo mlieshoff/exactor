@@ -1,5 +1,5 @@
 /******************************************************************
- * Copyright (c) 2012, Exoftware
+ * Copyright (c) 2013, Exoftware
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or
@@ -32,24 +32,20 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************/
-package com.exoftware.exactor.command.annotated.resolver.basic;
+package com.exoftware.exactor.doc;
 
-import com.exoftware.exactor.command.annotated.AnnotatedCommand;
-import com.exoftware.exactor.command.annotated.FooNamespace;
-import com.exoftware.exactor.command.annotated.resolver.MockedCommand;
-import junit.framework.TestCase;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
+@Retention(value = RetentionPolicy.RUNTIME)
+@Target({ElementType.METHOD, ElementType.TYPE, ElementType.FIELD})
 /**
- * This class is a test for class EnumResolver.
+ * This annotation defines a description with a text.
  *
  * @author Michael Lieshoff
  */
-public class EnumResolverTest extends TestCase {
-    private EnumResolver unitUnderTest = new EnumResolver(FooNamespace.class, "myField");
-    private AnnotatedCommand mockedCommand = new MockedCommand("STRING");
-
-    public void testResolve() {
-        assertEquals(FooNamespace.STRING, unitUnderTest.resolveIntern(mockedCommand));
-    }
-
+public @interface Description {
+     String text();
 }

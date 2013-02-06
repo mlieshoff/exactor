@@ -1,5 +1,5 @@
 /******************************************************************
- * Copyright (c) 2012, Exoftware
+ * Copyright (c) 2013, Exoftware
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or
@@ -32,24 +32,37 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************/
-package com.exoftware.exactor.command.annotated.resolver.basic;
+package com.exoftware.exactor.doc;
 
-import com.exoftware.exactor.command.annotated.AnnotatedCommand;
+import com.exoftware.exactor.command.annotated.FooCommand;
 import com.exoftware.exactor.command.annotated.FooNamespace;
-import com.exoftware.exactor.command.annotated.resolver.MockedCommand;
+import com.exoftware.exactor.command.annotated.ParameterType;
 import junit.framework.TestCase;
 
+import java.util.Set;
+
 /**
- * This class is a test for class EnumResolver.
+ * This class defines a test for class Doccer.
  *
  * @author Michael Lieshoff
  */
-public class EnumResolverTest extends TestCase {
-    private EnumResolver unitUnderTest = new EnumResolver(FooNamespace.class, "myField");
-    private AnnotatedCommand mockedCommand = new MockedCommand("STRING");
+public class DoccerTest extends TestCase {
 
-    public void testResolve() {
-        assertEquals(FooNamespace.STRING, unitUnderTest.resolveIntern(mockedCommand));
+    public void testDoc() throws NoSuchFieldException {
+        Set<Doccer.Command> result = new Doccer().doc();
+        for (Doccer.Command command : result) {
+            if (command.name.equals(FooCommand.class.getSimpleName())) {
+                assertEquals("The command defines the classical foo.", command.description.text());
+                for (Doccer.Meta meta : command.metas) {
+                    if ("string".equals(meta.param.name())) {
+                        assertEquals("The parameter defines a string.", meta.description.text());
+                        assertEquals(FooNamespace.class, meta.param.namespace());
+                        assertEquals(ParameterType.MANDATORY, meta.param.type());
+                        assertTrue(meta.parameterDefinition.getParameterNames().contains("string"));
+                    }
+                }
+            }
+        }
     }
 
 }
