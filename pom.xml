@@ -55,6 +55,12 @@
 
     <build>
         <plugins>
+		<plugin>
+		    <groupId>com.googlecode</groupId>
+		    <artifactId>maven-idea-plugin</artifactId>
+		    <version>1.6.1</version>
+		</plugin>
+
           <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -142,6 +148,7 @@
 
     <modules>
         <module>exactor-core</module>
+        <module>exactor-core-act</module>
         <module>exactor-abbot</module>
         <module>exactor-swing</module>
         <module>exactor-swt</module>
@@ -247,6 +254,13 @@
       <url>https://swt-repo.googlecode.com/svn/repo/</url>
   </repository>
     </repositories>
+
+<pluginRepositories>
+    <pluginRepository>
+        <id>maven-idea-plugin-repo</id>
+        <url>http://maven-idea-plugin.googlecode.com/svn/maven-repo</url>
+    </pluginRepository>
+</pluginRepositories>
 
     <distributionManagement>
         <repository>

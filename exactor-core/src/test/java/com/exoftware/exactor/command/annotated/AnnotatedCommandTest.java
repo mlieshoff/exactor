@@ -34,11 +34,10 @@
  *****************************************************************/
 package com.exoftware.exactor.command.annotated;
 
-import java.util.Collection;
-
+import com.exoftware.exactor.Parameter;
 import junit.framework.TestCase;
 
-import com.exoftware.exactor.Parameter;
+import java.util.Collection;
 
 /**
  *
@@ -48,7 +47,7 @@ public class AnnotatedCommandTest extends TestCase {
 
     public void testParameterWasRegistered() {
         FooCommand fooCommand = new FooCommand();
-        assertTrue(fooCommand.isParameterRegistered("mandatoryString"));
+        assertTrue(fooCommand.isParameterRegistered("string"));
     }
 
     public void testParameterWasNotRegistered() {
@@ -58,14 +57,14 @@ public class AnnotatedCommandTest extends TestCase {
 
     public void testHasParameter() {
         FooCommand fooCommand = new FooCommand();
-        fooCommand.addParameter(new Parameter("mandatoryString=hello"));
-        assertTrue(fooCommand.hasParameter("mandatoryString"));
+        fooCommand.addParameter(new Parameter("string=hello"));
+        assertTrue(fooCommand.hasParameter("string"));
     }
 
     public void testAddParameter() throws Exception {
         FooCommand fooCommand = new FooCommand();
-        fooCommand.addParameter(new Parameter("mandatoryString=hello"));
-        assertEquals("hello", fooCommand.getParameterByName("mandatoryString").stringValue());
+        fooCommand.addParameter(new Parameter("string=hello"));
+        assertEquals("hello", fooCommand.getParameterByName("string").stringValue());
     }
 
     public void testAddNotNamedParameter() throws Exception {
@@ -80,7 +79,7 @@ public class AnnotatedCommandTest extends TestCase {
 
     public void testGetParameterMember() throws Exception {
         FooCommand fooCommand = new FooCommand();
-        fooCommand.addParameter(new Parameter("mandatoryString=hello"));
+        fooCommand.addParameter(new Parameter("string=hello"));
         fooCommand.setUp();
         assertEquals("hello", fooCommand.getMandatoryString());
     }
@@ -97,7 +96,7 @@ public class AnnotatedCommandTest extends TestCase {
 
     public void testGetOptionalMissedParameterMember() throws Exception {
         FooCommand fooCommand = new FooCommand();
-        fooCommand.addParameter(new Parameter("mandatoryString=hello"));
+        fooCommand.addParameter(new Parameter("string=hello"));
         fooCommand.setUp();
         assertEquals("hello", fooCommand.getMandatoryString());
     }
@@ -105,27 +104,27 @@ public class AnnotatedCommandTest extends TestCase {
     public void testGetParameterMemberWithUseOfReplacement() throws Exception {
         System.setProperty("foo", "bar");
         FooCommand fooCommand = new FooCommand();
-        fooCommand.addParameter(new Parameter("mandatoryString=[foo]"));
+        fooCommand.addParameter(new Parameter("string=[foo]"));
         fooCommand.setUp();
         assertEquals(System.getProperty("foo"), fooCommand.getMandatoryString());
     }
 
     public void testGetParameters() throws Exception {
         FooCommand fooCommand = new FooCommand();
-        fooCommand.addParameter(new Parameter("mandatoryString=hello"));
+        fooCommand.addParameter(new Parameter("string=hello"));
         fooCommand.setUp();
         Collection<NamedParameter> actual = fooCommand.getNamedParameters();
         assertEquals(1, actual.size());
         NamedParameter namedParameter = actual.iterator().next();
-        assertEquals("mandatoryString", namedParameter.getName());
+        assertEquals("string", namedParameter.getName());
         assertEquals("hello", namedParameter.stringValue());
 
     }
 
     public void testGetInheritedMember() throws Exception {
         FooInheritCommand fooInheritCommand = new FooInheritCommand();
-        fooInheritCommand.addParameter(new Parameter("mandatoryString=hello"));
-        fooInheritCommand.addParameter(new Parameter("optionalInt=4711"));
+        fooInheritCommand.addParameter(new Parameter("string=hello"));
+        fooInheritCommand.addParameter(new Parameter("integer=4711"));
         fooInheritCommand.setUp();
         assertEquals("hello", fooInheritCommand.getMandatoryString());
         assertEquals(4711, fooInheritCommand.getOptionalInt());
@@ -133,7 +132,7 @@ public class AnnotatedCommandTest extends TestCase {
 
     public void testGetInheritedOptionalMember() throws Exception {
         FooInheritCommand fooInheritCommand = new FooInheritCommand();
-        fooInheritCommand.addParameter(new Parameter("mandatoryString=hello"));
+        fooInheritCommand.addParameter(new Parameter("string=hello"));
         fooInheritCommand.setUp();
         assertEquals("hello", fooInheritCommand.getMandatoryString());
         assertEquals(1004711, fooInheritCommand.getOptionalInt());
@@ -150,7 +149,7 @@ public class AnnotatedCommandTest extends TestCase {
 
     public void testParameterWithMaskedEquals() throws Exception {
         FooCommand fooCommand = new FooCommand();
-        fooCommand.addParameter(new Parameter("mandatoryString=bla\\=hello"));
+        fooCommand.addParameter(new Parameter("string=bla\\=hello"));
         fooCommand.setUp();
         assertEquals("bla=hello", fooCommand.getMandatoryString());
     }

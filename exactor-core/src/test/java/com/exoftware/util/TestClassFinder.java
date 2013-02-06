@@ -35,8 +35,10 @@
 package com.exoftware.util;
 
 import com.exoftware.exactor.Constants;
-import com.exoftware.util.ClassFinder;
+import com.exoftware.exactor.MockCommand;
 import junit.framework.TestCase;
+
+import java.util.Set;
 
 /**
  * Test class for <code>ClassFinder</code>.
@@ -51,7 +53,7 @@ public class TestClassFinder extends TestCase {
     }
 
     public void testFindClassFromDirectory() {
-        Class c = ClassFinder.findClass("MockCommand", Constants.TEST_DIR + "/java");
+        Class c = ClassFinder.findClass("MockCommand", Constants.TEST_DIR + "java");
         assertEquals("com.exoftware.exactor.MockCommand", c.getName());
     }
 
@@ -68,6 +70,21 @@ public class TestClassFinder extends TestCase {
     public void testFindFullyQualifiedClass() {
         Class c = ClassFinder.findClass("com.exoftware.exactor.MockCommand", Constants.TEST_DIR);
         assertEquals("com.exoftware.exactor.MockCommand", c.getName());
+    }
+
+    public void testGetClassnamesFromPath() {
+        Set<String> classnames = ClassFinder.getClassnamesFromPath(Constants.TEST_DIR + "java");
+        assertTrue(classnames.contains(MockCommand.class.getName()));
+    }
+
+    public void testGetClassnamesFromClasspath() {
+        Set<String> classnames = ClassFinder.getClassnamesFromPath(CLASSPATH);
+        assertTrue(classnames.contains(MockCommand.class.getName()));
+    }
+
+    public void testGetClassnamesFromJar() {
+        Set<String> classnames = ClassFinder.getClassnamesFromPath(CLASSPATH);
+        assertTrue(classnames.contains(TestCase.class.getName()));
     }
 
 }

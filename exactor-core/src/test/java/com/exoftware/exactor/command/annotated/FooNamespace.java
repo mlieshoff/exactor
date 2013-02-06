@@ -34,82 +34,36 @@
  *****************************************************************/
 package com.exoftware.exactor.command.annotated;
 
-import java.util.Arrays;
-import java.util.List;
+import com.exoftware.exactor.command.annotated.resolver.basic.IntegerResolver;
+import com.exoftware.exactor.command.annotated.resolver.basic.StringResolver;
+import com.exoftware.exactor.doc.Description;
 
-import com.exoftware.exactor.Parameter;
+import java.util.List;
 
 /**
  *
  * @author Michael Lieshoff
  */
 public enum FooNamespace implements ParameterDefinition {
-    MANDATORY_STRING(Arrays.asList("mandatoryString"), new Resolver<String, AnnotatedCommand>() {
-        @Override
-        public String resolve(ParameterType parameterType, AnnotatedCommand command) {
-            return command.getParameterByName("mandatoryString").stringValue();
-        }
+    @Description(text="The parameter defines a string.")
+    STRING(new StringResolver("string")),
+    @Description(text="The parameter defines an integer.")
+    INTEGER(new IntegerResolver("integer"));
 
-        @Override
-        public boolean validate(ParameterType parameterType, AnnotatedCommand command) {
-            return false;  //To change body of implemented methods use File | Settings | File Templates.
-        }
-
-        @Override
-        public List<String> getParameterNames() {
-            return Arrays.asList("mandatoryString");
-        }
-    }),
-    OPTIONAL_INT(Arrays.asList("optionalInt"), new Resolver<Integer, AnnotatedCommand>() {
-        @Override
-        public Integer resolve(ParameterType parameterType, AnnotatedCommand command) {
-            Parameter parameter = command.getParameterByName("optionalInt");
-            return parameter != null ? parameter.intValue() : null;
-        }
-
-        @Override
-        public boolean validate(ParameterType parameterType, AnnotatedCommand command) {
-            return false;  //To change body of implemented methods use File | Settings | File Templates.
-        }
-
-        @Override
-        public List<String> getParameterNames() {
-            return Arrays.asList("optionalString");
-        }
-    }),
-    OPTIONAL_STRING(Arrays.asList("optionalString"), new Resolver<String, AnnotatedCommand>() {
-        @Override
-        public String resolve(ParameterType parameterType, AnnotatedCommand command) {
-            Parameter parameter = command.getParameterByName("optionalString");
-            return parameter != null ? parameter.stringValue() : null;
-        }
-
-        @Override
-        public boolean validate(ParameterType parameterType, AnnotatedCommand command) {
-            return false;  //To change body of implemented methods use File | Settings | File Templates.
-        }
-
-        @Override
-        public List<String> getParameterNames() {
-            return Arrays.asList("optionalString");
-        }
-    });
-
-    private List<String> parameterNames;
     private Resolver resolver;
 
-    private FooNamespace(List<String> parameterNames, Resolver resolver) {
-        this.parameterNames = parameterNames;
+    private FooNamespace(Resolver resolver) {
         this.resolver = resolver;
     }
 
     @Override
     public List<String> getParameterNames() {
-        return parameterNames;
+        return resolver.getParameterNames();
     }
 
-    public Object resolve(ParameterType parameterType, AnnotatedCommand command) {
-        return resolver.resolve(parameterType, command);
+    @Override
+    public <T> T resolve(ParameterType parameterType, AnnotatedCommand annotatedCommand) {
+        return (T) resolver.resolve(parameterType, annotatedCommand);
     }
 
 }
