@@ -32,50 +32,32 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************/
-package com.exoftware.exactor.command.parallelity;
+package com.exoftware.exactor.command.annotated.resolver;
 
 import com.exoftware.exactor.command.annotated.AnnotatedCommand;
-import com.exoftware.exactor.command.annotated.ParameterDefinition;
-import com.exoftware.exactor.command.annotated.ParameterType;
-import com.exoftware.exactor.command.annotated.Resolver;
-import com.exoftware.exactor.command.annotated.resolver.basic.IntegerResolver;
-import com.exoftware.exactor.command.annotated.resolver.basic.LongResolver;
-import com.exoftware.exactor.command.parallelity.resolver.CommandResolver;
-import com.exoftware.exactor.doc.Description;
-
-import java.util.List;
+import com.exoftware.util.ClassFinder;
 
 /**
- * This enum defines parameters for parallelity variables.
  *
  * @author Michael Lieshoff
  */
-public enum ParallelityParameters implements ParameterDefinition {
-    @Description(text="Value for command class.")
-    COMMAND(new CommandResolver("command")),
-    @Description(text="Value for a pause in milli-seconds.")
-    PAUSE(new LongResolver("pause")),
-    @Description(text="Value for a timeout in milli-seconds.")
-    TIMEOUT(new LongResolver("timeout")),
-    @Description(text="Value for turns.")
-    TURNS(new IntegerResolver("turns")),
-    @Description(text="Value for waiting in milli-seconds.")
-    WAIT(new LongResolver("wait"));
+public class CommandResolver extends SingleFieldResolver<AnnotatedCommand, AnnotatedCommand> {
 
-    private Resolver resolver;
-
-    private ParallelityParameters(Resolver resolver) {
-        this.resolver = resolver;
+    public CommandResolver(String field) {
+        super(field);
     }
 
     @Override
-    public List<String> getParameterNames() {
-        return resolver.getParameterNames();
+    public AnnotatedCommand resolveIntern(AnnotatedCommand command) {
+        try {
+            String classname = command.getParameterByName(getField()).stringValue();
+            // TODO: other way to refer classpath is better
+            return (AnnotatedCommand) ClassFinder.findClass(classname, System.getProperty("java.class.path"))
+                    .newInstance();
+        } catch (InstantiationException e) {
+            throw new IllegalStateException(e);
+        } catch (IllegalAccessException e) {
+            throw new IllegalStateException(e);
+        }
     }
-
-    @Override
-    public <T> T resolve(ParameterType parameterType, AnnotatedCommand annotatedCommand) {
-        return (T) resolver.resolve(parameterType, annotatedCommand);
-    }
-
 }

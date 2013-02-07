@@ -32,44 +32,50 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************/
-package com.exoftware.exactor.command.parallelity;
+package com.exoftware.exactor.parallelity;
 
-import com.exoftware.exactor.Parameter;
 import com.exoftware.exactor.command.annotated.AnnotatedCommand;
-import com.exoftware.exactor.command.annotated.NamedParameter;
-import com.exoftware.exactor.command.annotated.Param;
+import com.exoftware.exactor.command.annotated.ParameterDefinition;
 import com.exoftware.exactor.command.annotated.ParameterType;
-import com.exoftware.exactor.parallelity.Gatling;
-import com.exoftware.exactor.parallelity.Parallelity;
+import com.exoftware.exactor.command.annotated.Resolver;
+import com.exoftware.exactor.command.annotated.resolver.CommandResolver;
+import com.exoftware.exactor.command.annotated.resolver.basic.IntegerResolver;
+import com.exoftware.exactor.command.annotated.resolver.basic.LongResolver;
+import com.exoftware.exactor.doc.Description;
+
+import java.util.List;
 
 /**
+ * This enum defines parameters for parallelity variables.
  *
  * @author Michael Lieshoff
  */
-public class Parallel extends AnnotatedCommand {
-    @Param(namespace = ParallelityParameters.class, name = "COMMAND")
-    private AnnotatedCommand command;
-    @Param(namespace = ParallelityParameters.class, name = "TURNS", type = ParameterType.OPTIONAL)
-    private int turns;
-    @Param(namespace = ParallelityParameters.class, name = "WAIT", type = ParameterType.OPTIONAL)
-    private long wait;
-    @Param(namespace = ParallelityParameters.class, name = "PAUSE", type = ParameterType.OPTIONAL)
-    private long pause;
+public enum ParallelityParameters implements ParameterDefinition {
+    @Description(text="Value for command class.")
+    COMMAND(new CommandResolver("command")),
+    @Description(text="Value for a pause in milli-seconds.")
+    PAUSE(new LongResolver("pause")),
+    @Description(text="Value for a timeout in milli-seconds.")
+    TIMEOUT(new LongResolver("timeout")),
+    @Description(text="Value for turns.")
+    TURNS(new IntegerResolver("turns")),
+    @Description(text="Value for waiting in milli-seconds.")
+    WAIT(new LongResolver("wait"));
+
+    private Resolver resolver;
+
+    private ParallelityParameters(Resolver resolver) {
+        this.resolver = resolver;
+    }
 
     @Override
-    public void execute() throws Exception {
-        setUp();
-        for (NamedParameter parameter : getNamedParameters()) {
-            command.addParameter(new Parameter(parameter));
-        }
-        Gatling.start(new Parallelity(command.getClass().getSimpleName(), turns, wait, pause) {
-            @Override
-            protected void runIntern() throws Exception {
-                command.setUp();
-                command.execute();
-            }
-        });
+    public List<String> getParameterNames() {
+        return resolver.getParameterNames();
+    }
 
+    @Override
+    public <T> T resolve(ParameterType parameterType, AnnotatedCommand annotatedCommand) {
+        return (T) resolver.resolve(parameterType, annotatedCommand);
     }
 
 }
