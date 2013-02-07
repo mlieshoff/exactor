@@ -48,6 +48,8 @@ import java.util.Set;
 public class TestClassFinder extends TestCase {
     private static final String CLASSPATH = System.getProperty("java.class.path");
 
+    private static final String[] INCLUDES = new String[]{"junit-3.8.1.jar"};
+
     public void setUp() {
         ClassFinder.clear();
     }
@@ -73,17 +75,17 @@ public class TestClassFinder extends TestCase {
     }
 
     public void testGetClassnamesFromPath() {
-        Set<String> classnames = ClassFinder.getClassnamesFromPath(Constants.TEST_DIR + "java");
+        Set<String> classnames = ClassFinder.getClassnamesFromPath(INCLUDES, Constants.TEST_DIR + "java");
         assertTrue(classnames.contains(MockCommand.class.getName()));
     }
 
     public void testGetClassnamesFromClasspath() {
-        Set<String> classnames = ClassFinder.getClassnamesFromPath(CLASSPATH);
+        Set<String> classnames = ClassFinder.getClassnamesFromPath(INCLUDES, CLASSPATH);
         assertTrue(classnames.contains(MockCommand.class.getName()));
     }
 
     public void testGetClassnamesFromJar() {
-        Set<String> classnames = ClassFinder.getClassnamesFromPath(CLASSPATH);
+        Set<String> classnames = ClassFinder.getClassnamesFromPath(INCLUDES, CLASSPATH);
         assertTrue(classnames.contains(TestCase.class.getName()));
     }
 

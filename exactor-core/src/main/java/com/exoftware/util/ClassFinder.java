@@ -189,40 +189,35 @@ public class ClassFinder {
         packages = null;
     }
 
-    private static final Set<String> IGNORES = new HashSet<String>() {{
-        add("idea_rt.jar");
-        add("tools.jar");
-        add("rt.jar");
-        add("org.eclipse.swt.gtk.linux.x86_64-4.2.1.jar");
-    }};
-
     /**
      * Gets all classnames found in classpath libs and classes.
      *
+     *
+     * @param includeJars jar files to include, if null no jars will be included.
      * @param classPath a specified classpath.
      * @return all classnames found in classpath libs and classes.
      */
-    public static Set<String> getClassnamesFromPath(String classPath) {
+    public static Set<String> getClassnamesFromPath(String[] includeJars, String classPath) {
         Set<String> set = new HashSet<String>();
+        Set<String> includes = new HashSet<String>(Arrays.asList(includeJars));
         File[] files = filesFromPath(classPath);
         for (int i = 0; i < files.length; i++) {
             String name = files[i].getName();
-            if (IGNORES.contains(name)) {
-                continue;
-            }
-            addClassnames(files[i], files[i], set);
+            addClassnames(includes, files[i], files[i], set);
         }
         return set;
     }
 
-    private static void addClassnames(File base, File file, Set<String> set) {
+    private static void addClassnames(Set<String> includes, File base, File file, Set<String> set) {
         String name = file.getName();
         if (file.isDirectory()) {
             for (File f : file.listFiles()) {
-                addClassnames(base, f, set);
+                addClassnames(includes, base, f, set);
             }
         } else if (name.endsWith(".jar")) {
-            addClassnamesFromJar(base, file, set);
+            if (includes.contains(name)) {
+                addClassnamesFromJar(base, file, set);
+            }
         } else if (name.endsWith(".class") || name.endsWith(".java")) {
             set.add(transformFilename(base.getAbsolutePath(), file.getAbsolutePath()));
         }
