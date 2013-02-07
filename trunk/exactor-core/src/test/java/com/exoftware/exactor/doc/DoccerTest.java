@@ -34,6 +34,7 @@
  *****************************************************************/
 package com.exoftware.exactor.doc;
 
+import com.exoftware.exactor.command.annotated.DoclessCommand;
 import com.exoftware.exactor.command.annotated.FooCommand;
 import com.exoftware.exactor.command.annotated.FooNamespace;
 import com.exoftware.exactor.command.annotated.ParameterType;
@@ -48,14 +49,31 @@ import java.util.Set;
  */
 public class DoccerTest extends TestCase {
 
+    private static final String[] IGNORES = new String[]{
+            "idea_rt.jar",
+            "tools.jar",
+            "rt.jar",
+            "org.eclipse.swt.gtk.linux.x86_64-4.2.1.jar"
+    };
+
     public void testDoc() throws NoSuchFieldException {
-        Set<Doccer.Command> result = new Doccer().doc();
-        for (Doccer.Command command : result) {
-            if (command.name.equals(FooCommand.class.getSimpleName())) {
-                assertEquals("The command defines the classical foo.", command.description.text());
-                for (Doccer.Meta meta : command.metas) {
+        Set<Doccer.Doc> result = new Doccer().transform(IGNORES);
+        for (Doccer.Doc doc : result) {
+            if (doc.name.equals(FooCommand.class.getSimpleName())) {
+                assertEquals("The command defines the classical foo.", doc.description.text());
+                for (Doccer.Meta meta : doc.metas) {
                     if ("string".equals(meta.param.name())) {
                         assertEquals("The parameter defines a string.", meta.description.text());
+                        assertEquals(FooNamespace.class, meta.param.namespace());
+                        assertEquals(ParameterType.MANDATORY, meta.param.type());
+                        assertTrue(meta.parameterDefinition.getParameterNames().contains("string"));
+                    }
+                }
+            } else if (doc.name.equals(DoclessCommand.class.getSimpleName())) {
+                assertNull(doc.description);
+                for (Doccer.Meta meta : doc.metas) {
+                    if ("string".equals(meta.param.name())) {
+                        assertNull(meta.description.text());
                         assertEquals(FooNamespace.class, meta.param.namespace());
                         assertEquals(ParameterType.MANDATORY, meta.param.type());
                         assertTrue(meta.parameterDefinition.getParameterNames().contains("string"));

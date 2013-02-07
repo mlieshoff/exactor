@@ -52,9 +52,9 @@ public class Doccer {
     private Map<Class<? extends Enum>, Map<String, Meta>> definitions = new HashMap<Class<? extends Enum>, Map<String,
             Meta>>();
 
-    public Set<Command> doc() throws NoSuchFieldException {
-        Set<Command> data = new TreeSet<Command>();
-        Set<WrappedClass> commands = filterClasses().get(new WrappedClass(AnnotatedCommand.class));
+    Set<Doc> transform(String[] includeJars) throws NoSuchFieldException {
+        Set<Doc> data = new TreeSet<Doc>();
+        Set<WrappedClass> commands = filterClasses(includeJars).get(new WrappedClass(AnnotatedCommand.class));
         for(WrappedClass wrappedClass : commands) {
             Class<?> command = wrappedClass.clazz;
             Set<Meta> metas = new TreeSet<Meta>();
@@ -64,24 +64,24 @@ public class Doccer {
                     metas.add(getMeta(param));
                 }
             }
-            data.add(new Command(command.getSimpleName(), command.getAnnotation(Description.class), metas));
+            data.add(new Doc(command.getSimpleName(), command.getAnnotation(Description.class), metas));
         }
         return data;
     }
 
-    static class Command implements Comparable<Command> {
+    static class Doc implements Comparable<Doc> {
         String name;
         Description description;
         Set<Meta> metas;
 
-        Command(String name, Description description, Set<Meta> metas) {
+        Doc(String name, Description description, Set<Meta> metas) {
             this.name = name;
             this.description = description;
             this.metas = metas;
         }
 
         @Override
-        public int compareTo(Command o) {
+        public int compareTo(Doc o) {
             return name.compareTo(o.name);
         }
     }
@@ -123,17 +123,9 @@ public class Doccer {
         }
     }
 
-    public static void main(String[] args) {
-        try {
-            new Doccer().doc();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public Map<WrappedClass, Set<WrappedClass>> filterClasses() {
+    public Map<WrappedClass, Set<WrappedClass>> filterClasses(String[] includeJars) {
         Map<WrappedClass, Set<WrappedClass>> result = new TreeMap<WrappedClass, Set<WrappedClass>>();
-        Set<String> classnames = ClassFinder.getClassnamesFromPath(CLASSPATH);
+        Set<String> classnames = ClassFinder.getClassnamesFromPath(includeJars, CLASSPATH);
         for (String classname : classnames) {
             try {
                 Class<?> clazz = Class.forName(classname);
