@@ -34,72 +34,40 @@
  *****************************************************************/
 package com.exoftware.exactor.parallelity;
 
+import com.exoftware.exactor.Parameter;
+import com.exoftware.exactor.command.annotated.AnnotatedCommand;
+import com.exoftware.exactor.command.annotated.NamedParameter;
+import com.exoftware.exactor.command.annotated.Param;
+import com.exoftware.exactor.command.annotated.ParameterType;
+
 /**
- * This class defines a parallelity. It's something executed by a thread for maximal turns, or forever. It can wait for
- * first execution and/or wait after each execution.
+ * This command defines a parallel command. It wraps another command in the way it will be executed as thread.
  *
  * @author Michael Lieshoff
  */
-abstract class Parallelity implements Runnable {
-    private volatile boolean running = false;
-    private volatile int turns = 0;
-    private int maxTurns;
+public class Parallel extends AnnotatedCommand {
+    @Param(namespace = ParallelityParameters.class, name = "COMMAND")
+    private AnnotatedCommand command;
+    @Param(namespace = ParallelityParameters.class, name = "TURNS", type = ParameterType.OPTIONAL)
+    private int turns;
+    @Param(namespace = ParallelityParameters.class, name = "WAIT", type = ParameterType.OPTIONAL)
     private long wait;
+    @Param(namespace = ParallelityParameters.class, name = "PAUSE", type = ParameterType.OPTIONAL)
     private long pause;
-    private String name;
-
-    Parallelity(String name, int maxTurns, long wait, long pause) {
-        this.name = name;
-        this.maxTurns = maxTurns;
-        this.wait = wait;
-        this.pause = pause;
-    }
 
     @Override
-    public final void run() {
-        running = true;
-        try {
-            Thread.sleep(wait);
-        } catch (InterruptedException e) {
-            throw new IllegalStateException(e);
+    public void execute() throws Exception {
+        setUp();
+        for (NamedParameter parameter : getNamedParameters()) {
+            command.addParameter(new Parameter(parameter));
         }
-        try {
-            while (running) {
-                runIntern();
-                turns ++;
-                try {
-                    Thread.sleep(pause);
-                } catch (InterruptedException e) {
-                    throw new IllegalStateException(e);
-                }
-                if (maxTurns > 0 && turns >= maxTurns) {
-                    running = false;
-                }
+        Gatling.start(new Parallelity(command.getClass().getSimpleName(), turns, wait, pause) {
+            @Override
+            protected void runIntern() throws Exception {
+                command.setUp();
+                command.execute();
             }
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
-        }
+        });
     }
 
-    abstract void runIntern() throws Exception;
-
-    final void stop() {
-        running = false;
-    }
-
-    final boolean isRunning() {
-        return running;
-    }
-
-    final boolean wasStarted() {
-        return turns > 0;
-    }
-
-    String getName() {
-        return name;
-    }
-
-    int getTurns() {
-        return turns;
-    }
 }

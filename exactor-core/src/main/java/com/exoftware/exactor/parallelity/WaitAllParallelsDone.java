@@ -32,33 +32,39 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************/
-package com.exoftware.exactor.command.parallelity.resolver;
+package com.exoftware.exactor.parallelity;
 
 import com.exoftware.exactor.command.annotated.AnnotatedCommand;
-import com.exoftware.exactor.command.annotated.resolver.SingleFieldResolver;
-import com.exoftware.util.ClassFinder;
+import com.exoftware.exactor.command.annotated.Param;
+import com.exoftware.exactor.command.annotated.ParameterType;
+import com.exoftware.util.Idioms;
 
 /**
  *
  * @author Michael Lieshoff
  */
-public class CommandResolver extends SingleFieldResolver<AnnotatedCommand, AnnotatedCommand> {
+public class WaitAllParallelsDone extends AnnotatedCommand {
+    @Param(namespace = ParallelityParameters.class, name = "TIMEOUT", type = ParameterType.OPTIONAL)
+    private long timeout = Long.getLong("com.exoftware.exactor.parallelity.WaitAllParallelsDone.timeout", 60000);
 
-    public CommandResolver(String field) {
-        super(field);
-    }
+    private final Idioms.UntilTimeoutDo timeouter = new Idioms.UntilTimeoutDo() {
+                @Override
+                public boolean action() {
+                    return Gatling.finished();
+                }
+            };
 
     @Override
-    public AnnotatedCommand resolveIntern(AnnotatedCommand command) {
-        try {
-            String classname = command.getParameterByName(getField()).stringValue();
-            // TODO: other way to refer classpath is better
-            return (AnnotatedCommand) ClassFinder.findClass(classname, System.getProperty("java.class.path"))
-                    .newInstance();
-        } catch (InstantiationException e) {
-            throw new IllegalStateException(e);
-        } catch (IllegalAccessException e) {
-            throw new IllegalStateException(e);
+    public void execute() throws Exception {
+        setUp();
+        boolean wasTimeouted = !timeouter.run(timeout);
+        if (wasTimeouted) {
+            Gatling.stop();
+            timeouter.run(timeout);
         }
+        if (!Gatling.unregisterAll()) {
+            throw new IllegalStateException("Parallels cannot be unregister!");
+        }
+        Gatling.stats();
     }
 }

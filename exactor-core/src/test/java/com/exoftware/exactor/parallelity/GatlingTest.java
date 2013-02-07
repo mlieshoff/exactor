@@ -34,72 +34,72 @@
  *****************************************************************/
 package com.exoftware.exactor.parallelity;
 
+import com.exoftware.util.Idioms;
+import junit.framework.TestCase;
+
 /**
- * This class defines a parallelity. It's something executed by a thread for maximal turns, or forever. It can wait for
- * first execution and/or wait after each execution.
+ * This class is a test for class Gatling.
  *
  * @author Michael Lieshoff
  */
-abstract class Parallelity implements Runnable {
-    private volatile boolean running = false;
-    private volatile int turns = 0;
-    private int maxTurns;
-    private long wait;
-    private long pause;
-    private String name;
+public class GatlingTest extends TestCase {
 
-    Parallelity(String name, int maxTurns, long wait, long pause) {
-        this.name = name;
-        this.maxTurns = maxTurns;
-        this.wait = wait;
-        this.pause = pause;
+    public void tearDown() {
+        Gatling.stop();
+        waitUntilAllFinished();
+        Gatling.unregisterAll();
     }
 
-    @Override
-    public final void run() {
-        running = true;
-        try {
-            Thread.sleep(wait);
-        } catch (InterruptedException e) {
-            throw new IllegalStateException(e);
-        }
-        try {
-            while (running) {
-                runIntern();
-                turns ++;
-                try {
-                    Thread.sleep(pause);
-                } catch (InterruptedException e) {
-                    throw new IllegalStateException(e);
-                }
-                if (maxTurns > 0 && turns >= maxTurns) {
-                    running = false;
-                }
+    public void testStartAndFinished() {
+        Gatling.start(create("test", 1, 1, 1));
+        waitUntilAllFinished();
+        assertTrue(Gatling.finished());
+    }
+
+    private Parallelity create(String name, int maxTurns, long wait, long pause) {
+        return new Parallelity(name, maxTurns, wait, pause) {
+            @Override
+            protected void runIntern() throws Exception {
+                // nop
             }
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
+        };
+    }
+
+    private void waitUntilAllFinished() {
+        new Idioms.UntilTimeoutDo(){
+            @Override
+            public boolean action() {
+                return Gatling.finished();
+            }
+        }.run(100);
+    }
+
+    public void testStartTwice() {
+        Parallelity parallelity = create("test", 1, 1, 1);
+        Gatling.start(parallelity);
+        try {
+            Gatling.start(parallelity);
+            fail("exception expected!");
+        } catch(IllegalArgumentException e) {
+            // expected
         }
     }
 
-    abstract void runIntern() throws Exception;
-
-    final void stop() {
-        running = false;
+    public void testStartAndStop() {
+        Gatling.start(create("test", 10, 1, 1));
+        Gatling.stop();
+        waitUntilAllFinished();
+        assertTrue(Gatling.finished());
     }
 
-    final boolean isRunning() {
-        return running;
+    public void testStats() throws InterruptedException {
+        Gatling.start(create("test", 1, 1, 1));
+        waitUntilAllFinished();
+        String actual = Gatling.stats();
+        StringBuilder expected = new StringBuilder();
+        expected.append("GATLING EXECUTION DUMP\n");
+        expected.append(String.format("%s -> %s\n", "test", "1"));
+        assertEquals(expected.toString(), actual);
     }
 
-    final boolean wasStarted() {
-        return turns > 0;
-    }
-
-    String getName() {
-        return name;
-    }
-
-    int getTurns() {
-        return turns;
-    }
 }

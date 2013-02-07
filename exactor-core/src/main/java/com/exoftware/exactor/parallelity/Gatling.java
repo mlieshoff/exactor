@@ -34,47 +34,66 @@
  *****************************************************************/
 package com.exoftware.exactor.parallelity;
 
+import com.exoftware.util.Require;
+
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Set;
 
 /**
+ * This class manages parallel command executions.
  *
  * @author Michael Lieshoff
  */
-public abstract class Gatling {
-    private static Map<Integer, Parallelity> parallels = new ConcurrentHashMap<Integer, Parallelity>();
-    private static Map<Parallelity, Integer> executions = new ConcurrentHashMap<Parallelity, Integer>();
+class Gatling {
+    private static Set<Parallelity> parallels = new HashSet<Parallelity>();
 
-    public static void start(Parallelity parallel) {
+    private Gatling() {
+        // avoid construction.
+    }
+
+    /**
+     * Starts a parallelity.
+     *
+     * @param parallel the parallelity to start.
+     */
+    static void start(Parallelity parallel) {
         register(parallel);
         Thread thread = new Thread(parallel);
         thread.start();
     }
 
-    private static void register(Parallelity parallel) {
-        parallels.put(parallel.hashCode(), parallel);
-        executions.put(parallel, 0);
+    private static void register(Parallelity parallelity) {
+        Require.condition(parallelity != null, "parallelity cannot be null!");
+        synchronized (parallels) {
+            if (parallels.contains(parallelity)) {
+                throw new IllegalArgumentException(String.format("%s (%s) is already registered!",
+                        parallelity.getName(), parallelity.hashCode()));
+            }
+            parallels.add(parallelity);
+        }
     }
 
-    public static void count(Parallelity parallel) {
-        executions.put(parallel, executions.get(parallel) + 1);
-    }
-
-    public static void stop() {
-        synchronized(parallels) {
-            for (Map.Entry<Integer, Parallelity> entry : parallels.entrySet()) {
-                Parallelity parallel = entry.getValue();
-                parallel.stop();
+    /**
+     * Stops all parallelities.
+     */
+    static void stop() {
+        synchronized (parallels) {
+            for (Parallelity parallelity : parallels) {
+                parallelity.stop();
             }
         }
     }
 
-    public static boolean unregisterAll() {
-        synchronized(parallels) {
-            for (Iterator<Map.Entry<Integer, Parallelity>> iterator = parallels.entrySet().iterator(); iterator
-                    .hasNext(); ) {
-                if (!iterator.next().getValue().isRunning()) {
+    /**
+     * Unregisters all stopped parallelities.
+     *
+     * @return true if all parallelities unregistered, false if some are already running.
+     */
+    static boolean unregisterAll() {
+        synchronized (parallels) {
+            for (Iterator<Parallelity> iterator = parallels.iterator(); iterator.hasNext(); ) {
+                if (!iterator.next().isRunning()) {
                     iterator.remove();
                 }
             }
@@ -82,11 +101,16 @@ public abstract class Gatling {
         }
     }
 
-    public static boolean finished() {
-        synchronized(parallels) {
-            for (Iterator<Map.Entry<Integer, Parallelity>> iterator = parallels.entrySet().iterator(); iterator
-                    .hasNext(); ) {
-                if (iterator.next().getValue().isRunning()) {
+    /**
+     * Checks if all parallelities are finished.
+     *
+     * @return true all parallelities are finished, false some are already running.
+     */
+    static boolean finished() {
+        synchronized (parallels) {
+            for (Iterator<Parallelity> iterator = parallels.iterator(); iterator.hasNext(); ) {
+                Parallelity parallelity = iterator.next();
+                if (!parallelity.wasStarted() || parallelity.isRunning()) {
                     return false;
                 }
             }
@@ -94,12 +118,19 @@ public abstract class Gatling {
         }
     }
 
-    public static void stats() {
-        synchronized(executions) {
-            System.out.println("GATLING EXECUTION DUMP");
-            for (Map.Entry<Parallelity, Integer> entry : executions.entrySet()) {
-                System.out.printf("%s -> %s\n", entry.getKey().getName(), entry.getValue());
+    /**
+     * Stats the gatlings state to an informative string.
+     *
+     * @return an informative string about gatlings state.
+     */
+    static String stats() {
+        synchronized (parallels) {
+            StringBuilder s = new StringBuilder();
+            s.append("GATLING EXECUTION DUMP\n");
+            for (Parallelity parallelity : parallels) {
+                s.append(String.format("%s -> %s\n", parallelity.getName(), parallelity.getTurns()));
             }
+            return s.toString();
         }
     }
 

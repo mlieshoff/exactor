@@ -32,38 +32,29 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************/
-package com.exoftware.exactor.command.parallelity;
-
-import com.exoftware.exactor.command.annotated.AnnotatedCommand;
-import com.exoftware.exactor.command.annotated.Param;
-import com.exoftware.exactor.command.annotated.ParameterType;
-import com.exoftware.exactor.parallelity.Gatling;
+package com.exoftware.util;
 
 /**
+ * This class supports common idioms used in the Exactor project.
+ *
  *
  * @author Michael Lieshoff
  */
-public class WaitAllParallelsDone extends AnnotatedCommand {
-    @Param(namespace = ParallelityParameters.class, name = "TIMEOUT", type = ParameterType.OPTIONAL)
-    private long timeout = Long.getLong("com.exoftware.exactor.command.parallelity.WaitAllParallelsDone.timeout", 60000)
-            ;
+public class Idioms {
 
-    @Override
-    public void execute() throws Exception {
-        setUp();
-        boolean stoppedNormally = false;
-        for (long i = 0, stop = System.currentTimeMillis(); i < stop + timeout; i = System.currentTimeMillis()) {
-            stoppedNormally = Gatling.finished();
-            if (stoppedNormally) {
-                break;
+    /**
+     * This class support an idiom to do something until a timeout was reached, or something returns true.
+     */
+    public static abstract class UntilTimeoutDo {
+        public boolean run(long timeout) {
+            for (long i = 0, stop = System.currentTimeMillis(); i < stop + timeout; i = System.currentTimeMillis()) {
+                if (action()) {
+                    return true;
+                }
             }
+            return false;
         }
-        if (!stoppedNormally) {
-            Gatling.stop();
-            if (!Gatling.unregisterAll()) {
-                throw new IllegalStateException("Parallels cannot be stopped!");
-            }
-        }
-        Gatling.stats();
+        public abstract boolean action();
     }
+
 }
