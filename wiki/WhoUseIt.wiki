@@ -1,0 +1,9 @@
+#summary Who use Exactor?
+
+Exactor is used by (yet known) following companies:
+
+[http://www.exoftware.com/ eXoftware]
+
+[http://www.healthcarion.de http://www.healthcarion.de/templates/HealthCarion_ver2/images/header.jpg]
+
+[http://www.smeet.com http://webcdn.smeet.com/sites/all/themes/smeet/smeettheme/misc/images/page-header/logo.png]
