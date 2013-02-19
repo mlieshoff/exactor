@@ -40,7 +40,6 @@ import junit.framework.TestCase;
 import java.util.Collection;
 
 /**
- *
  * @author Michael Lieshoff
  */
 public class AnnotatedCommandTest extends TestCase {

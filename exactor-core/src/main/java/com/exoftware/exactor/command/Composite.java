@@ -8,50 +8,38 @@ import java.io.File;
 
 /**
  * Represents a composite command.
- *
  */
-public class Composite extends Command
-{
+public class Composite extends Command {
     private final Script script;
 
-    public Composite( Script s )
-    {
+    public Composite(Script s) {
         script = s;
     }
 
-    public void execute() throws Exception
-    {
-        script.substituteParameters( getParameters() );
-        for( int i = 0; i < script.countCommands(); i++ )
-        {
-            Command c = script.getCommand( i );
-            c.setScript( getScript() );
-            getScript().getExecutionSet().fireCommandStarted( c );
-            try
-            {
+    public void execute() throws Exception {
+        script.substituteParameters(getParameters());
+        for (int i = 0; i < script.countCommands(); i++) {
+            Command c = script.getCommand(i);
+            c.setScript(getScript());
+            getScript().getExecutionSet().fireCommandStarted(c);
+            try {
                 c.execute();
-            }
-            catch( AssertionFailedError e )
-            {
-                getScript().getExecutionSet().fireCommandEnded( c, e );
+            } catch (AssertionFailedError e) {
+                getScript().getExecutionSet().fireCommandEnded(c, e);
+                throw e;
+            } catch (Exception e) {
+                getScript().getExecutionSet().fireCommandEnded(c, e);
                 throw e;
             }
-            catch( Exception e )
-            {
-                getScript().getExecutionSet().fireCommandEnded( c, e );
-                throw e;
-            }
-            getScript().getExecutionSet().fireCommandEnded( c, null );
+            getScript().getExecutionSet().fireCommandEnded(c, null);
         }
     }
 
-    public Script getCompositeScript()
-    {
+    public Script getCompositeScript() {
         return script;
     }
 
-    public File getCompositeScriptFile()
-    {
-        return new File( script.getAbsolutePath() );
+    public File getCompositeScriptFile() {
+        return new File(script.getAbsolutePath());
     }
 }

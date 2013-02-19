@@ -51,8 +51,7 @@ import java.io.File;
  * @author Sean Hanly
  */
 
-public class JUnitScriptRunner
-{
+public class JUnitScriptRunner {
     /**
      * Returns a JUnit test suite of acceptance tests. These are found by searching either
      * the current working directory or wherever the test.dir system property is set to,
@@ -60,27 +59,24 @@ public class JUnitScriptRunner
      *
      * @return a test suite made up of individual test cases for each acceptance test.
      */
-    public static Test suite()
-    {
-        TestSuite suite = new TestSuite( "act-scripts" );
-        String testDir = System.getProperty( "test.dir" );
-
-        if( testDir == null )
-            testDir = System.getProperty( "user.dir" );
-
+    public static Test suite() {
+        TestSuite suite = new TestSuite("act-scripts");
+        String testDir = System.getProperty("test.dir");
+        if (testDir == null) {
+            testDir = System.getProperty("user.dir");
+        }
         // stop being invoked by ide's that auto discover junit tests
-        if( System.getProperty( "ide", "false" ).equals( "false" ) )
-            addTests( new File( testDir ), suite );
-
+        if (System.getProperty("ide", "false").equals("false")) {
+            addTests(new File(testDir), suite);
+        }
         return suite;
     }
 
-    private static void addTests( File location, TestSuite testSuite )
-    {
-        File[] filesWithExtension = FileCollector.filesWithExtension( location, ExecutionSet.SCRIPT_EXTENSION );
-
-        for( int i = 0; i < filesWithExtension.length; i++ )
-            testSuite.addTest( new ScriptWrapperTestCase( filesWithExtension[i] ) );
+    private static void addTests(File location, TestSuite testSuite) {
+        File[] filesWithExtension = FileCollector.filesWithExtension(location, ExecutionSet.SCRIPT_EXTENSION);
+        for (int i = 0; i < filesWithExtension.length; i++) {
+            testSuite.addTest(new ScriptWrapperTestCase(filesWithExtension[i]));
+        }
     }
 }
 

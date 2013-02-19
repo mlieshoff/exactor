@@ -41,13 +41,12 @@ import com.exoftware.exactor.doc.Description;
 import java.util.List;
 
 /**
- *
  * @author Michael Lieshoff
  */
 public enum FooNamespace implements ParameterDefinition {
-    @Description(text="The parameter defines a string.")
+    @Description(text = "The parameter defines a string.")
     STRING(new StringResolver("string")),
-    @Description(text="The parameter defines an integer.")
+    @Description(text = "The parameter defines an integer.")
     INTEGER(new IntegerResolver("integer"));
 
     private Resolver resolver;

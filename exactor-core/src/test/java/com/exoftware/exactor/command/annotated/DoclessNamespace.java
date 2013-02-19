@@ -40,7 +40,6 @@ import com.exoftware.exactor.command.annotated.resolver.basic.StringResolver;
 import java.util.List;
 
 /**
- *
  * @author Michael Lieshoff
  */
 public enum DoclessNamespace implements ParameterDefinition {

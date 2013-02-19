@@ -34,14 +34,13 @@
  *****************************************************************/
 package com.exoftware.exactor.command.annotated.resolver.collection;
 
+import com.exoftware.exactor.command.annotated.AnnotatedCommand;
+import com.exoftware.exactor.command.annotated.resolver.MockedCommand;
+import junit.framework.TestCase;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-
-import junit.framework.TestCase;
-
-import com.exoftware.exactor.command.annotated.AnnotatedCommand;
-import com.exoftware.exactor.command.annotated.resolver.MockedCommand;
 
 /**
  * This class is a test for class StringSetResolver.

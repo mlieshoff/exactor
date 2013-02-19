@@ -52,8 +52,7 @@ import java.io.File;
  *
  * @author Brian Swan
  */
-public class Include extends Command
-{
+public class Include extends Command {
     /**
      * Execute the command. One parameter
      * is expected, the path to the script file to include.
@@ -61,11 +60,10 @@ public class Include extends Command
      *
      * @throws Exception if an error occurs.
      */
-    public void execute() throws Exception
-    {
-        ScriptParser parser = new ScriptParser( getScript().getExecutionSet() );
-        Script script = parser.parse( new File( getParameter( 0 ).stringValue() ) );
-        script.setExecutionSet( getScript().getExecutionSet() );
+    public void execute() throws Exception {
+        ScriptParser parser = new ScriptParser(getScript().getExecutionSet());
+        Script script = parser.parse(new File(getParameter(0).stringValue()));
+        script.setExecutionSet(getScript().getExecutionSet());
         script.execute();
     }
 }

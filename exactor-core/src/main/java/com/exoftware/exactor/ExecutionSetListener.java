@@ -39,42 +39,41 @@ package com.exoftware.exactor;
  *
  * @author Brian Swan
  */
-public interface ExecutionSetListener
-{
+public interface ExecutionSetListener {
     /**
      * Notify the listener that the executionSet has started.
      *
      * @param es the started execution set.
      */
-    void executionSetStarted( ExecutionSet es );
+    void executionSetStarted(ExecutionSet es);
 
     /**
      * Notify the listener that the executionSet has ended.
      *
      * @param es the ended execution set.
      */
-    void executionSetEnded( ExecutionSet es );
+    void executionSetEnded(ExecutionSet es);
 
     /**
      * Notify the listener that a script has started.
      *
      * @param s the started script.
      */
-    void scriptStarted( Script s );
+    void scriptStarted(Script s);
 
     /**
      * Notify the listener that a script has ended.
      *
      * @param s the ended script.
      */
-    void scriptEnded( Script s );
+    void scriptEnded(Script s);
 
     /**
      * Notify the listener that a command has started.
      *
      * @param c the started command.
      */
-    void commandStarted( Command c );
+    void commandStarted(Command c);
 
     /**
      * Notify the listener that a command has ended, possibly in error.
@@ -86,5 +85,5 @@ public interface ExecutionSetListener
      * @param c the ended command
      * @param t the reason the command ended, or <code>null</code>.
      */
-    void commandEnded( Command c, Throwable t );
+    void commandEnded(Command c, Throwable t);
 }

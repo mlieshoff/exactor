@@ -44,7 +44,7 @@ import java.util.Map;
  */
 public class RandomResolver {
 
-    private static Map<String, Function> TAGS = new HashMap<String, Function>(){{
+    private static Map<String, Function> TAGS = new HashMap<String, Function>() {{
         put("a_boolean", new Function() {
             @Override
             public Object execute() {
@@ -154,9 +154,9 @@ public class RandomResolver {
     }
 
     /**
-     * Resolves the qualifiers with random values.
+     * Replaces the qualifiers with random values.
      *
-     * @param valueToResolve the value to resolve.
+     * @param valueToReplace the value to replace.
      * @return resolves string.
      */
     public static String resolveRandoms(String valueToReplace) {
@@ -166,7 +166,7 @@ public class RandomResolver {
         boolean inTag = false;
         StringBuilder result = new StringBuilder();
         StringBuilder tag = new StringBuilder();
-        for (int i = 0, n = valueToReplace.length(); i < n; i ++) {
+        for (int i = 0, n = valueToReplace.length(); i < n; i++) {
             char c = valueToReplace.charAt(i);
             if (c == '#') {
                 if (inTag) {

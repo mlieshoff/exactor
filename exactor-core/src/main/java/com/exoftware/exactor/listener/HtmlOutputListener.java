@@ -39,15 +39,18 @@ import com.exoftware.exactor.ExecutionSet;
 import com.exoftware.exactor.ExecutionSetListener;
 import com.exoftware.exactor.Script;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Writer;
 
 /**
- *
  * @author Brian Swan
  */
-public class HtmlOutputListener implements ExecutionSetListener
-{
-    private static final String DEFAULT_PACKAGE_BASE = System.getProperty( "user.dir" );
+public class HtmlOutputListener implements ExecutionSetListener {
+    private static final String DEFAULT_PACKAGE_BASE = System.getProperty("user.dir");
     private static final String DEFAULT_HTML = "out.html";
     private static final String DEFAULT_STYLE_SHEET = "style.css";
 
@@ -55,78 +58,62 @@ public class HtmlOutputListener implements ExecutionSetListener
     private Writer html;
     private Writer styleSheet;
 
-    public HtmlOutputListener() throws IOException
-    {
-        this( new FileWriter( DEFAULT_HTML ), new FileWriter( DEFAULT_STYLE_SHEET ), DEFAULT_PACKAGE_BASE );
+    public HtmlOutputListener() throws IOException {
+        this(new FileWriter(DEFAULT_HTML), new FileWriter(DEFAULT_STYLE_SHEET), DEFAULT_PACKAGE_BASE);
     }
 
-    public HtmlOutputListener( String packageBase ) throws IOException
-    {
-        this( new FileWriter( DEFAULT_HTML ), new FileWriter( DEFAULT_STYLE_SHEET ), packageBase );
+    public HtmlOutputListener(String packageBase) throws IOException {
+        this(new FileWriter(DEFAULT_HTML), new FileWriter(DEFAULT_STYLE_SHEET), packageBase);
     }
 
-    public HtmlOutputListener( Writer html, Writer styleSheet )
-    {
-        this( html, styleSheet, DEFAULT_PACKAGE_BASE );
+    public HtmlOutputListener(Writer html, Writer styleSheet) {
+        this(html, styleSheet, DEFAULT_PACKAGE_BASE);
     }
 
-    public HtmlOutputListener( Writer html, Writer styleSheet, String packageBase )
-    {
-        this( html, styleSheet, new ExecutionSummary( packageBase ) );
+    public HtmlOutputListener(Writer html, Writer styleSheet, String packageBase) {
+        this(html, styleSheet, new ExecutionSummary(packageBase));
     }
 
-    public HtmlOutputListener( Writer html, Writer styleSheet, ExecutionSummary summary )
-    {
+    public HtmlOutputListener(Writer html, Writer styleSheet, ExecutionSummary summary) {
         this.summary = summary;
         this.html = html;
         this.styleSheet = styleSheet;
     }
 
-    public void executionSetStarted( ExecutionSet es )
-    {
+    public void executionSetStarted(ExecutionSet es) {
         summary.executionStarted();
     }
 
-    public void executionSetEnded( ExecutionSet es )
-    {
-        try
-        {
-            writeStyleSheet( styleSheet, HtmlOutputListener.class.getResourceAsStream( "/" + DEFAULT_STYLE_SHEET ) );
-            writeHtml( html, new HtmlOutputBuilder() );
-        }
-        catch( IOException e )
-        {
-            throw new RuntimeException( "Failed to write report", e );
+    public void executionSetEnded(ExecutionSet es) {
+        try {
+            writeStyleSheet(styleSheet, HtmlOutputListener.class.getResourceAsStream("/" + DEFAULT_STYLE_SHEET));
+            writeHtml(html, new HtmlOutputBuilder());
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to write report", e);
         }
     }
 
-    private void writeHtml( Writer html, HtmlOutputBuilder builder ) throws IOException
-    {
-        html.write( builder.buildHtmlHeader() );
-        html.write( builder.buildSummaryTable( summary ) );
-        html.write( builder.buildPackageSummaryTable( summary.getPackageSummaries() ) );
-        html.write( builder.buildScriptSummaryTables( summary.getPackageSummaries() ) );
-        html.write( builder.buildLineSummaryTables( summary.getPackageSummaries() ) );
-        html.write( builder.buildHtmlFooter() );
+    private void writeHtml(Writer html, HtmlOutputBuilder builder) throws IOException {
+        html.write(builder.buildHtmlHeader());
+        html.write(builder.buildSummaryTable(summary));
+        html.write(builder.buildPackageSummaryTable(summary.getPackageSummaries()));
+        html.write(builder.buildScriptSummaryTables(summary.getPackageSummaries()));
+        html.write(builder.buildLineSummaryTables(summary.getPackageSummaries()));
+        html.write(builder.buildHtmlFooter());
         html.flush();
         html.close();
     }
 
-    private void writeStyleSheet( Writer styleSheet, InputStream inputStream ) throws IOException
-    {
-        InputStreamReader streamReader = new InputStreamReader( inputStream );
-        BufferedReader in = new BufferedReader( streamReader );
-        try
-        {
+    private void writeStyleSheet(Writer styleSheet, InputStream inputStream) throws IOException {
+        InputStreamReader streamReader = new InputStreamReader(inputStream);
+        BufferedReader in = new BufferedReader(streamReader);
+        try {
             String line = in.readLine();
-            while( line != null )
-            {
-                styleSheet.write( line );
+            while (line != null) {
+                styleSheet.write(line);
                 line = in.readLine();
             }
-        }
-        finally
-        {
+        } finally {
             styleSheet.flush();
             styleSheet.close();
             inputStream.close();
@@ -135,23 +122,17 @@ public class HtmlOutputListener implements ExecutionSetListener
         }
     }
 
-    public void scriptStarted( Script s )
-    {
-        summary.scriptStarted( s );
+    public void scriptStarted(Script s) {
+        summary.scriptStarted(s);
     }
 
-    public void scriptEnded( Script s )
-    {
-
+    public void scriptEnded(Script s) {
     }
 
-    public void commandStarted( Command c )
-    {
-
+    public void commandStarted(Command c) {
     }
 
-    public void commandEnded( Command c, Throwable t )
-    {
-        summary.commandEnded( c, t );
+    public void commandEnded(Command c, Throwable t) {
+        summary.commandEnded(c, t);
     }
 }

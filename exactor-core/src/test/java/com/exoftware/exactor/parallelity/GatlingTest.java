@@ -66,7 +66,7 @@ public class GatlingTest extends TestCase {
     }
 
     private void waitUntilAllFinished() {
-        new Idioms.UntilTimeoutDo(){
+        new Idioms.UntilTimeoutDo() {
             @Override
             public boolean action() {
                 return Gatling.finished();
@@ -80,7 +80,7 @@ public class GatlingTest extends TestCase {
         try {
             Gatling.start(parallelity);
             fail("exception expected!");
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             // expected
         }
     }

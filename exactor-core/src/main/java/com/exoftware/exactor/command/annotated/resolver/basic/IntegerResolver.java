@@ -42,7 +42,7 @@ import com.exoftware.exactor.command.annotated.resolver.SingleFieldResolver;
  *
  * @author Michael Lieshoff
  */
-public class IntegerResolver extends SingleFieldResolver<Integer, AnnotatedCommand>{
+public class IntegerResolver extends SingleFieldResolver<Integer, AnnotatedCommand> {
 
     public IntegerResolver(String field) {
         super(field);

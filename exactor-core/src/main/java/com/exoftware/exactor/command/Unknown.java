@@ -42,17 +42,15 @@ import com.exoftware.exactor.Command;
  *
  * @author Brian Swan
  */
-public class Unknown extends Command
-{
+public class Unknown extends Command {
     private final String commandToken;
 
     /**
      * Create a new unknown with the specified commandToken and parameterTokens.
      *
-     * @param commandToken    the script token representing the command.
+     * @param commandToken the script token representing the command.
      */
-    public Unknown( String commandToken )
-    {
+    public Unknown(String commandToken) {
         this.commandToken = commandToken;
     }
 
@@ -60,10 +58,10 @@ public class Unknown extends Command
      * Execute the command. Always fails indicating
      * the name of the command this class is a placeholder for.
      *
-     * @throws junit.framework.AssertionFailedError always fails.
+     * @throws junit.framework.AssertionFailedError
+     *          always fails.
      */
-    public void execute() throws Exception
-    {
-        fail( "No command found for: " + commandToken );
+    public void execute() throws Exception {
+        fail("No command found for: " + commandToken);
     }
 }

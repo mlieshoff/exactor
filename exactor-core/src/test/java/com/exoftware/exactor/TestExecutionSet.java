@@ -34,312 +34,247 @@
  *****************************************************************/
 package com.exoftware.exactor;
 
-import java.io.File;
-
 import com.exoftware.exactor.command.Composite;
+
+import java.io.File;
 
 /**
  * Test class for <code>ExecutionSet</code>.
  *
  * @author Brian Swan
  */
-public class TestExecutionSet extends ExecutionSetListenerTestCase
-{
+public class TestExecutionSet extends ExecutionSetListenerTestCase {
     private ExecutionSet executionSet;
     private Script script;
     private Command command;
 
-    protected void setUp() throws Exception
-    {
+    protected void setUp() throws Exception {
         executionSet = new ExecutionSet();
         script = new Script();
         command = new MockCommand();
     }
 
-    public void testCreate()
-    {
-        assertNotNull( executionSet.getContext() );
+    public void testCreate() {
+        assertNotNull(executionSet.getContext());
     }
 
-    public void testAddScript()
-    {
-        executionSet.addScript( script );
-        assertSame( executionSet, script.getExecutionSet() );
+    public void testAddScript() {
+        executionSet.addScript(script);
+        assertSame(executionSet, script.getExecutionSet());
     }
 
-    public void testAddNullScript()
-    {
-        try
-        {
-            executionSet.addScript( null );
-            fail( "RuntimeException not thrown" );
-        }
-        catch( RuntimeException e )
-        {
-            assertEquals( "Script cannot be null", e.getMessage() );
+    public void testAddNullScript() {
+        try {
+            executionSet.addScript(null);
+            fail("RuntimeException not thrown");
+        } catch (RuntimeException e) {
+            assertEquals("Script cannot be null", e.getMessage());
         }
     }
 
-    public void testAddNullListener()
-    {
-        try
-        {
-            executionSet.addListener( null );
-            fail( "RuntimeException not thrown" );
-        }
-        catch( RuntimeException e )
-        {
-            assertEquals( "Listener cannot be null", e.getMessage() );
+    public void testAddNullListener() {
+        try {
+            executionSet.addListener(null);
+            fail("RuntimeException not thrown");
+        } catch (RuntimeException e) {
+            assertEquals("Listener cannot be null", e.getMessage());
         }
     }
 
-    public void testFireScriptStarted()
-    {
-        executionSet.addListener( this );
-        executionSet.fireScriptStarted( script );
-        assertEquals( 1, executionStartedCount );
-        assertSame( script, scriptStartedParameter );
+    public void testFireScriptStarted() {
+        executionSet.addListener(this);
+        executionSet.fireScriptStarted(script);
+        assertEquals(1, executionStartedCount);
+        assertSame(script, scriptStartedParameter);
     }
 
-    public void testFireScriptStartedWithNullScript()
-    {
-        try
-        {
-            executionSet.fireScriptStarted( null );
-            fail( "RuntimeException not thrown" );
-        }
-        catch( RuntimeException e )
-        {
-            assertEquals( "Script cannot be null", e.getMessage() );
+    public void testFireScriptStartedWithNullScript() {
+        try {
+            executionSet.fireScriptStarted(null);
+            fail("RuntimeException not thrown");
+        } catch (RuntimeException e) {
+            assertEquals("Script cannot be null", e.getMessage());
         }
     }
 
-    public void testFireScriptEnded()
-    {
-        executionSet.addListener( this );
-        executionSet.fireScriptEnded( script );
-        assertEquals( 1, executionEndedCount );
-        assertSame( script, scriptEndedParameter );
+    public void testFireScriptEnded() {
+        executionSet.addListener(this);
+        executionSet.fireScriptEnded(script);
+        assertEquals(1, executionEndedCount);
+        assertSame(script, scriptEndedParameter);
     }
 
-    public void testFireScriptEndedWithNullScript()
-    {
-        try
-        {
-            executionSet.fireScriptEnded( null );
-            fail( "RuntimeException not thrown" );
-        }
-        catch( RuntimeException e )
-        {
-            assertEquals( "Script cannot be null", e.getMessage() );
+    public void testFireScriptEndedWithNullScript() {
+        try {
+            executionSet.fireScriptEnded(null);
+            fail("RuntimeException not thrown");
+        } catch (RuntimeException e) {
+            assertEquals("Script cannot be null", e.getMessage());
         }
     }
 
-    public void testFireCommandStarted()
-    {
-        executionSet.addListener( this );
-        executionSet.fireCommandStarted( command );
-        assertEquals( 1, commandStartedCount );
-        assertSame( command, commandedStartedParameter );
+    public void testFireCommandStarted() {
+        executionSet.addListener(this);
+        executionSet.fireCommandStarted(command);
+        assertEquals(1, commandStartedCount);
+        assertSame(command, commandedStartedParameter);
     }
 
-    public void testFireCommandStartedWithNullCommand()
-    {
-        try
-        {
-            executionSet.fireCommandStarted( null );
-            fail( "RuntimeException not thrown" );
-        }
-        catch( RuntimeException e )
-        {
-            assertEquals( "Command cannot be null", e.getMessage() );
+    public void testFireCommandStartedWithNullCommand() {
+        try {
+            executionSet.fireCommandStarted(null);
+            fail("RuntimeException not thrown");
+        } catch (RuntimeException e) {
+            assertEquals("Command cannot be null", e.getMessage());
         }
     }
 
-    public void testFireCommandEndedNoException()
-    {
-        executionSet.addListener( this );
-        executionSet.fireCommandEnded( command, null );
-        assertEquals( 1, commandEndedCount );
-        assertSame( command, commandedEndedParameter );
-        assertNull( commandEndedThrowable );
+    public void testFireCommandEndedNoException() {
+        executionSet.addListener(this);
+        executionSet.fireCommandEnded(command, null);
+        assertEquals(1, commandEndedCount);
+        assertSame(command, commandedEndedParameter);
+        assertNull(commandEndedThrowable);
     }
 
-    public void testFireCommandEndedWithException()
-    {
-        executionSet.addListener( this );
+    public void testFireCommandEndedWithException() {
+        executionSet.addListener(this);
         Exception e = new Exception();
         commandEndedCount = 0;
-        executionSet.fireCommandEnded( command, e );
-        assertEquals( 1, commandEndedCount );
-        assertSame( command, commandedEndedParameter );
-        assertSame( e, commandEndedThrowable );
+        executionSet.fireCommandEnded(command, e);
+        assertEquals(1, commandEndedCount);
+        assertSame(command, commandedEndedParameter);
+        assertSame(e, commandEndedThrowable);
     }
 
-    public void testFireCommandEndedWithNullCommand()
-    {
-        try
-        {
-            executionSet.fireCommandEnded( null, null );
-            fail( "RuntimeException not thrown" );
-        }
-        catch( RuntimeException e )
-        {
-            assertEquals( "Command cannot be null", e.getMessage() );
+    public void testFireCommandEndedWithNullCommand() {
+        try {
+            executionSet.fireCommandEnded(null, null);
+            fail("RuntimeException not thrown");
+        } catch (RuntimeException e) {
+            assertEquals("Command cannot be null", e.getMessage());
         }
     }
 
-    public void testFireExecutionSetStarted()
-    {
-        executionSet.addListener( this );
+    public void testFireExecutionSetStarted() {
+        executionSet.addListener(this);
         executionSet.fireExecutionSetStarted();
-        assertEquals( 1, executionSetStartedCount );
+        assertEquals(1, executionSetStartedCount);
     }
 
-    public void testFireExecutionSetEnded()
-    {
-        executionSet.addListener( this );
+    public void testFireExecutionSetEnded() {
+        executionSet.addListener(this);
         executionSet.fireExecutionSetEnded();
-        assertEquals( 1, executionSetEndedCount );
+        assertEquals(1, executionSetEndedCount);
     }
 
-    public void testExecuteCallsScriptExecute()
-    {
-        executionSet.addListener( this );
-        script.addCommand( command );
-        executionSet.addScript( script );
+    public void testExecuteCallsScriptExecute() {
+        executionSet.addListener(this);
+        script.addCommand(command);
+        executionSet.addScript(script);
         executionSet.execute();
-        assertEquals( 1, executionSetStartedCount );
-        assertEquals( 1, executionStartedCount );
-        assertEquals( 1, commandStartedCount );
-        assertEquals( 1, commandEndedCount );
-        assertEquals( 1, executionEndedCount );
-        assertEquals( 1, executionSetEndedCount );
+        assertEquals(1, executionSetStartedCount);
+        assertEquals(1, executionStartedCount);
+        assertEquals(1, commandStartedCount);
+        assertEquals(1, commandEndedCount);
+        assertEquals(1, executionEndedCount);
+        assertEquals(1, executionSetEndedCount);
     }
 
-    public void testFindCommand()
-    {
-        Command c = executionSet.findCommand( "MockCommand" );
-        assertTrue( c instanceof MockCommand );
+    public void testFindCommand() {
+        Command c = executionSet.findCommand("MockCommand");
+        assertTrue(c instanceof MockCommand);
     }
 
-    public void testFindNonExistantCommand()
-    {
-        assertNull( executionSet.findCommand( "Junk" ) );
+    public void testFindNonExistantCommand() {
+        assertNull(executionSet.findCommand("Junk"));
     }
 
-    public void testFindCommandWithNullName()
-    {
-        assertNull( executionSet.findCommand( null ) );
+    public void testFindCommandWithNullName() {
+        assertNull(executionSet.findCommand(null));
     }
 
-    public void testFindOnClasspathButNotInClassLoader()
-    {
-        Command c = executionSet.findCommand( "Dummy" );
-        assertNotNull( c );
-        assertEquals( "data.Dummy", c.getClass().getName() );
+    public void testFindOnClasspathButNotInClassLoader() {
+        Command c = executionSet.findCommand("Dummy");
+        assertNotNull(c);
+        assertEquals("data.Dummy", c.getClass().getName());
     }
 
-    public void testAddCommandMapping()
-    {
-        executionSet.addCommandMapping( "TestCommand", MockCommand.class );
-        Command c = executionSet.findCommand( "TestCommand" );
-        assertNotNull( c );
-        assertTrue( c instanceof MockCommand );
+    public void testAddCommandMapping() {
+        executionSet.addCommandMapping("TestCommand", MockCommand.class);
+        Command c = executionSet.findCommand("TestCommand");
+        assertNotNull(c);
+        assertTrue(c instanceof MockCommand);
     }
 
-    public void testAddNullCommandMappingName()
-    {
-        try
-        {
-            executionSet.addCommandMapping( null, MockCommand.class );
-            fail( "RuntimeException not thrown" );
-        }
-        catch( RuntimeException e )
-        {
-            assertEquals( "Command name cannot be null", e.getMessage() );
+    public void testAddNullCommandMappingName() {
+        try {
+            executionSet.addCommandMapping(null, MockCommand.class);
+            fail("RuntimeException not thrown");
+        } catch (RuntimeException e) {
+            assertEquals("Command name cannot be null", e.getMessage());
         }
     }
 
-    public void testAddNullCommandMappingClass()
-    {
-        try
-        {
-            executionSet.addCommandMapping( "TestCommand", null );
-            fail( "RuntimeException not thrown" );
-        }
-        catch( RuntimeException e )
-        {
-            assertEquals( "Command class cannot be null", e.getMessage() );
+    public void testAddNullCommandMappingClass() {
+        try {
+            executionSet.addCommandMapping("TestCommand", null);
+            fail("RuntimeException not thrown");
+        } catch (RuntimeException e) {
+            assertEquals("Command class cannot be null", e.getMessage());
         }
     }
 
-    public void testAddCommandMappingForNonCommandClass()
-    {
-        try
-        {
-            executionSet.addCommandMapping( "Test", String.class );
-            fail( "RuntimeException not thrown" );
-        }
-        catch( RuntimeException e )
-        {
-            assertEquals( "Class is not a Command or Command subclass", e.getMessage() );
+    public void testAddCommandMappingForNonCommandClass() {
+        try {
+            executionSet.addCommandMapping("Test", String.class);
+            fail("RuntimeException not thrown");
+        } catch (RuntimeException e) {
+            assertEquals("Class is not a Command or Command subclass", e.getMessage());
         }
     }
 
-    public void testFindCompositeBackwardsCompatible()
-    {
-        Command c = executionSet.findCommand( "AComposite" );
-        assertNotNull( c );
-        assertTrue( c instanceof Composite );
+    public void testFindCompositeBackwardsCompatible() {
+        Command c = executionSet.findCommand("AComposite");
+        assertNotNull(c);
+        assertTrue(c instanceof Composite);
     }
 
-    public void testFindCompositeOnClasspath()
-    {
-        Command c = executionSet.findCommand( "comments" );
-        assertNotNull( c );
-        assertTrue( c instanceof Composite );
+    public void testFindCompositeOnClasspath() {
+        Command c = executionSet.findCommand("comments");
+        assertNotNull(c);
+        assertTrue(c instanceof Composite);
     }
 
-    public void testAddCompositeMapping()
-    {
-        executionSet.addCompositeMapping( "Test", new File( Constants.DATA_DIR + "AComposite.cmp" ) );
-        Command c = executionSet.findCommand( "Test" );
-        assertNotNull( c );
-        assertTrue( c instanceof Composite );
+    public void testAddCompositeMapping() {
+        executionSet.addCompositeMapping("Test", new File(Constants.DATA_DIR + "AComposite.cmp"));
+        Command c = executionSet.findCommand("Test");
+        assertNotNull(c);
+        assertTrue(c instanceof Composite);
     }
 
-    public void testAddNullCompositeMappingName()
-    {
-        try
-        {
-            executionSet.addCompositeMapping( null, null );
-            fail( "RuntimeException not thrown" );
-        }
-        catch( RuntimeException e )
-        {
-            assertEquals( "Composite name cannot be null", e.getMessage() );
+    public void testAddNullCompositeMappingName() {
+        try {
+            executionSet.addCompositeMapping(null, null);
+            fail("RuntimeException not thrown");
+        } catch (RuntimeException e) {
+            assertEquals("Composite name cannot be null", e.getMessage());
         }
     }
 
-    public void testAddNullCompositeMappingScript()
-    {
-        try
-        {
-            executionSet.addCompositeMapping( "Test", null );
-            fail( "RuntimeException not thrown" );
-        }
-        catch( RuntimeException e )
-        {
-            assertEquals( "Composite script cannot be null", e.getMessage() );
+    public void testAddNullCompositeMappingScript() {
+        try {
+            executionSet.addCompositeMapping("Test", null);
+            fail("RuntimeException not thrown");
+        } catch (RuntimeException e) {
+            assertEquals("Composite script cannot be null", e.getMessage());
         }
     }
 
-    public void testContextContainsSystemProperties()
-    {
-        assertTrue( System.getProperties().containsKey( "user.name" ) );
-        assertTrue( executionSet.getContext().containsKey( "user.name" ) );
-        assertEquals( System.getProperty( "user.name" ), executionSet.getContext().get( "user.name" ).toString() );
+    public void testContextContainsSystemProperties() {
+        assertTrue(System.getProperties().containsKey("user.name"));
+        assertTrue(executionSet.getContext().containsKey("user.name"));
+        assertEquals(System.getProperty("user.name"), executionSet.getContext().get("user.name").toString());
     }
 
 }

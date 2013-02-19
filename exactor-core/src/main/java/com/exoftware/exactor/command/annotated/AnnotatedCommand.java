@@ -76,18 +76,18 @@ import java.util.Set;
  *     }
  * </code>
  * </pre>
- *
+ * <p/>
  * In example script an annotated command can be used like this:
- *
+ * <p/>
  * <pre>
  * <code>
  *     CalculatorCommand method=add x=1 y=5
  * </code>
  * </pre>
- *
+ * <p/>
  * means the calculator command shall add x and y with values 1 and 5. The class should looks
  * like:
- *
+ * <p/>
  * <pre>
  * <code>
  *     public class CalculatorCommand extends AnnotatedCommand {
@@ -113,12 +113,12 @@ public class AnnotatedCommand extends Command {
     public AnnotatedCommand() {
         Class<?> clazz = this.getClass();
         for (Field field : getAllFields(clazz)) {
-            for(Annotation annotation : field.getDeclaredAnnotations()) {
+            for (Annotation annotation : field.getDeclaredAnnotations()) {
                 if (annotation instanceof Param) {
                     Param param = (Param) annotation;
                     registeredParameters.put(param, field);
                     ParameterDefinition parameterDefinition = getParameterDefinition(param);
-                    for(String s : parameterDefinition.getParameterNames()) {
+                    for (String s : parameterDefinition.getParameterNames()) {
                         registeredParameterKeys.add(s.toLowerCase());
                     }
                 }
@@ -144,7 +144,7 @@ public class AnnotatedCommand extends Command {
     }
 
     public void setUp() throws IllegalAccessException {
-        for(Map.Entry<Param, Field> entry : registeredParameters.entrySet()) {
+        for (Map.Entry<Param, Field> entry : registeredParameters.entrySet()) {
             Param param = entry.getKey();
             Field field = entry.getValue();
             field.setAccessible(true);
@@ -156,8 +156,7 @@ public class AnnotatedCommand extends Command {
 
     private void checkSettingOfMandatoryParams(ParameterDefinition parameterDefinition, Param param) {
         for (String name : parameterDefinition.getParameterNames()) {
-            if (getParameterByName(name) == null
-                    && param.type() == ParameterType.MANDATORY) {
+            if (getParameterByName(name) == null && param.type() == ParameterType.MANDATORY) {
                 throw new IllegalArgumentException(String.format(
                         "parameter '%s' is not set but was mandatory!", name));
             }
@@ -186,15 +185,14 @@ public class AnnotatedCommand extends Command {
             namedParameters.put(namedParameter.getName(), namedParameter);
         } else {
             throw new IllegalArgumentException(String.format(
-                    "parameter '%s' is not a named parameter and cannot be used in an "
-                    + "annotated command!", value));
+                    "parameter '%s' is not a named parameter and cannot be used in an annotated command!", value));
         }
     }
 
     private String[] computeParameterValue(String value) {
         int indexFirstEquals = value.indexOf("=");
         if (indexFirstEquals <= 0) {
-            throw new IllegalArgumentException(String.format("value '%s' is not a named parameter!" , value));
+            throw new IllegalArgumentException(String.format("value '%s' is not a named parameter!", value));
         }
         return new String[]{
                 value.substring(0, indexFirstEquals),

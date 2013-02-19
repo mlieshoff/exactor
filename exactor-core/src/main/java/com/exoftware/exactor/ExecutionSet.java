@@ -41,7 +41,11 @@ import com.exoftware.util.FileCollector;
 import com.exoftware.util.Require;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A collection of scripts to be executed together.
@@ -51,11 +55,10 @@ import java.util.*;
  *
  * @author Brian Swan
  */
-public class ExecutionSet
-{
+public class ExecutionSet {
     public static final String SCRIPT_EXTENSION = ".act";
-    private static final File USER_DIR = new File( System.getProperty( "user.dir" ) );
-    private static final String CLASSPATH = System.getProperty( "java.class.path" );
+    private static final File USER_DIR = new File(System.getProperty("user.dir"));
+    private static final String CLASSPATH = System.getProperty("java.class.path");
     private static final String COMPOSITE_EXTENSION = ".cmp"; // to maintain backward compatibility
 
     private final Map context = new HashMap();
@@ -64,9 +67,8 @@ public class ExecutionSet
     private final Map commands = new HashMap();
     private final Map compositeScripts = new HashMap();
 
-    public ExecutionSet()
-    {
-        context.putAll( System.getProperties() );
+    public ExecutionSet() {
+        context.putAll(System.getProperties());
     }
 
     /**
@@ -74,11 +76,9 @@ public class ExecutionSet
      * This context map also contains all of the entries from <code>System.getProperties()</code>.
      *
      * @return the context for all scripts in this ExecutionSet.
-     *
      * @see System#getProperties()
      */
-    public Map getContext()
-    {
+    public Map getContext() {
         return context;
     }
 
@@ -87,12 +87,10 @@ public class ExecutionSet
      *
      * @param s the script to add.
      */
-    public void addScript( Script s )
-    {
-        Require.condition( s != null, "Script cannot be null" );
-
-        s.setExecutionSet( this );
-        scripts.add( s );
+    public void addScript(Script s) {
+        Require.condition(s != null, "Script cannot be null");
+        s.setExecutionSet(this);
+        scripts.add(s);
     }
 
     /**
@@ -100,40 +98,38 @@ public class ExecutionSet
      *
      * @param listener the listener to add.
      */
-    public void addListener( ExecutionSetListener listener )
-    {
-        Require.condition( listener != null, "Listener cannot be null" );
-
-        listeners.add( listener );
+    public void addListener(ExecutionSetListener listener) {
+        Require.condition(listener != null, "Listener cannot be null");
+        listeners.add(listener);
     }
 
     /**
      * Execute all the scripts in the ExecutionSet.
      */
-    public void execute()
-    {
+    public void execute() {
         fireExecutionSetStarted();
-        for( Iterator i = scripts.iterator(); i.hasNext(); )
+        for (Iterator i = scripts.iterator(); i.hasNext(); ) {
             ((Script) i.next()).execute();
+        }
         fireExecutionSetEnded();
     }
 
     /**
      * Notify all added listeners that the execution set has started.
      */
-    public void fireExecutionSetStarted()
-    {
-        for( Iterator i = listeners.iterator(); i.hasNext(); )
-            ((ExecutionSetListener) i.next()).executionSetStarted( this );
+    public void fireExecutionSetStarted() {
+        for (Iterator i = listeners.iterator(); i.hasNext(); ) {
+            ((ExecutionSetListener) i.next()).executionSetStarted(this);
+        }
     }
 
     /**
      * Notify all added listeners that the execution set has ended.
      */
-    public void fireExecutionSetEnded()
-    {
-        for( Iterator i = listeners.iterator(); i.hasNext(); )
-            ((ExecutionSetListener) i.next()).executionSetEnded( this );
+    public void fireExecutionSetEnded() {
+        for (Iterator i = listeners.iterator(); i.hasNext(); ) {
+            ((ExecutionSetListener) i.next()).executionSetEnded(this);
+        }
     }
 
     /**
@@ -141,12 +137,11 @@ public class ExecutionSet
      *
      * @param s the started script.
      */
-    public void fireScriptStarted( Script s )
-    {
-        Require.condition( s != null, "Script cannot be null" );
-
-        for( Iterator i = listeners.iterator(); i.hasNext(); )
-            ((ExecutionSetListener) i.next()).scriptStarted( s );
+    public void fireScriptStarted(Script s) {
+        Require.condition(s != null, "Script cannot be null");
+        for (Iterator i = listeners.iterator(); i.hasNext(); ) {
+            ((ExecutionSetListener) i.next()).scriptStarted(s);
+        }
     }
 
     /**
@@ -154,12 +149,11 @@ public class ExecutionSet
      *
      * @param s the ended script.
      */
-    public void fireScriptEnded( Script s )
-    {
-        Require.condition( s != null, "Script cannot be null" );
-
-        for( Iterator i = listeners.iterator(); i.hasNext(); )
-            ((ExecutionSetListener) i.next()).scriptEnded( s );
+    public void fireScriptEnded(Script s) {
+        Require.condition(s != null, "Script cannot be null");
+        for (Iterator i = listeners.iterator(); i.hasNext(); ) {
+            ((ExecutionSetListener) i.next()).scriptEnded(s);
+        }
     }
 
     /**
@@ -170,7 +164,7 @@ public class ExecutionSet
     public void fireCommandStarted(Command c) {
         Require.condition(c != null, "Command cannot be null");
         c.setStartTime(System.currentTimeMillis());
-        for(Iterator i = listeners.iterator(); i.hasNext();) {
+        for (Iterator i = listeners.iterator(); i.hasNext(); ) {
             ((ExecutionSetListener) i.next()).commandStarted(c);
         }
     }
@@ -184,7 +178,7 @@ public class ExecutionSet
     public void fireCommandEnded(Command c, Throwable t) {
         Require.condition(c != null, "Command cannot be null");
         c.setEndTime(System.currentTimeMillis());
-        for (Iterator i = listeners.iterator(); i.hasNext();) {
+        for (Iterator i = listeners.iterator(); i.hasNext(); ) {
             ((ExecutionSetListener) i.next()).commandEnded(c, t);
         }
     }
@@ -193,21 +187,20 @@ public class ExecutionSet
      * Find a <code>Command</code> with the specified name.
      *
      * @param name the name of the <code>Command</code> to find.
-     *
      * @return A <code>Command</code> for the specified name, or <code>null</code> if no command
      *         could be found.
      */
-    public Command findCommand( String name )
-    {
-        if( commands.containsKey( name ) )
-            return createCommandInstance( (Class) commands.get( name ) );
-        if( compositeScripts.containsKey( name ) )
-            return createCompositeInstance( (File) compositeScripts.get( name ) );
-
-        Command result = findCommandClass( name );
-        if( result == null )
-            result = findComposite( name );
-
+    public Command findCommand(String name) {
+        if (commands.containsKey(name)) {
+            return createCommandInstance((Class) commands.get(name));
+        }
+        if (compositeScripts.containsKey(name)) {
+            return createCompositeInstance((File) compositeScripts.get(name));
+        }
+        Command result = findCommandClass(name);
+        if (result == null) {
+            result = findComposite(name);
+        }
         return result;
     }
 
@@ -216,73 +209,62 @@ public class ExecutionSet
      *
      * @param name the name to use to reference this command in a script
      * @param c    the command class to execute for the supplied name.
-     *
      * @throws RuntimeException if <code>name</code> or <code>c</code> are <code>null</code>, or
      *                          if <code>c</code> is not a <code>Command</code> class.
      */
-    public void addCommandMapping( String name, Class c ) throws RuntimeException
-    {
-        Require.condition( name != null, "Command name cannot be null" );
-        Require.condition( c != null, "Command class cannot be null" );
-        Require.condition( Command.class.isAssignableFrom( c ), "Class is not a Command or Command subclass" );
-
-        commands.put( name, c );
+    public void addCommandMapping(String name, Class c) throws RuntimeException {
+        Require.condition(name != null, "Command name cannot be null");
+        Require.condition(c != null, "Command class cannot be null");
+        Require.condition(Command.class.isAssignableFrom(c), "Class is not a Command or Command subclass");
+        commands.put(name, c);
     }
 
     /**
      * Add a mapping of a composite scriptFile to the specified <code>name</code>.
      *
-     * @param name   the name to use to reference this command in a scriptFile
+     * @param name       the name to use to reference this command in a scriptFile
      * @param scriptFile the scriptFile to execute for the suppied name.
-     *
      * @throws RuntimeException if <code>name</code> or <code>scriptFile</code> are <code>null</code>.
      */
-    public void addCompositeMapping( String name, File scriptFile )
-    {
-        Require.condition( name != null, "Composite name cannot be null" );
-        Require.condition( scriptFile != null, "Composite script cannot be null" );
-
-        compositeScripts.put( name, scriptFile );
+    public void addCompositeMapping(String name, File scriptFile) {
+        Require.condition(name != null, "Composite name cannot be null");
+        Require.condition(scriptFile != null, "Composite script cannot be null");
+        compositeScripts.put(name, scriptFile);
     }
 
-    private Command findComposite( String name )
-    {
-        File f = findFirstMatchingInUserDir( name + COMPOSITE_EXTENSION );  // backwards compatibility
-        if( f == null )
-            f = findFirstMatchingInClasspath( name + SCRIPT_EXTENSION );
-
-        if( f == null )
+    private Command findComposite(String name) {
+        File f = findFirstMatchingInUserDir(name + COMPOSITE_EXTENSION);  // backwards compatibility
+        if (f == null) {
+            f = findFirstMatchingInClasspath(name + SCRIPT_EXTENSION);
+        }
+        if (f == null) {
             return null;
-
-        compositeScripts.put( name, f );
-
-        return createCompositeInstance( f );
+        }
+        compositeScripts.put(name, f);
+        return createCompositeInstance(f);
     }
 
-    private File findFirstMatchingInClasspath( String name )
-    {
-        File[] matches = FileCollector.filesWithName( CLASSPATH, name );
-        if( matches.length > 0 )
+    private File findFirstMatchingInClasspath(String name) {
+        File[] matches = FileCollector.filesWithName(CLASSPATH, name);
+        if (matches.length > 0) {
             return matches[0];
-
+        }
         return null;
     }
 
-    private File findFirstMatchingInUserDir( String name )
-    {
-        File[] matches = FileCollector.filesWithName( USER_DIR, name );
-        if( matches.length > 0 )
+    private File findFirstMatchingInUserDir(String name) {
+        File[] matches = FileCollector.filesWithName(USER_DIR, name);
+        if (matches.length > 0) {
             return matches[0];
-
+        }
         return null;
     }
 
-    private Command findCommandClass( String name )
-    {
-        Command result = createCommandInstance( ClassFinder.findClass( name, CLASSPATH ) );
-        if( result != null )
-            addCommandMapping( name, result.getClass() );
-
+    private Command findCommandClass(String name) {
+        Command result = createCommandInstance(ClassFinder.findClass(name, CLASSPATH));
+        if (result != null) {
+            addCommandMapping(name, result.getClass());
+        }
         return result;
     }
 
@@ -290,20 +272,18 @@ public class ExecutionSet
         if (c != null) {
             try {
                 Object result = c.newInstance();
-                if(result instanceof Command) {
+                if (result instanceof Command) {
                     return (Command) result;
                 }
-            }
-            catch(Exception ignored) {
+            } catch (Exception ignored) {
                 ignored.printStackTrace();
             }
         }
         return null;
     }
 
-    private Command createCompositeInstance( File f )
-    {
-        Script s = new ScriptParser( this ).parse( f );
-        return new Composite( s );
+    private Command createCompositeInstance(File f) {
+        Script s = new ScriptParser(this).parse(f);
+        return new Composite(s);
     }
 }

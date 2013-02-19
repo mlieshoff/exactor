@@ -1,8 +1,7 @@
 package com.exoftware.exactor;
 
-import junit.framework.TestCase;
-
 import com.exoftware.exactor.command.annotated.NamedParameter;
+import junit.framework.TestCase;
 
 /**
  * Test class for <code>Parameter</code>.

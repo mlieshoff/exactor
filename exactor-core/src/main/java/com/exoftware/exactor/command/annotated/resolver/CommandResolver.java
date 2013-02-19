@@ -38,7 +38,6 @@ import com.exoftware.exactor.command.annotated.AnnotatedCommand;
 import com.exoftware.util.ClassFinder;
 
 /**
- *
  * @author Michael Lieshoff
  */
 public class CommandResolver extends SingleFieldResolver<AnnotatedCommand, AnnotatedCommand> {

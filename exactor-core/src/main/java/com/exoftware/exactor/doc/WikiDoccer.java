@@ -38,7 +38,6 @@ import java.util.List;
 import java.util.Set;
 
 /**
- *
  * @author Michael Lieshoff
  */
 public class WikiDoccer {
@@ -78,7 +77,7 @@ public class WikiDoccer {
 
     private String getString(List<String> list) {
         StringBuilder s = new StringBuilder();
-        for (int i = 0, n = list.size(); i < n; i ++) {
+        for (int i = 0, n = list.size(); i < n; i++) {
             s.append(list.get(i));
             if (i < n - 1) {
                 s.append(", ");

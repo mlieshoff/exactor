@@ -34,11 +34,11 @@
  *****************************************************************/
 package com.exoftware.exactor;
 
-import java.util.Map;
-
 import com.exoftware.exactor.command.annotated.NamedParameter;
 import com.exoftware.util.RandomResolver;
 import com.exoftware.util.Require;
+
+import java.util.Map;
 
 /**
  * A parameter to a command. Provides convenience methods to obtain the numeric
@@ -63,9 +63,7 @@ public class Parameter {
      * value of the parameter can be obtained via <code>stringValue</code> or
      * <code>toString</code>.
      *
-     * @param s
-     *            the value of the parameter.
-     *
+     * @param s the value of the parameter.
      * @see #intValue()
      * @see #doubleValue()
      * @see #booleanValue()
@@ -92,7 +90,7 @@ public class Parameter {
      * For example, as the execution set context contains all of the System
      * properties, the following code would display <code>Windows XP</code> on a
      * Windows XP machine.;
-     *
+     * <p/>
      * <pre>
      * <code>
      * Parameter p = new Parameter( "[os.name]" );
@@ -130,7 +128,7 @@ public class Parameter {
      * this parameter. For example, as the execution set context contains all of
      * the System properties, the following code would display
      * <code>Windows XP</code> on a Windows XP machine.;
-     *
+     * <p/>
      * <pre>
      * <code>
      * Parameter p = new Parameter("[os.name]");
@@ -166,9 +164,7 @@ public class Parameter {
      * <code>Integer.parseInt</code>.
      *
      * @return the int value of the parameter.
-     *
-     * @throws NumberFormatException
-     *             if the parameter value is not a number.
+     * @throws NumberFormatException if the parameter value is not a number.
      * @see Integer#parseInt(String)
      */
     public int intValue() throws NumberFormatException {
@@ -186,9 +182,7 @@ public class Parameter {
      * <code>Float.parseFloat</code>.
      *
      * @return the float value of the parameter.
-     *
-     * @throws NumberFormatException
-     *             if the parameter value is not a number.
+     * @throws NumberFormatException if the parameter value is not a number.
      * @see Float#parseFloat(String)
      */
     public float floatValue() throws NumberFormatException {
@@ -206,9 +200,7 @@ public class Parameter {
      * <code>Long.parseLong</code>.
      *
      * @return the long value of the parameter.
-     *
-     * @throws NumberFormatException
-     *             if the parameter value is not a number.
+     * @throws NumberFormatException if the parameter value is not a number.
      * @see Long#parseLong(String)
      */
     public long longValue() {
@@ -224,9 +216,7 @@ public class Parameter {
      * <code>Double.parseDouble</code>.
      *
      * @return the double value of the parameter.
-     *
-     * @throws NumberFormatException
-     *             if the parameter value is not a number.
+     * @throws NumberFormatException if the parameter value is not a number.
      * @see Double#parseDouble(String)
      */
     public double doubleValue() throws NumberFormatException {
@@ -245,7 +235,6 @@ public class Parameter {
      *
      * @return <code>true</code> if the parameter value is equal, ignoring case,
      *         to the String 'true', otherwise <code>false</code>.
-     *
      * @see Boolean#valueOf(String)
      */
     public boolean booleanValue() {
@@ -255,11 +244,8 @@ public class Parameter {
     /**
      * Set the owning command for this parameter.
      *
-     * @param c
-     *            the command tnat owns this parameter.
-     *
-     * @throws RuntimeException
-     *             if the supplied command is <code>null</code>.
+     * @param c the command tnat owns this parameter.
+     * @throws RuntimeException if the supplied command is <code>null</code>.
      */
     public void setCommand(Command c) throws RuntimeException {
         if (c == null) {

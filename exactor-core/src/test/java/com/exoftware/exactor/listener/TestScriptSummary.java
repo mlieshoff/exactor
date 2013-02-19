@@ -34,35 +34,31 @@
  *****************************************************************/
 package com.exoftware.exactor.listener;
 
-import java.io.File;
-
+import com.exoftware.exactor.Constants;
+import com.exoftware.exactor.MockCommand;
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
-import com.exoftware.exactor.Constants;
-import com.exoftware.exactor.MockCommand;
+import java.io.File;
 
 /**
  * @author Brian Swan
  */
-public class TestScriptSummary extends TestCase
-{
+public class TestScriptSummary extends TestCase {
     private ScriptSummary summary;
     private MockCommand command;
 
-    protected void setUp() throws Exception
-    {
-        summary = new ScriptSummary( new File( Constants.pathToTestFile( "single.act" ) ) );
+    protected void setUp() throws Exception {
+        summary = new ScriptSummary(new File(Constants.pathToTestFile("single.act")));
         command = new MockCommand();
     }
 
-    public void testCreate()
-    {
-        assertEquals( "single", summary.getName() );
-        assertEquals( Constants.pathToTestFile( "single.act" ), summary.getAbsolutePath() );
-        assertTrue( summary.hasPassed() );
-        assertEquals( 1, summary.getLineSummaries().length );
-        assertEquals( "MockCommand", summary.getLineSummaries()[0].getLine() );
+    public void testCreate() {
+        assertEquals("single", summary.getName());
+        assertEquals(Constants.pathToTestFile("single.act"), summary.getAbsolutePath());
+        assertTrue(summary.hasPassed());
+        assertEquals(1, summary.getLineSummaries().length);
+        assertEquals("MockCommand", summary.getLineSummaries()[0].getLine());
     }
 
     public void testCommandEndedWithFailure() {
@@ -73,15 +69,14 @@ public class TestScriptSummary extends TestCase
         assertEquals(0, summary.getExecutionTime());
     }
 
-    public void testFailedCommandFollowedByPassingCommand()
-    {
-        summary = new ScriptSummary( new File( Constants.pathToTestFile( "declare.act" ) ) );
-        command.setLineNumber( 1 );
-        summary.commandEnded( command, new Exception( "An error" ) );
-        assertFalse( summary.hasPassed() );
-        command.setLineNumber( 2 );
-        summary.commandEnded( command, null );
-        assertFalse( summary.hasPassed() );
+    public void testFailedCommandFollowedByPassingCommand() {
+        summary = new ScriptSummary(new File(Constants.pathToTestFile("declare.act")));
+        command.setLineNumber(1);
+        summary.commandEnded(command, new Exception("An error"));
+        assertFalse(summary.hasPassed());
+        command.setLineNumber(2);
+        summary.commandEnded(command, null);
+        assertFalse(summary.hasPassed());
     }
 
 

@@ -47,8 +47,7 @@ import java.util.Map;
  *
  * @author Brian Swan
  */
-public class Script
-{
+public class Script {
     private static final String DEFAULT_NAME = "DEFAULT";
 
     private final String name;
@@ -60,8 +59,7 @@ public class Script
     /**
      * Create a new script.
      */
-    public Script()
-    {
+    public Script() {
         this.name = DEFAULT_NAME;
         this.absolutePath = "";
     }
@@ -71,11 +69,10 @@ public class Script
      *
      * @param scriptFile the file containing the script.
      */
-    public Script( File scriptFile )
-    {
-        if( scriptFile == null )
-            throw new RuntimeException( "Name cannot be null" );
-
+    public Script(File scriptFile) {
+        if (scriptFile == null) {
+            throw new RuntimeException("Name cannot be null");
+        }
         this.name = scriptFile.getName();
         this.absolutePath = scriptFile.getAbsolutePath();
     }
@@ -85,8 +82,7 @@ public class Script
      *
      * @return the name of the script.
      */
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
@@ -95,8 +91,7 @@ public class Script
      *
      * @return the full path of the script file.
      */
-    public String getAbsolutePath()
-    {
+    public String getAbsolutePath() {
         return absolutePath;
     }
 
@@ -105,8 +100,7 @@ public class Script
      *
      * @return the ExecutionSet containing this script.
      */
-    public ExecutionSet getExecutionSet()
-    {
+    public ExecutionSet getExecutionSet() {
         return executionSet;
     }
 
@@ -115,11 +109,10 @@ public class Script
      *
      * @param s the ExecutionSet that contains this script.
      */
-    public void setExecutionSet( ExecutionSet s )
-    {
-        if( s == null )
-            throw new RuntimeException( "ExecutionSet cannot be null" );
-
+    public void setExecutionSet(ExecutionSet s) {
+        if (s == null) {
+            throw new RuntimeException("ExecutionSet cannot be null");
+        }
         executionSet = s;
     }
 
@@ -128,8 +121,7 @@ public class Script
      *
      * @return the context for all commands in this script.
      */
-    public Map getContext()
-    {
+    public Map getContext() {
         return context;
     }
 
@@ -138,13 +130,12 @@ public class Script
      *
      * @param c the command to add.
      */
-    public void addCommand( Command c )
-    {
-        if( c == null )
-            throw new RuntimeException( "Command cannot be null" );
-
-        c.setScript( this );
-        commands.add( c );
+    public void addCommand(Command c) {
+        if (c == null) {
+            throw new RuntimeException("Command cannot be null");
+        }
+        c.setScript(this);
+        commands.add(c);
     }
 
     /**
@@ -153,8 +144,7 @@ public class Script
      * @return <code>true</code> if the script contains commands,
      *         otherwise <code>false</code>.
      */
-    public boolean hasCommands()
-    {
+    public boolean hasCommands() {
         return countCommands() > 0;
     }
 
@@ -163,8 +153,7 @@ public class Script
      *
      * @return the number of commands added to the script.
      */
-    public int countCommands()
-    {
+    public int countCommands() {
         return commands.size();
     }
 
@@ -176,16 +165,13 @@ public class Script
      * @throws IndexOutOfBoundsException if the command has no parameters, or
      *                                   if the index is out of range (index < 0 || index >= countCommands()).
      */
-    public Command getCommand( int index ) throws IndexOutOfBoundsException
-    {
+    public Command getCommand(int index) throws IndexOutOfBoundsException {
         Command result;
-        try
-        {
-            result = (Command) commands.get( index );
-        }
-        catch( IndexOutOfBoundsException e )
-        {
-            throw new IndexOutOfBoundsException( "Index: " + index + ", Size: " + commands.size() );  // this is done for consistancy across JDK versions.
+        try {
+            result = (Command) commands.get(index);
+        } catch (IndexOutOfBoundsException e) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + commands.size());
+            // this is done for consistancy across JDK versions.
         }
         return result;
     }
@@ -198,44 +184,40 @@ public class Script
      * @throws RuntimeException if either command or replacement are <code>null</code> or
      *                          if command is not contained in this script
      */
-    public void replaceCommand( Command command, Command replacement ) throws NullPointerException, IllegalStateException
-    {
-        if( command == null )
-            throw new RuntimeException( "Command cannot be null" );
-        if( replacement == null )
-            throw new RuntimeException( "Replacement cannot be null" );
-        if( !commands.contains( command ) )
-            throw new RuntimeException( "Command does not exist in script" );
-
-        replacement.setScript( this );
-        int index = commands.indexOf( command );
-        commands.add( index, replacement );
-        commands.remove( index + 1 );
+    public void replaceCommand(Command command, Command replacement) throws NullPointerException,
+            IllegalStateException {
+        if (command == null) {
+            throw new RuntimeException("Command cannot be null");
+        }
+        if (replacement == null) {
+            throw new RuntimeException("Replacement cannot be null");
+        }
+        if (!commands.contains(command)) {
+            throw new RuntimeException("Command does not exist in script");
+        }
+        replacement.setScript(this);
+        int index = commands.indexOf(command);
+        commands.add(index, replacement);
+        commands.remove(index + 1);
     }
 
     /**
      * Execute all the commands in the script.
      */
-    public void execute()
-    {
-        executionSet.fireScriptStarted( this );
-        for( int i = 0; i < countCommands(); i++ )
-        {
-            Command c = getCommand( i );
+    public void execute() {
+        executionSet.fireScriptStarted(this);
+        for (int i = 0; i < countCommands(); i++) {
+            Command c = getCommand(i);
             Throwable throwable = null;
-            getExecutionSet().fireCommandStarted( c );
-            try
-            {
+            getExecutionSet().fireCommandStarted(c);
+            try {
                 c.execute();
-            }
-            catch( Throwable t )
-            {
+            } catch (Throwable t) {
                 throwable = t;
             }
-            getExecutionSet().fireCommandEnded( c, throwable );
+            getExecutionSet().fireCommandEnded(c, throwable);
         }
-
-        executionSet.fireScriptEnded( this );
+        executionSet.fireScriptEnded(this);
     }
 
     /**
@@ -243,15 +225,14 @@ public class Script
      * commands in the script.
      *
      * @param substitutions the array of parameters to use for substitutions.
-     *
-     * @see Command#substituteParameters(Parameter[]) 
+     * @see Command#substituteParameters(Parameter[])
      */
-    public void substituteParameters( Parameter[] substitutions )
-    {
-        if( substitutions == null )
-            throw new RuntimeException( "Substitutions cannot be null" );
-
-        for( int i = 0; i < countCommands(); i++ )
-            getCommand( i ).substituteParameters( substitutions );
+    public void substituteParameters(Parameter[] substitutions) {
+        if (substitutions == null) {
+            throw new RuntimeException("Substitutions cannot be null");
+        }
+        for (int i = 0; i < countCommands(); i++) {
+            getCommand(i).substituteParameters(substitutions);
+        }
     }
 }

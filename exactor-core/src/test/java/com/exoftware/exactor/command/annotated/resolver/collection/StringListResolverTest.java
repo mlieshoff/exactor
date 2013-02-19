@@ -34,13 +34,12 @@
  *****************************************************************/
 package com.exoftware.exactor.command.annotated.resolver.collection;
 
-import java.util.Arrays;
-import java.util.List;
-
-import junit.framework.TestCase;
-
 import com.exoftware.exactor.command.annotated.AnnotatedCommand;
 import com.exoftware.exactor.command.annotated.resolver.MockedCommand;
+import junit.framework.TestCase;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * This class is a test for class StringListResolver.

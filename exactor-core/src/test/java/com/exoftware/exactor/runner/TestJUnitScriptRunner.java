@@ -34,13 +34,12 @@
  *****************************************************************/
 package com.exoftware.exactor.runner;
 
+import com.exoftware.exactor.Constants;
+import com.exoftware.exactor.MockCommand;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestResult;
 import junit.textui.TestRunner;
-
-import com.exoftware.exactor.Constants;
-import com.exoftware.exactor.MockCommand;
 
 /**
  * Test class for <code>JUnitScriptRunner</code>.
@@ -48,29 +47,24 @@ import com.exoftware.exactor.MockCommand;
  * @author Sean Hanly
  */
 
-public class TestJUnitScriptRunner extends TestCase
-{
-    protected void setUp() throws Exception
-    {
-        System.setProperty( "test.dir", Constants.DATA_DIR + "multiplefiles" );
+public class TestJUnitScriptRunner extends TestCase {
+    protected void setUp() throws Exception {
+        System.setProperty("test.dir", Constants.DATA_DIR + "multiplefiles");
         MockCommand.staticExecuteCalledCount = 0;
-        System.setProperty( "ide", "false" );
+        System.setProperty("ide", "false");
     }
 
-    public void testSuite()
-    {
+    public void testSuite() {
         Test test = JUnitScriptRunner.suite();
-        assertEquals( 2, test.countTestCases() );
-        System.setProperty( "ide", "true" );
+        assertEquals(2, test.countTestCases());
+        System.setProperty("ide", "true");
     }
 
-    public void testRunner()
-    {
-        System.setProperty( "test.dir", Constants.DATA_DIR + "multiplefiles" );
+    public void testRunner() {
+        System.setProperty("test.dir", Constants.DATA_DIR + "multiplefiles");
         TestRunner testRunner = new TestRunner();
-        TestResult testResult = testRunner.doRun( JUnitScriptRunner.suite() );
-
-        assertEquals( 2, testResult.runCount() );
-        assertEquals( 4, MockCommand.staticExecuteCalledCount );
+        TestResult testResult = testRunner.doRun(JUnitScriptRunner.suite());
+        assertEquals(2, testResult.runCount());
+        assertEquals(4, MockCommand.staticExecuteCalledCount);
     }
 }

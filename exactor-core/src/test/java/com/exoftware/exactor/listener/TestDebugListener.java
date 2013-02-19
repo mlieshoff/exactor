@@ -34,51 +34,46 @@
  *****************************************************************/
 package com.exoftware.exactor.listener;
 
-import java.io.File;
-import java.io.StringWriter;
-
-import junit.framework.TestCase;
-
 import com.exoftware.exactor.Constants;
 import com.exoftware.exactor.MockCommand;
 import com.exoftware.exactor.Script;
 import com.exoftware.exactor.command.Composite;
+import junit.framework.TestCase;
+
+import java.io.File;
+import java.io.StringWriter;
 
 /**
  * Test class for <code>DebugListener</code>.
  *
  * @author Brian Swan
  */
-public class TestDebugListener extends TestCase
-{
-    private static final String NEW_LINE = System.getProperty( "line.separator" );
-    private static final File SCRIPT_FILE = new File( Constants.DATA_DIR + "empty.act" );
+public class TestDebugListener extends TestCase {
+    private static final String NEW_LINE = System.getProperty("line.separator");
+    private static final File SCRIPT_FILE = new File(Constants.DATA_DIR + "empty.act");
 
     private StringWriter output;
     private SimpleListener listener;
     private MockCommand command;
     private Script script;
 
-    protected void setUp() throws Exception
-    {
+    protected void setUp() throws Exception {
         output = new StringWriter();
-        listener = new DebugListener( output );
-        script = new Script( SCRIPT_FILE );
+        listener = new DebugListener(output);
+        script = new Script(SCRIPT_FILE);
         command = new MockCommand();
-        command.setName( "TestCommand" );
-        command.setLineNumber( 1 );
+        command.setName("TestCommand");
+        command.setLineNumber(1);
     }
 
-    public void testExecutionSetWithComposite()
-    {
-        script.addCommand( command );
-        Composite composite = new Composite( script );
-        composite.setName( "Composite" );
-        listener.commandStarted( composite );
-        listener.commandStarted( command );
-        listener.commandEnded( command, null );
-        listener.commandEnded( composite, null );
-        assertEquals( "\t\t\tOK: TestCommand" + NEW_LINE +
-                "\t\tOK: Composite" + NEW_LINE, output.toString() );
+    public void testExecutionSetWithComposite() {
+        script.addCommand(command);
+        Composite composite = new Composite(script);
+        composite.setName("Composite");
+        listener.commandStarted(composite);
+        listener.commandStarted(command);
+        listener.commandEnded(command, null);
+        listener.commandEnded(composite, null);
+        assertEquals("\t\t\tOK: TestCommand" + NEW_LINE + "\t\tOK: Composite" + NEW_LINE, output.toString());
     }
 }

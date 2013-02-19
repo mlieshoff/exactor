@@ -42,7 +42,7 @@ import com.exoftware.exactor.command.annotated.resolver.SingleFieldResolver;
  *
  * @author Michael Lieshoff
  */
-public class DoubleResolver extends SingleFieldResolver<Double, AnnotatedCommand>{
+public class DoubleResolver extends SingleFieldResolver<Double, AnnotatedCommand> {
 
     public DoubleResolver(String field) {
         super(field);

@@ -36,7 +36,15 @@ package com.exoftware.util;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.StringTokenizer;
+import java.util.Vector;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 
@@ -192,9 +200,8 @@ public class ClassFinder {
     /**
      * Gets all classnames found in classpath libs and classes.
      *
-     *
      * @param includeJars jar files to include, if null no jars will be included.
-     * @param classPath a specified classpath.
+     * @param classPath   a specified classpath.
      * @return all classnames found in classpath libs and classes.
      */
     public static Set<String> getClassnamesFromPath(String[] includeJars, String classPath) {
@@ -202,7 +209,6 @@ public class ClassFinder {
         Set<String> includes = new HashSet<String>(Arrays.asList(includeJars));
         File[] files = filesFromPath(classPath);
         for (int i = 0; i < files.length; i++) {
-            String name = files[i].getName();
             addClassnames(includes, files[i], files[i], set);
         }
         return set;

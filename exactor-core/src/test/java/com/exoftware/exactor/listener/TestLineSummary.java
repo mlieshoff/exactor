@@ -34,52 +34,45 @@
  *****************************************************************/
 package com.exoftware.exactor.listener;
 
-import junit.framework.AssertionFailedError;
-import junit.framework.TestCase;
-
 import com.exoftware.exactor.Constants;
 import com.exoftware.exactor.MockCommand;
+import junit.framework.AssertionFailedError;
+import junit.framework.TestCase;
 
 /**
  * @author Brian Swan
  */
-public class TestLineSummary extends TestCase
-{
+public class TestLineSummary extends TestCase {
     private LineSummary summary;
 
-    protected void setUp() throws Exception
-    {
-        summary = new LineSummary( "A line" );
+    protected void setUp() throws Exception {
+        summary = new LineSummary("A line");
     }
 
-    public void testCreate()
-    {
-        assertEquals( "A line", summary.getLine() );
-        assertTrue( summary.hasPassed() );
-        assertEquals( "", summary.getErrorText() );
+    public void testCreate() {
+        assertEquals("A line", summary.getLine());
+        assertTrue(summary.hasPassed());
+        assertEquals("", summary.getErrorText());
     }
 
-    public void testCommandEndedWithFailure()
-    {
-        summary.commandEnded( new MockCommand().getExecutionTime(), new AssertionFailedError( "Command Failed" ) );
-        assertFalse( summary.hasPassed() );
-        assertEquals( "Command Failed", summary.getErrorText() );
+    public void testCommandEndedWithFailure() {
+        summary.commandEnded(new MockCommand().getExecutionTime(), new AssertionFailedError("Command Failed"));
+        assertFalse(summary.hasPassed());
+        assertEquals("Command Failed", summary.getErrorText());
         assertEquals(0, summary.getExecutionTime());
     }
 
-    public void testCommandEndedWithError()
-    {
-        summary.commandEnded( new MockCommand().getExecutionTime(), new MockException( "An error" ) );
-        assertFalse( summary.hasPassed() );
-        assertEquals( "An error" + Constants.NEW_LINE + "stacktrace", summary.getErrorText() );
+    public void testCommandEndedWithError() {
+        summary.commandEnded(new MockCommand().getExecutionTime(), new MockException("An error"));
+        assertFalse(summary.hasPassed());
+        assertEquals("An error" + Constants.NEW_LINE + "stacktrace", summary.getErrorText());
         assertEquals(0, summary.getExecutionTime());
     }
 
-    public void testCommandEndedSuccess()
-    {
-        summary.commandEnded( new MockCommand().getExecutionTime(), null );
-        assertTrue( summary.hasPassed() );
-        assertEquals( "", summary.getErrorText() );
+    public void testCommandEndedSuccess() {
+        summary.commandEnded(new MockCommand().getExecutionTime(), null);
+        assertTrue(summary.hasPassed());
+        assertEquals("", summary.getErrorText());
         assertEquals(0, summary.getExecutionTime());
     }
 }

@@ -42,7 +42,7 @@ import com.exoftware.exactor.command.annotated.resolver.SingleFieldResolver;
  *
  * @author Michael Lieshoff
  */
-public class LongResolver extends SingleFieldResolver<Long, AnnotatedCommand>{
+public class LongResolver extends SingleFieldResolver<Long, AnnotatedCommand> {
 
     public LongResolver(String field) {
         super(field);

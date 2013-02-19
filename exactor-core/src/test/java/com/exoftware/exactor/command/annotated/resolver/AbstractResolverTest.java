@@ -34,13 +34,11 @@
  *****************************************************************/
 package com.exoftware.exactor.command.annotated.resolver;
 
-import junit.framework.TestCase;
-
 import com.exoftware.exactor.command.annotated.AnnotatedCommand;
 import com.exoftware.exactor.command.annotated.ParameterType;
+import junit.framework.TestCase;
 
 /**
- *
  * @author Michael Lieshoff
  */
 public class AbstractResolverTest extends TestCase {

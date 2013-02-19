@@ -37,7 +37,6 @@ package com.exoftware.util;
 /**
  * This class supports common idioms used in the Exactor project.
  *
- *
  * @author Michael Lieshoff
  */
 public class Idioms {
@@ -54,6 +53,7 @@ public class Idioms {
             }
             return false;
         }
+
         public abstract boolean action();
     }
 

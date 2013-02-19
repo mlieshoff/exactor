@@ -39,15 +39,12 @@ import java.io.PrintWriter;
 /**
  * @author Brian Swan
  */
-public class MockException extends Exception
-{
-    public MockException( String message )
-    {
-        super( message );
+public class MockException extends Exception {
+    public MockException(String message) {
+        super(message);
     }
 
-    public void printStackTrace( PrintWriter s )
-    {
-        s.print( "stacktrace" );
+    public void printStackTrace(PrintWriter s) {
+        s.print("stacktrace");
     }
 }
