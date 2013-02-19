@@ -39,7 +39,8 @@ import com.exoftware.exactor.Script;
 import com.exoftware.util.ClassFinder;
 import junit.framework.AssertionFailedError;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * ExecutionSetListener that records statistics about the
@@ -47,8 +48,7 @@ import java.util.*;
  *
  * @author Brian Swan
  */
-public class ExecutionSummary
-{
+public class ExecutionSummary {
     private int runCount;
     private int failureCount;
     private int errorCount;
@@ -57,18 +57,15 @@ public class ExecutionSummary
     private Map<String, PackageSummary> packageSummaries = new LinkedHashMap<String, PackageSummary>();
     private PackageSummary currentSummary;
 
-    public ExecutionSummary()
-    {
-        this( System.getProperty( "user.dir" ) );
+    public ExecutionSummary() {
+        this(System.getProperty("user.dir"));
     }
 
-    public ExecutionSummary( String packageBase )
-    {
+    public ExecutionSummary(String packageBase) {
         this.packageBase = packageBase;
     }
 
-    public void executionStarted()
-    {
+    public void executionStarted() {
         startTime = getCurrentTime();
     }
 
@@ -79,37 +76,33 @@ public class ExecutionSummary
         }
         currentSummary = packageSummaries.get(packageName);
         currentSummary.scriptStarted(s);
-        runCount ++;
+        runCount++;
     }
 
-    public void commandEnded( Command c, Throwable t )
-    {
-        if( t instanceof AssertionFailedError )
+    public void commandEnded(Command c, Throwable t) {
+        if (t instanceof AssertionFailedError) {
             failureCount++;
-        else if( t != null )
+        } else if (t != null) {
             errorCount++;
-
-        if( currentSummary != null )
-            currentSummary.commandEnded( c, t );
+        }
+        if (currentSummary != null) {
+            currentSummary.commandEnded(c, t);
+        }
     }
 
-    public int getScriptsRunCount()
-    {
+    public int getScriptsRunCount() {
         return runCount;
     }
 
-    public int getFailureCount()
-    {
+    public int getFailureCount() {
         return failureCount;
     }
 
-    public int getErrorCount()
-    {
+    public int getErrorCount() {
         return errorCount;
     }
 
-    public long getElapsedTimeSeconds()
-    {
+    public long getElapsedTimeSeconds() {
         return (getCurrentTime() - startTime) / 1000;
     }
 
@@ -117,19 +110,17 @@ public class ExecutionSummary
         return packageSummaries.values().toArray(new PackageSummary[packageSummaries.size()]);
     }
 
-    protected long getCurrentTime()
-    {
+    protected long getCurrentTime() {
         return System.currentTimeMillis();
     }
 
-    private String packageForScript( Script script, String packageBase )
-    {
+    private String packageForScript(Script script, String packageBase) {
         String scriptPath = script.getAbsolutePath();
-        String scriptDir = scriptPath.substring( 0, scriptPath.length() - script.getName().length() );
-        String result = ClassFinder.toPackageName( scriptDir.substring( packageBase.length() ) );
-        if( result.endsWith( ClassFinder.PACKAGE_SEPARATOR ) )
-            return result.substring( 0, result.length() - 1 );
-
+        String scriptDir = scriptPath.substring(0, scriptPath.length() - script.getName().length());
+        String result = ClassFinder.toPackageName(scriptDir.substring(packageBase.length()));
+        if (result.endsWith(ClassFinder.PACKAGE_SEPARATOR)) {
+            return result.substring(0, result.length() - 1);
+        }
         return result;
     }
 

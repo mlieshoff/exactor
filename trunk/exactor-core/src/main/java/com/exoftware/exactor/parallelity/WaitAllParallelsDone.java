@@ -40,7 +40,6 @@ import com.exoftware.exactor.command.annotated.ParameterType;
 import com.exoftware.util.Idioms;
 
 /**
- *
  * @author Michael Lieshoff
  */
 public class WaitAllParallelsDone extends AnnotatedCommand {
@@ -48,11 +47,11 @@ public class WaitAllParallelsDone extends AnnotatedCommand {
     private long timeout = Long.getLong("com.exoftware.exactor.parallelity.WaitAllParallelsDone.timeout", 60000);
 
     private final Idioms.UntilTimeoutDo timeouter = new Idioms.UntilTimeoutDo() {
-                @Override
-                public boolean action() {
-                    return Gatling.finished();
-                }
-            };
+        @Override
+        public boolean action() {
+            return Gatling.finished();
+        }
+    };
 
     @Override
     public void execute() throws Exception {

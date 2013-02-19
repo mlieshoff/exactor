@@ -37,14 +37,13 @@ package com.exoftware.exactor.command.annotated;
 import com.exoftware.exactor.doc.Description;
 
 /**
- *
  * @author Michael Lieshoff
  */
-@Description(text="The command defines the classical foo.")
+@Description(text = "The command defines the classical foo.")
 public class FooCommand extends AnnotatedCommand {
     @Param(namespace = FooNamespace.class, name = "STRING")
     private String mandatoryString;
-    @Param(namespace = FooNamespace.class, name = "STRING", type=ParameterType.OPTIONAL)
+    @Param(namespace = FooNamespace.class, name = "STRING", type = ParameterType.OPTIONAL)
     private String optionalString;
 
     public void execute() throws Exception {

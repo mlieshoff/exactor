@@ -42,32 +42,27 @@ import java.io.StringWriter;
 /**
  * @author Brian Swan
  */
-public class LineSummary
-{
-    private static final String NEW_LINE = System.getProperty( "line.separator" );
+public class LineSummary {
+    private static final String NEW_LINE = System.getProperty("line.separator");
 
     private String line;
     private boolean passed = true;
     private String errorText = "";
     private long _executionTime = 0;
 
-    public LineSummary( String line )
-    {
+    public LineSummary(String line) {
         this.line = line;
     }
 
-    public String getLine()
-    {
+    public String getLine() {
         return line;
     }
 
-    public boolean hasPassed()
-    {
+    public boolean hasPassed() {
         return passed;
     }
 
-    public String getErrorText()
-    {
+    public String getErrorText() {
         return errorText;
     }
 
@@ -81,10 +76,9 @@ public class LineSummary
         _executionTime = executionTime;
     }
 
-    private String stackTraceString( Throwable throwable )
-    {
+    private String stackTraceString(Throwable throwable) {
         StringWriter w = new StringWriter();
-        throwable.printStackTrace( new PrintWriter( w ) );
+        throwable.printStackTrace(new PrintWriter(w));
         w.flush();
         return w.getBuffer().toString();
     }

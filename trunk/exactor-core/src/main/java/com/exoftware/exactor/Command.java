@@ -34,14 +34,14 @@
  *****************************************************************/
 package com.exoftware.exactor;
 
-import com.exoftware.util.Require;
 import com.exoftware.util.FileUtilities;
+import com.exoftware.util.Require;
 import junit.framework.Assert;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Iterator;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Base class for all commands executed by the framework.
@@ -75,8 +75,7 @@ import java.io.File;
  *
  * @author Brian Swan
  */
-public class Command extends Assert
-{
+public class Command extends Assert {
     private final List parameters = new ArrayList();
     private Script script = new Script();
     private int lineNumber = 0;
@@ -90,12 +89,10 @@ public class Command extends Assert
      * @param p the parameter to add.
      * @throws NullPointerException if the supplied parameter is <code>null</code>.
      */
-    public void addParameter( Parameter p ) throws NullPointerException
-    {
-        Require.condition( p != null, "Parameter cannot be null" );
-
-        p.setCommand( this );
-        parameters.add( p );
+    public void addParameter(Parameter p) throws NullPointerException {
+        Require.condition(p != null, "Parameter cannot be null");
+        p.setCommand(this);
+        parameters.add(p);
     }
 
     /**
@@ -104,8 +101,7 @@ public class Command extends Assert
      * @return <code>true</code> if the command has parameters,
      *         otherwise <code>false</code>.
      */
-    public boolean hasParameters()
-    {
+    public boolean hasParameters() {
         return countParameters() > 0;
     }
 
@@ -114,8 +110,7 @@ public class Command extends Assert
      *
      * @return the number of parameters added to the command.
      */
-    public int countParameters()
-    {
+    public int countParameters() {
         return parameters.size();
     }
 
@@ -127,16 +122,13 @@ public class Command extends Assert
      * @throws IndexOutOfBoundsException if the command has no parameters, or
      *                                   if the index is out of range (index < 0 || index >= countParameters()).
      */
-    public Parameter getParameter( int index ) throws IndexOutOfBoundsException
-    {
+    public Parameter getParameter(int index) throws IndexOutOfBoundsException {
         Parameter result = null;
-        try
-        {
-            result = ( Parameter ) parameters.get( index );
-        }
-        catch ( IndexOutOfBoundsException e )
-        {
-            throw new IndexOutOfBoundsException( "Index: " + index + ", Size: " + parameters.size() ); // this is done for consistancy across JDK versions
+        try {
+            result = (Parameter) parameters.get(index);
+        } catch (IndexOutOfBoundsException e) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + parameters.size());
+            // this is done for consistancy across JDK versions
         }
         return result;
     }
@@ -147,19 +139,13 @@ public class Command extends Assert
      * @param index the index of the parameter to return.
      * @return the parameter at the specified index. If not present returns <code>new Parameter(defaultValue)</code>;
      */
-    public Parameter getParameter( int index, String defaultValue )
-    {
+    public Parameter getParameter(int index, String defaultValue) {
         Parameter result = null;
-
-        try
-        {
-            result = getParameter( index );
+        try {
+            result = getParameter(index);
+        } catch (IndexOutOfBoundsException e) {
+            return new Parameter(defaultValue);
         }
-        catch ( IndexOutOfBoundsException e )
-        {
-            return new Parameter( defaultValue );
-        }
-
         return result;
     }
 
@@ -168,9 +154,8 @@ public class Command extends Assert
      *
      * @return all the parameters in this command.
      */
-    public Parameter[] getParameters()
-    {
-        return ( Parameter[] ) parameters.toArray( new Parameter[0] );
+    public Parameter[] getParameters() {
+        return (Parameter[]) parameters.toArray(new Parameter[0]);
     }
 
     /**
@@ -178,8 +163,7 @@ public class Command extends Assert
      *
      * @return the script that owns this command.
      */
-    public Script getScript()
-    {
+    public Script getScript() {
         return script;
     }
 
@@ -189,10 +173,8 @@ public class Command extends Assert
      * @param s the script that owns this command.
      * @throws NullPointerException if the supplied script is <code>null</code>.
      */
-    public void setScript( Script s ) throws NullPointerException
-    {
-        Require.condition( s != null, "Script cannot be null" );
-
+    public void setScript(Script s) throws NullPointerException {
+        Require.condition(s != null, "Script cannot be null");
         script = s;
     }
 
@@ -207,9 +189,8 @@ public class Command extends Assert
      * @throws Exception if an error occurs.
      * @see junit.framework.AssertionFailedError
      */
-    public void execute() throws Exception
-    {
-        fail( "Not implemented" );
+    public void execute() throws Exception {
+        fail("Not implemented");
     }
 
     /**
@@ -218,8 +199,7 @@ public class Command extends Assert
      *
      * @return the line number of the command in the script.
      */
-    public int getLineNumber()
-    {
+    public int getLineNumber() {
         return lineNumber;
     }
 
@@ -228,8 +208,7 @@ public class Command extends Assert
      *
      * @param lineNumber the line number of this command.
      */
-    public void setLineNumber( int lineNumber )
-    {
+    public void setLineNumber(int lineNumber) {
         this.lineNumber = lineNumber;
     }
 
@@ -238,8 +217,7 @@ public class Command extends Assert
      *
      * @return the command name for this command.
      */
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
@@ -248,8 +226,7 @@ public class Command extends Assert
      *
      * @param name the name of the command.
      */
-    public void setName( String name )
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -262,26 +239,21 @@ public class Command extends Assert
      *
      * @param substitutions the array of parameters to use for substitutions.
      */
-    public void substituteParameters( Parameter[] substitutions ) throws RuntimeException
-    {
-        Require.condition( substitutions != null, "Substitutions cannot be null" );
-
-        for ( int i = 0; i < countParameters(); i++ )
-            substituteParameter( getParameter( i ), substitutions, i );
+    public void substituteParameters(Parameter[] substitutions) throws RuntimeException {
+        Require.condition(substitutions != null, "Substitutions cannot be null");
+        for (int i = 0; i < countParameters(); i++) {
+            substituteParameter(getParameter(i), substitutions, i);
+        }
     }
 
-    private void substituteParameter( Parameter p, Parameter[] substitutions, int currentIndex )
-    {
-        if ( p.stringValue().startsWith( "$" ) )
-        {
-            try
-            {
-                int index = Integer.parseInt( p.stringValue().substring( 1 ) );
-                parameters.add( currentIndex, substitutions[index] );
-                parameters.remove( currentIndex + 1 );
-            }
-            catch ( Exception ignored ) // ignore exceptions and leave params unchanged
-            {
+    private void substituteParameter(Parameter p, Parameter[] substitutions, int currentIndex) {
+        if (p.stringValue().startsWith("$")) {
+            try {
+                int index = Integer.parseInt(p.stringValue().substring(1));
+                parameters.add(currentIndex, substitutions[index]);
+                parameters.remove(currentIndex + 1);
+            } catch (Exception ignored) {
+                // ignore exceptions and leave params unchanged
             }
         }
     }
@@ -291,17 +263,12 @@ public class Command extends Assert
      *
      * @return all parametes as a string
      */
-    public String parametersAsString()
-    {
+    public String parametersAsString() {
         String result = "";
-
-        for ( Iterator iterator = parameters.iterator(); iterator.hasNext(); )
-        {
-            Parameter parameter = ( Parameter ) iterator.next();
-
+        for (Iterator iterator = parameters.iterator(); iterator.hasNext(); ) {
+            Parameter parameter = (Parameter) iterator.next();
             result += parameter.toString() + " ";
         }
-
         return result.trim();
     }
 
@@ -312,10 +279,9 @@ public class Command extends Assert
      * @param fileName to be resolved
      * @return resolved file name
      */
-    public String resolveFileRelativeToScriptFile( String fileName )
-    {
-        return FileUtilities.resolveLocation( fileName,
-                new File( getScript().getAbsolutePath() ).getParentFile().getAbsolutePath() );
+    public String resolveFileRelativeToScriptFile(String fileName) {
+        return FileUtilities.resolveLocation(fileName, new File(getScript().getAbsolutePath()).getParentFile()
+                .getAbsolutePath());
     }
 
     public void setStartTime(long startTime) {

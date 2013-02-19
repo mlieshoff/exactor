@@ -39,18 +39,15 @@ package com.exoftware.util;
  *
  * @author Brian Swan
  */
-public class Require
-{
+public class Require {
     /**
      * Checks that the supplied <code>expression</code> is satisfied.
      *
      * @param expression the expression to evaluate.
-     *
      * @throws RuntimeException if the expression is not satisfied.
      */
-    public static void condition( boolean expression ) throws RuntimeException
-    {
-        condition( expression, "Precondition violated" );
+    public static void condition(boolean expression) throws RuntimeException {
+        condition(expression, "Precondition violated");
     }
 
     /**
@@ -58,12 +55,11 @@ public class Require
      *
      * @param expression the expression to evaluate.
      * @param message    the failure message.
-     *
      * @throws RuntimeException if the expression is not satisfied.
      */
-    public static void condition( boolean expression, String message ) throws RuntimeException
-    {
-        if( !expression )
-            throw new RuntimeException( message );
+    public static void condition(boolean expression, String message) throws RuntimeException {
+        if (!expression) {
+            throw new RuntimeException(message);
+        }
     }
 }

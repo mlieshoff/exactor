@@ -50,90 +50,67 @@ import java.io.File;
  * @author Sean Hanly
  */
 
-public class ScriptWrapperTestCase extends TestCase implements ExecutionSetListener
-{
+public class ScriptWrapperTestCase extends TestCase implements ExecutionSetListener {
     File file;
     Throwable throwable;
     private int lineNumber;
 
-    public ScriptWrapperTestCase( String s )
-    {
-        super( s );
+    public ScriptWrapperTestCase(String s) {
+        super(s);
     }
 
-    public ScriptWrapperTestCase( File file )
-    {
+    public ScriptWrapperTestCase(File file) {
         this.file = file;
-        setName( "testRunAcceptanceTest" );
+        setName("testRunAcceptanceTest");
     }
 
-    public int countTestCases()
-    {
+    public int countTestCases() {
         return 1;
     }
 
-    public void testRunAcceptanceTest() throws Throwable
-    {
-        if( realTest() )
+    public void testRunAcceptanceTest() throws Throwable {
+        if (realTest()) {
             executeTestCase();
+        }
     }
 
-    private void executeTestCase()
-            throws Throwable
-    {
+    private void executeTestCase() throws Throwable {
         ExecutionSet executionSet = new ExecutionSet();
-
-        executionSet.addListener( this );
-        executionSet.addScript( new ScriptParser( executionSet ).parse( file ) );
+        executionSet.addListener(this);
+        executionSet.addScript(new ScriptParser(executionSet).parse(file));
         executionSet.execute();
-
-        if( throwable != null )
-        {
-            throw new Exception( "Line Number: " + lineNumber, throwable );
+        if (throwable != null) {
+            throw new Exception("Line Number: " + lineNumber, throwable);
         }
     }
 
     // test to see if the test is a real one as distinct from one created by
     // IDEA in its search for subclasses of TestCase
-    private boolean realTest()
-    {
+    private boolean realTest() {
         return file != null;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return (realTest()) ? file.toString() : "";
     }
 
-    public void executionSetStarted( ExecutionSet es )
-    {
-
+    public void executionSetStarted(ExecutionSet es) {
     }
 
-    public void executionSetEnded( ExecutionSet es )
-    {
-
+    public void executionSetEnded(ExecutionSet es) {
     }
 
-    public void scriptStarted( Script s )
-    {
-
+    public void scriptStarted(Script s) {
     }
 
-    public void scriptEnded( Script s )
-    {
-
+    public void scriptEnded(Script s) {
     }
 
-    public void commandStarted( Command c )
-    {
-
+    public void commandStarted(Command c) {
     }
 
-    public void commandEnded( Command c, Throwable t )
-    {
-        if( t != null )
-        {
+    public void commandEnded(Command c, Throwable t) {
+        if (t != null) {
             throwable = t;
             lineNumber = c.getLineNumber();
         }

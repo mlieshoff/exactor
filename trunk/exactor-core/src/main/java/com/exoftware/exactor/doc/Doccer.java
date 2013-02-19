@@ -40,7 +40,11 @@ import com.exoftware.exactor.command.annotated.ParameterDefinition;
 import com.exoftware.util.ClassFinder;
 
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 /**
  * This class defines a doc generator for commands.
@@ -48,14 +52,14 @@ import java.util.*;
  * @author Michael Lieshoff
  */
 public class Doccer {
-    private static final String CLASSPATH = System.getProperty( "java.class.path" );
+    private static final String CLASSPATH = System.getProperty("java.class.path");
     private Map<Class<? extends Enum>, Map<String, Meta>> definitions = new HashMap<Class<? extends Enum>, Map<String,
             Meta>>();
 
     Set<Doc> transform(String[] includeJars) throws NoSuchFieldException {
         Set<Doc> data = new TreeSet<Doc>();
         Set<WrappedClass> commands = filterClasses(includeJars).get(new WrappedClass(AnnotatedCommand.class));
-        for(WrappedClass wrappedClass : commands) {
+        for (WrappedClass wrappedClass : commands) {
             Class<?> command = wrappedClass.clazz;
             Set<Meta> metas = new TreeSet<Meta>();
             for (Field field : command.getDeclaredFields()) {
@@ -107,13 +111,10 @@ public class Doccer {
             if (o == null || getClass() != o.getClass()) {
                 return false;
             }
-
             WrappedClass that = (WrappedClass) o;
-
             if (clazz != that.clazz) {
                 return false;
             }
-
             return true;
         }
 

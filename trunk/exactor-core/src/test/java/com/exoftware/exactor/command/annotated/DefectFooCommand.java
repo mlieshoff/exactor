@@ -35,7 +35,6 @@
 package com.exoftware.exactor.command.annotated;
 
 /**
- *
  * @author Michael Lieshoff
  */
 public class DefectFooCommand extends AnnotatedCommand {

@@ -65,7 +65,7 @@ public class TestFileCollector extends TestCase {
 
     public void testFilesWithExtensionFileNotDirectoryIgnored() {
         files = FileCollector.filesWithExtension(new File(BASE_DIRECTORY + Constants.FS + "dir1", "test1.act"), ".act",
-                new String[] { "dir1" });
+                new String[]{"dir1"});
         assertEquals(0, files.length);
     }
 
@@ -81,13 +81,13 @@ public class TestFileCollector extends TestCase {
     }
 
     public void testFilesWithExtensionIgnoredDirectories() {
-        files = FileCollector.filesWithExtension(BASE_DIRECTORY, ".act", new String[] { "dir1" });
+        files = FileCollector.filesWithExtension(BASE_DIRECTORY, ".act", new String[]{"dir1"});
         assertEquals(1, files.length);
         assertEquals("test2.act", files[0].getName());
     }
 
     public void testFilesWithNameIgnoredDirectories() {
-        files = FileCollector.filesWithName(BASE_DIRECTORY, "test2.act", new String[] { "dir1" });
+        files = FileCollector.filesWithName(BASE_DIRECTORY, "test2.act", new String[]{"dir1"});
         assertEquals(1, files.length);
         assertEquals("test2.act", files[0].getName());
     }
@@ -116,7 +116,7 @@ public class TestFileCollector extends TestCase {
     }
 
     public void testFindDirectoriesWithIgnored() {
-        files = FileCollector.directories(new File(Constants.DATA_DIR), new String[] { "dir1", "dir2" });
+        files = FileCollector.directories(new File(Constants.DATA_DIR), new String[]{"dir1", "dir2"});
         assertEquals(6, files.length);
         assertContains("multipledirs", files);
         assertContains("multiplefiles", files);

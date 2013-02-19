@@ -34,10 +34,10 @@
  *****************************************************************/
 package com.exoftware.exactor.command.annotated;
 
+import junit.framework.TestCase;
+
 import java.util.Arrays;
 import java.util.List;
-
-import junit.framework.TestCase;
 
 /**
  * This class is a test for class NamedParameter.

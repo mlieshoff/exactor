@@ -37,35 +37,31 @@ package com.exoftware.exactor.listener;
 import junit.framework.TestCase;
 
 /**
- *
  * @author Brian Swan
  */
-public class TestHtmlOutputListener extends TestCase
-{
-    public void testExecutionSummaryCalls()
-    {
+public class TestHtmlOutputListener extends TestCase {
+    public void testExecutionSummaryCalls() {
         MockExecutionSummary summary = new MockExecutionSummary();
-        HtmlOutputListener listener = new HtmlOutputListener( null, null, summary );
-        listener.executionSetStarted( null );
-        listener.scriptStarted( null );
-        listener.commandEnded( null, null );
-        assertTrue( summary.executionStartedCalled );
-        assertTrue( summary.scriptStartedCalled );
-        assertTrue( summary.commandEndedCalled );
+        HtmlOutputListener listener = new HtmlOutputListener(null, null, summary);
+        listener.executionSetStarted(null);
+        listener.scriptStarted(null);
+        listener.commandEnded(null, null);
+        assertTrue(summary.executionStartedCalled);
+        assertTrue(summary.scriptStartedCalled);
+        assertTrue(summary.commandEndedCalled);
     }
 
-    public void testOutputWrites()
-    {
+    public void testOutputWrites() {
         MockWriter html = new MockWriter();
         MockWriter styleSheet = new MockWriter();
-        HtmlOutputListener listener = new HtmlOutputListener( html, styleSheet );
-        listener.executionSetEnded( null );
-        assertTrue( html.writeCalled );
-        assertTrue( html.flushCalled );
-        assertTrue( html.closeCalled );
-        assertTrue( styleSheet.writeCalled );
-        assertTrue( styleSheet.flushCalled );
-        assertTrue( styleSheet.closeCalled );
+        HtmlOutputListener listener = new HtmlOutputListener(html, styleSheet);
+        listener.executionSetEnded(null);
+        assertTrue(html.writeCalled);
+        assertTrue(html.flushCalled);
+        assertTrue(html.closeCalled);
+        assertTrue(styleSheet.writeCalled);
+        assertTrue(styleSheet.flushCalled);
+        assertTrue(styleSheet.closeCalled);
     }
 
 }

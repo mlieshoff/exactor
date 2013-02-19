@@ -46,7 +46,7 @@ import java.io.IOException;
 /**
  * Class to run scripts from a file or directory. Script files are plain text files with the
  * extension <code>.act</code>. The format of the script files is as follows;
- *
+ * <p/>
  * <pre>
  * <code>
  *    # a comment line
@@ -54,7 +54,7 @@ import java.io.IOException;
  *    AnotherCommand
  * </code>
  * </pre>
- *
+ * <p/>
  * Command names are mapped to instances of the <code>Command</code> class by looking for a
  * class with the same name on the classpath.
  *
@@ -91,7 +91,6 @@ public class Runner {
      * Create a new Runner.
      *
      * @param fileName the name of the file or directory to run.
-     *
      * @throws FileNotFoundException if the specified filename is not a file or directory name.
      */
     public Runner(String fileName) throws FileNotFoundException {

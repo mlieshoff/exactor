@@ -42,53 +42,45 @@ import java.io.File;
 /**
  * @author Brian Swan
  */
-public class ScriptSummary
-{
+public class ScriptSummary {
     private final String name;
     private final String absolutePath;
     private final LineSummary[] lineSummaries;
     private boolean passed = true;
 
-    public ScriptSummary( File scriptFile )
-    {
-        this.name = removeExtension( scriptFile );
+    public ScriptSummary(File scriptFile) {
+        this.name = removeExtension(scriptFile);
         this.absolutePath = scriptFile.getAbsolutePath();
-        this.lineSummaries = createLineSummaries( FileUtilities.linesFromFile( scriptFile ) );
+        this.lineSummaries = createLineSummaries(FileUtilities.linesFromFile(scriptFile));
     }
 
-    private LineSummary[] createLineSummaries( String[] lines )
-    {
+    private LineSummary[] createLineSummaries(String[] lines) {
         LineSummary[] result = new LineSummary[lines.length];
-        for( int i = 0; i < lines.length; i++ )
-            result[i] = new LineSummary( lines[i] );
-
+        for (int i = 0; i < lines.length; i++) {
+            result[i] = new LineSummary(lines[i]);
+        }
         return result;
     }
 
-    private String removeExtension( File scriptFile )
-    {
+    private String removeExtension(File scriptFile) {
         String name = scriptFile.getName();
-        int endIndex = name.lastIndexOf( "." );
-        return endIndex == -1 ? name : name.substring( 0, endIndex );
+        int endIndex = name.lastIndexOf(".");
+        return endIndex == -1 ? name : name.substring(0, endIndex);
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public String getAbsolutePath()
-    {
+    public String getAbsolutePath() {
         return absolutePath;
     }
 
-    public boolean hasPassed()
-    {
+    public boolean hasPassed() {
         return passed;
     }
 
-    public LineSummary[] getLineSummaries()
-    {
+    public LineSummary[] getLineSummaries() {
         return lineSummaries;
     }
 

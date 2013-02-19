@@ -8,17 +8,14 @@ import java.io.OutputStream;
  *
  * @author Brian Swan
  */
-public class StringOutputStream extends OutputStream
-{
+public class StringOutputStream extends OutputStream {
     private StringBuffer buffer = new StringBuffer();
 
-    public void write( int b ) throws IOException
-    {
-        buffer.append( (char) b );
+    public void write(int b) throws IOException {
+        buffer.append((char) b);
     }
 
-    public String toString()
-    {
+    public String toString() {
         return buffer.toString();
     }
 }

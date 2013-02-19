@@ -34,25 +34,22 @@
  *****************************************************************/
 package com.exoftware.exactor;
 
-import java.io.File;
-
+import com.exoftware.exactor.parser.ScriptParser;
 import junit.framework.TestCase;
 
-import com.exoftware.exactor.parser.ScriptParser;
+import java.io.File;
 
 /**
  * @author Brian Swan
  */
-public class TestSetPropertyComposite extends TestCase
-{
+public class TestSetPropertyComposite extends TestCase {
 
-    public void testExecute()
-    {
+    public void testExecute() {
         ExecutionSet set = new ExecutionSet();
-        ScriptParser parser = new ScriptParser( set );
-        Script script = parser.parse( new File( Constants.DATA_DIR + "UpdateProperty.act" ) );
+        ScriptParser parser = new ScriptParser(set);
+        Script script = parser.parse(new File(Constants.DATA_DIR + "UpdateProperty.act"));
         script.execute();
-        assertEquals( "world", script.getContext().get( "key" ) );
+        assertEquals("world", script.getContext().get("key"));
     }
 
 }

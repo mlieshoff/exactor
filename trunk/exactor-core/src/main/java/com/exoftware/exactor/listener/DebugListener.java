@@ -58,7 +58,7 @@ import java.io.Writer;
  * 			    OK: CheckTitleEquals
  * 		    OK: CheckPageTitle
  * 	    ended: pagetitles.act
- * <p/>
+ *
  * Scripts run: 1
  * Failures: 0
  * Errors: 0
@@ -68,13 +68,11 @@ import java.io.Writer;
  * @author Brian Swan
  * @see SimpleListener
  */
-public class DebugListener extends SimpleListener
-{
+public class DebugListener extends SimpleListener {
     /**
      * Create a new <code>DebugListener</code> outputing to <code>System.out</code>.
      */
-    public DebugListener()
-    {
+    public DebugListener() {
         super();
     }
 
@@ -83,20 +81,18 @@ public class DebugListener extends SimpleListener
      *
      * @param output the writer to output to.
      */
-    public DebugListener( Writer output )
-    {
-        super( output );
+    public DebugListener(Writer output) {
+        super(output);
     }
 
-    public void commandEnded( Command c, Throwable t )
-    {
-        super.commandEnded( c, t );
-        if( compositeLevel != 0 )
-            outputCommandResult( c, t );
+    public void commandEnded(Command c, Throwable t) {
+        super.commandEnded(c, t);
+        if (compositeLevel != 0) {
+            outputCommandResult(c, t);
+        }
     }
 
-    protected void output( String message, int indentLevel )
-    {
-        super.output( message, indentLevel + compositeLevel );
+    protected void output(String message, int indentLevel) {
+        super.output(message, indentLevel + compositeLevel);
     }
 }

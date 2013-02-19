@@ -45,8 +45,7 @@ import java.util.StringTokenizer;
  *
  * @author Brian Swan
  */
-public class FileCollector
-{
+public class FileCollector {
     private static final String[] DEFAULT_IGNORED_DIRS = new String[]{"CVS"};
 
     /**
@@ -59,9 +58,8 @@ public class FileCollector
      * @return an array of files representing all the files with the supplied
      *         extension in the supplied directory or below.
      */
-    public static File[] filesWithExtension( File directory, String extension )
-    {
-        return collectMatchingFiles( directory, new ExtensionFilter( extension ), DEFAULT_IGNORED_DIRS );
+    public static File[] filesWithExtension(File directory, String extension) {
+        return collectMatchingFiles(directory, new ExtensionFilter(extension), DEFAULT_IGNORED_DIRS);
     }
 
     /**
@@ -74,9 +72,8 @@ public class FileCollector
      * @return an array of files representing all the files with the supplied
      *         extension in the supplied directory or below.
      */
-    public static File[] filesWithExtension( File directory, String extension, String[] ignoredDirs )
-    {
-        return collectMatchingFiles( directory, new ExtensionFilter( extension ), ignoredDirs );
+    public static File[] filesWithExtension(File directory, String extension, String[] ignoredDirs) {
+        return collectMatchingFiles(directory, new ExtensionFilter(extension), ignoredDirs);
     }
 
     /**
@@ -89,9 +86,8 @@ public class FileCollector
      * @return an array of files representing all the files with the supplied
      *         name in the supplied directory or below.
      */
-    public static File[] filesWithName( File directory, String name )
-    {
-        return collectMatchingFiles( directory, new NameFilter( name ), DEFAULT_IGNORED_DIRS );
+    public static File[] filesWithName(File directory, String name) {
+        return collectMatchingFiles(directory, new NameFilter(name), DEFAULT_IGNORED_DIRS);
     }
 
     /**
@@ -104,9 +100,8 @@ public class FileCollector
      * @return an array of files representing all the files with the supplied
      *         name in the supplied directory or below.
      */
-    public static File[] filesWithName( File directory, String name, String[] ignoredDirs )
-    {
-        return collectMatchingFiles( directory, new NameFilter( name ), ignoredDirs );
+    public static File[] filesWithName(File directory, String name, String[] ignoredDirs) {
+        return collectMatchingFiles(directory, new NameFilter(name), ignoredDirs);
     }
 
     /**
@@ -119,18 +114,17 @@ public class FileCollector
      * @return an array of files representing all the files with the supplied name on the searchPath
      *         or below.
      */
-    public static File[] filesWithName( String searchPath, String name )
-    {
+    public static File[] filesWithName(String searchPath, String name) {
         List result = new ArrayList();
-        FileFilter nameFilter = new NameFilter( name );
-        StringTokenizer tokenizer = new StringTokenizer( searchPath, System.getProperty( "path.separator" ) );
-        while( tokenizer.hasMoreTokens() )
-        {
-            File pathElement = new File( tokenizer.nextToken() );
-            if( pathElement.isDirectory() )
-                addMatchingFiles( pathElement, nameFilter, DEFAULT_IGNORED_DIRS, result );
+        FileFilter nameFilter = new NameFilter(name);
+        StringTokenizer tokenizer = new StringTokenizer(searchPath, System.getProperty("path.separator"));
+        while (tokenizer.hasMoreTokens()) {
+            File pathElement = new File(tokenizer.nextToken());
+            if (pathElement.isDirectory()) {
+                addMatchingFiles(pathElement, nameFilter, DEFAULT_IGNORED_DIRS, result);
+            }
         }
-        return (File[]) result.toArray( new File[0] );
+        return (File[]) result.toArray(new File[0]);
     }
 
     /**
@@ -142,9 +136,8 @@ public class FileCollector
      * @return an array of files representing all the directories
      *         in the supplied directory or below.
      */
-    public static File[] directories( File directory )
-    {
-        return collectMatchingFiles( directory, new DirectoryFilter( DEFAULT_IGNORED_DIRS ), DEFAULT_IGNORED_DIRS );
+    public static File[] directories(File directory) {
+        return collectMatchingFiles(directory, new DirectoryFilter(DEFAULT_IGNORED_DIRS), DEFAULT_IGNORED_DIRS);
     }
 
     /**
@@ -156,92 +149,77 @@ public class FileCollector
      * @return an array of files representing all directories
      *         in the supplied directory or below.
      */
-    public static File[] directories( File directory, String[] ignoredDirs )
-    {
-        return collectMatchingFiles( directory, new DirectoryFilter( ignoredDirs ), ignoredDirs );
+    public static File[] directories(File directory, String[] ignoredDirs) {
+        return collectMatchingFiles(directory, new DirectoryFilter(ignoredDirs), ignoredDirs);
     }
 
-    private static File[] collectMatchingFiles( File directory, FileFilter filter, String[] ignoredDirs )
-    {
+    private static File[] collectMatchingFiles(File directory, FileFilter filter, String[] ignoredDirs) {
         List result = new ArrayList();
-
-        if( directory.isFile() )
-        {
-            if( filter.accept( directory ) && !isIgnored( directory.getParentFile(), ignoredDirs ) )
-                result.add( directory );
+        if (directory.isFile()) {
+            if (filter.accept(directory) && !isIgnored(directory.getParentFile(), ignoredDirs)) {
+                result.add(directory);
+            }
+        } else {
+            addMatchingFiles(directory, filter, ignoredDirs, result);
         }
-        else
-        {
-            addMatchingFiles( directory, filter, ignoredDirs, result );
-        }
-
-        return (File[]) result.toArray( new File[0] );
+        return (File[]) result.toArray(new File[0]);
     }
 
-    private static void addMatchingFiles( File directory, FileFilter filter, String[] ignoredDirs, List list )
-    {
+    private static void addMatchingFiles(File directory, FileFilter filter, String[] ignoredDirs, List list) {
         File[] files = directory.listFiles();
-        for( int i = 0; i < files.length; i++ )
-        {
-            if( filter.accept( files[i] ) )
-                list.add( files[i] );
-            if( files[i].isDirectory() && !isIgnored( files[i], ignoredDirs ) )
-                addMatchingFiles( files[i], filter, ignoredDirs, list );
+        for (int i = 0; i < files.length; i++) {
+            if (filter.accept(files[i])) {
+                list.add(files[i]);
+            }
+            if (files[i].isDirectory() && !isIgnored(files[i], ignoredDirs)) {
+                addMatchingFiles(files[i], filter, ignoredDirs, list);
+            }
         }
     }
 
     private static boolean isIgnored(File dir, String[] ignoredDirs) {
-        for(int i = 0; i < ignoredDirs.length; i++) {
+        for (int i = 0; i < ignoredDirs.length; i++) {
             String name = dir.getName();
-            if(name.startsWith(".") || name.equals(ignoredDirs[i])) {
+            if (name.startsWith(".") || name.equals(ignoredDirs[i])) {
                 return true;
             }
         }
         return false;
     }
 
-    private static class ExtensionFilter implements FileFilter
-    {
+    private static class ExtensionFilter implements FileFilter {
         private final String extension;
 
-        public ExtensionFilter( String extension )
-        {
+        public ExtensionFilter(String extension) {
             this.extension = extension;
         }
 
-        public boolean accept( File pathname )
-        {
-            return pathname.getName().endsWith( extension );
+        public boolean accept(File pathname) {
+            return pathname.getName().endsWith(extension);
         }
     }
 
-    private static class NameFilter implements FileFilter
-    {
+    private static class NameFilter implements FileFilter {
         private final String name;
 
-        public NameFilter( String name )
-        {
+        public NameFilter(String name) {
             this.name = name;
         }
 
-        public boolean accept( File pathname )
-        {
-            return pathname.getName().equals( name );
+        public boolean accept(File pathname) {
+            return pathname.getName().equals(name);
         }
     }
 
-    private static class DirectoryFilter implements FileFilter
-    {
+    private static class DirectoryFilter implements FileFilter {
         private final String[] ignoredDirs;
 
-        public DirectoryFilter( String[] ignoredDirs )
-        {
+        public DirectoryFilter(String[] ignoredDirs) {
             this.ignoredDirs = ignoredDirs;
         }
 
-        public boolean accept( File pathname )
-        {
-            return pathname.isDirectory() && !isIgnored( pathname, ignoredDirs );
+        public boolean accept(File pathname) {
+            return pathname.isDirectory() && !isIgnored(pathname, ignoredDirs);
         }
     }
 }

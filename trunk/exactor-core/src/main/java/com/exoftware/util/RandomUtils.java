@@ -34,9 +34,9 @@
  *****************************************************************/
 package com.exoftware.util;
 
-import java.util.Random;
-
 import org.apache.commons.lang3.RandomStringUtils;
+
+import java.util.Random;
 
 /**
  * This class helps with some random stuff.

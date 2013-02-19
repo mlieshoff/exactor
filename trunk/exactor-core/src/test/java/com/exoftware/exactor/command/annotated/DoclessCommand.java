@@ -35,13 +35,12 @@
 package com.exoftware.exactor.command.annotated;
 
 /**
- *
  * @author Michael Lieshoff
  */
 public class DoclessCommand extends AnnotatedCommand {
     @Param(namespace = DoclessNamespace.class, name = "STRING")
     private String mandatoryString;
-    @Param(namespace = DoclessNamespace.class, name = "STRING", type=ParameterType.OPTIONAL)
+    @Param(namespace = DoclessNamespace.class, name = "STRING", type = ParameterType.OPTIONAL)
     private String optionalString;
 
     public void execute() throws Exception {

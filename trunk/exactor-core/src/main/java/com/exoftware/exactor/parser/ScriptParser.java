@@ -52,8 +52,7 @@ import java.util.StringTokenizer;
  *
  * @author Brian Swan
  */
-public class ScriptParser
-{
+public class ScriptParser {
     private static final String COMMENT_CHARACTER = "#";
 
     private final ExecutionSet executionSet;
@@ -64,11 +63,10 @@ public class ScriptParser
      * @param executionSet that holds onto context information for parsing the current file e.g. previously parsed
      *                     commands
      */
-    public ScriptParser( ExecutionSet executionSet )
-    {
-        if( executionSet == null )
-            throw new RuntimeException( "ExecutionSet cannot be null" );
-
+    public ScriptParser(ExecutionSet executionSet) {
+        if (executionSet == null) {
+            throw new RuntimeException("ExecutionSet cannot be null");
+        }
         this.executionSet = executionSet;
     }
 
@@ -76,82 +74,74 @@ public class ScriptParser
      * Parses a file into an Exactor script.
      *
      * @param file to be parsed
-     *
      * @return exactor script
      */
-    public Script parse( File file )
-    {
-        if( file == null )
-            throw new RuntimeException( "Cannot parse null file" );
-
-        Script result = new Script( file );
-        String[] lines = FileUtilities.linesFromFile( file );
-        for( int i = 0; i < lines.length; i++ )
-        {
+    public Script parse(File file) {
+        if (file == null) {
+            throw new RuntimeException("Cannot parse null file");
+        }
+        Script result = new Script(file);
+        String[] lines = FileUtilities.linesFromFile(file);
+        for (int i = 0; i < lines.length; i++) {
             String line = lines[i];
-            parseLine( result, line, i );
+            parseLine(result, line, i);
         }
         return result;
     }
 
-    private void parseLine( Script result, String line, int i )
-    {
-        if( !isCommentLine( line ) && !isBlankLine( line ) )
-            result.addCommand( createCommandFromLine( line, i + 1 ) );
+    private void parseLine(Script result, String line, int i) {
+        if (!isCommentLine(line) && !isBlankLine(line)) {
+            result.addCommand(createCommandFromLine(line, i + 1));
+        }
     }
 
-    private boolean isBlankLine( String line )
-    {
+    private boolean isBlankLine(String line) {
         return line.trim().length() == 0;
     }
 
-    private boolean isCommentLine( String line )
-    {
-        return line.startsWith( COMMENT_CHARACTER );
+    private boolean isCommentLine(String line) {
+        return line.startsWith(COMMENT_CHARACTER);
     }
 
-    private Command createCommandFromLine( String line, int lineNumber )
-    {
-        ScriptElement scriptElement = new ScriptElement( line );
-        Command command = createCommand( scriptElement.commandToken );
-        command.setName( scriptElement.commandToken );
-        command.setLineNumber( lineNumber );
-        addParameters( command, scriptElement.parameterTokens );
+    private Command createCommandFromLine(String line, int lineNumber) {
+        ScriptElement scriptElement = new ScriptElement(line);
+        Command command = createCommand(scriptElement.commandToken);
+        command.setName(scriptElement.commandToken);
+        command.setLineNumber(lineNumber);
+        addParameters(command, scriptElement.parameterTokens);
         return command;
     }
 
-    private Command createCommand( String commandToken )
-    {
-        Command result = executionSet.findCommand( commandToken );
-        if( result == null )
-            result = new Unknown( commandToken );
+    private Command createCommand(String commandToken) {
+        Command result = executionSet.findCommand(commandToken);
+        if (result == null) {
+            result = new Unknown(commandToken);
+        }
         return result;
     }
 
-    private void addParameters( Command command, String[] parameterTokens )
-    {
-        for( int i = 0; i < parameterTokens.length; i++ )
-            command.addParameter( new Parameter( parameterTokens[i] ) );
+    private void addParameters(Command command, String[] parameterTokens) {
+        for (int i = 0; i < parameterTokens.length; i++) {
+            command.addParameter(new Parameter(parameterTokens[i]));
+        }
     }
 
-    private class ScriptElement
-    {
+    private class ScriptElement {
         private static final String WHITESPACE = " \t";
 
         private String commandToken = "";
         private String[] parameterTokens = new String[0];
 
-        ScriptElement( String line )
-        {
-            StringTokenizer tokenizer = new QuotedStringTokenizer( line, WHITESPACE );
-            if( tokenizer.hasMoreTokens() )
+        ScriptElement(String line) {
+            StringTokenizer tokenizer = new QuotedStringTokenizer(line, WHITESPACE);
+            if (tokenizer.hasMoreTokens()) {
                 commandToken = tokenizer.nextToken();
-
+            }
             List tokens = new ArrayList();
-            while( tokenizer.hasMoreTokens() )
-                tokens.add( tokenizer.nextToken() );
-
-            parameterTokens = (String[]) tokens.toArray( new String[0] );
+            while (tokenizer.hasMoreTokens()) {
+                tokens.add(tokenizer.nextToken());
+            }
+            parameterTokens = (String[]) tokens.toArray(new String[0]);
         }
     }
 }

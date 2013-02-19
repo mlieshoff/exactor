@@ -49,6 +49,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface Param {
     ParameterType type() default ParameterType.MANDATORY;
+
     Class<? extends Enum> namespace();
+
     String name();
 }

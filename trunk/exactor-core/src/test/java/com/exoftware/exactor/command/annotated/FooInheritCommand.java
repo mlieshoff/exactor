@@ -37,12 +37,11 @@ package com.exoftware.exactor.command.annotated;
 import com.exoftware.exactor.doc.Description;
 
 /**
- *
  * @author Michael Lieshoff
  */
-@Description(text="The command defines an inheritation from the classical foo.")
+@Description(text = "The command defines an inheritation from the classical foo.")
 public class FooInheritCommand extends FooCommand {
-    @Param(namespace = FooNamespace.class, name = "INTEGER", type=ParameterType.OPTIONAL)
+    @Param(namespace = FooNamespace.class, name = "INTEGER", type = ParameterType.OPTIONAL)
     private int optionalInt = 1004711;
 
     public void execute() throws Exception {

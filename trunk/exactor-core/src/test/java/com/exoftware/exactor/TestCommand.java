@@ -34,10 +34,10 @@
  *****************************************************************/
 package com.exoftware.exactor;
 
-import java.io.File;
-
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
+
+import java.io.File;
 
 /**
  * Test class for <code>Command</code>.
@@ -135,7 +135,7 @@ public class TestCommand extends TestCase {
     public void testSubstituteParameters() {
         command.addParameter(new Parameter("$0"));
         command.addParameter(new Parameter("$1"));
-        command.substituteParameters(new Parameter[] { new Parameter("Hello"), new Parameter("World") });
+        command.substituteParameters(new Parameter[]{new Parameter("Hello"), new Parameter("World")});
         assertEquals("Hello", command.getParameter(0).stringValue());
         assertEquals("World", command.getParameter(1).stringValue());
     }
@@ -163,7 +163,7 @@ public class TestCommand extends TestCase {
 
     public void testSubstituteOutOfSequenceReplacement() {
         command.addParameter(new Parameter("$1"));
-        command.substituteParameters(new Parameter[] { new Parameter("Hello"), new Parameter("World") });
+        command.substituteParameters(new Parameter[]{new Parameter("Hello"), new Parameter("World")});
         assertEquals("World", command.getParameter(0).stringValue());
     }
 

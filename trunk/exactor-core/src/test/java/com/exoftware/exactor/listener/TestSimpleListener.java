@@ -34,17 +34,16 @@
  *****************************************************************/
 package com.exoftware.exactor.listener;
 
-import java.io.File;
-import java.io.StringWriter;
-
-import junit.framework.AssertionFailedError;
-import junit.framework.TestCase;
-
 import com.exoftware.exactor.Constants;
 import com.exoftware.exactor.ExecutionSet;
 import com.exoftware.exactor.MockCommand;
 import com.exoftware.exactor.Script;
 import com.exoftware.exactor.command.Composite;
+import junit.framework.AssertionFailedError;
+import junit.framework.TestCase;
+
+import java.io.File;
+import java.io.StringWriter;
 
 /**
  * Test class for <code>SimpleListener</code>.
@@ -100,18 +99,16 @@ public class TestSimpleListener extends TestCase {
     public void testCommandEndedFailure() {
         listener.scriptStarted(script);
         listener.commandEnded(command, new AssertionFailedError("failure message"));
-        assertEquals("\tstarted: empty.act" + NEW_LINE + "\t\tFailed: TestCommand ("
-                + SCRIPT_FILE.getAbsolutePath() + ":1)" + NEW_LINE + "\t\t\tfailure message"
-                + NEW_LINE, output.toString());
+        assertEquals("\tstarted: empty.act" + NEW_LINE + "\t\tFailed: TestCommand (" + SCRIPT_FILE.getAbsolutePath()
+                + ":1)" + NEW_LINE + "\t\t\tfailure message" + NEW_LINE, output.toString());
         assertTrue(listener.errorsOccured());
     }
 
     public void testCommandEndedError() {
         listener.scriptStarted(script);
         listener.commandEnded(command, new MockException("error message"));
-        assertEquals("\tstarted: empty.act" + NEW_LINE + "\t\tError: TestCommand ("
-                + SCRIPT_FILE.getAbsolutePath() + ":1)" + NEW_LINE + "\t\t\terror message"
-                + NEW_LINE + "stacktrace" + NEW_LINE, output.toString());
+        assertEquals("\tstarted: empty.act" + NEW_LINE + "\t\tError: TestCommand (" + SCRIPT_FILE.getAbsolutePath()
+                + ":1)" + NEW_LINE + "\t\t\terror message" + NEW_LINE + "stacktrace" + NEW_LINE, output.toString());
         assertTrue(listener.errorsOccured());
     }
 
@@ -122,19 +119,17 @@ public class TestSimpleListener extends TestCase {
 
     public void testExecutionSetEndedNoFailuresNoErrors() {
         listener.executionSetEnded(executionSet);
-        assertEquals(NEW_LINE + "Scripts run: 0" + NEW_LINE + "Failures: 0" + NEW_LINE + ""
-                + "Errors: 0" + NEW_LINE + NEW_LINE + "Duration: 1s" + NEW_LINE, output
-                .toString());
+        assertEquals(NEW_LINE + "Scripts run: 0" + NEW_LINE + "Failures: 0" + NEW_LINE + "" + "Errors: 0" + NEW_LINE
+                + NEW_LINE + "Duration: 1s" + NEW_LINE, output.toString());
     }
 
     public void testExecutionSetEndedOneScriptNoFailuresNoErrors() {
         listener.scriptStarted(script);
         listener.scriptEnded(script);
         listener.executionSetEnded(executionSet);
-        assertEquals("\tstarted: empty.act" + NEW_LINE + "\tended: empty.act" + NEW_LINE
-                + NEW_LINE + "Scripts run: 1" + NEW_LINE + "Failures: 0" + NEW_LINE + ""
-                + "Errors: 0" + NEW_LINE + NEW_LINE + "Duration: 1s" + NEW_LINE, output
-                .toString());
+        assertEquals("\tstarted: empty.act" + NEW_LINE + "\tended: empty.act" + NEW_LINE + NEW_LINE + "Scripts run: 1"
+                + NEW_LINE + "Failures: 0" + NEW_LINE + "" + "Errors: 0" + NEW_LINE + NEW_LINE + "Duration: 1s"
+                + NEW_LINE, output.toString());
     }
 
     public void testExecutionSetEndedOneScriptOneFailureNoErrors() {
@@ -143,10 +138,9 @@ public class TestSimpleListener extends TestCase {
         listener.commandEnded(command, new AssertionFailedError("failure message"));
         listener.scriptEnded(script);
         listener.executionSetEnded(executionSet);
-        assertEquals("\tstarted: empty.act" + NEW_LINE + "\t\tFailed: TestCommand ("
-                + SCRIPT_FILE.getAbsolutePath() + ":1)" + NEW_LINE + "\t\t\tfailure message"
-                + NEW_LINE + "\tended: empty.act" + NEW_LINE + NEW_LINE + "Scripts run: 1"
-                + NEW_LINE + "Failures: 1" + NEW_LINE + "" + "Errors: 0" + NEW_LINE + NEW_LINE
+        assertEquals("\tstarted: empty.act" + NEW_LINE + "\t\tFailed: TestCommand (" + SCRIPT_FILE.getAbsolutePath()
+                + ":1)" + NEW_LINE + "\t\t\tfailure message" + NEW_LINE + "\tended: empty.act" + NEW_LINE + NEW_LINE
+                + "Scripts run: 1" + NEW_LINE + "Failures: 1" + NEW_LINE + "" + "Errors: 0" + NEW_LINE + NEW_LINE
                 + "Duration: 1s" + NEW_LINE, output.toString());
     }
 
@@ -156,13 +150,10 @@ public class TestSimpleListener extends TestCase {
         listener.commandEnded(command, new MockException("error message"));
         listener.scriptEnded(script);
         listener.executionSetEnded(executionSet);
-        assertEquals("\tstarted: empty.act" + NEW_LINE + "\t\tError: TestCommand ("
-                + SCRIPT_FILE.getAbsolutePath() + ":1)" + NEW_LINE + "\t\t\terror message"
-                + NEW_LINE + "stacktrace" + NEW_LINE + "\tended: empty.act" + NEW_LINE
-                + NEW_LINE + "Scripts run: 1" + NEW_LINE + "Failures: 0" + NEW_LINE + ""
-                + "Errors: 1" + NEW_LINE + NEW_LINE + "Duration: 1s" + NEW_LINE, output
-                .toString());
-
+        assertEquals("\tstarted: empty.act" + NEW_LINE + "\t\tError: TestCommand (" + SCRIPT_FILE.getAbsolutePath()
+                + ":1)" + NEW_LINE + "\t\t\terror message" + NEW_LINE + "stacktrace" + NEW_LINE + "\tended: empty.act"
+                + NEW_LINE + NEW_LINE + "Scripts run: 1" + NEW_LINE + "Failures: 0" + NEW_LINE + "" + "Errors: 1"
+                + NEW_LINE + NEW_LINE + "Duration: 1s" + NEW_LINE, output.toString());
     }
 
     public void testExecutionSetWithComposite() {
@@ -186,7 +177,6 @@ public class TestSimpleListener extends TestCase {
         listener.commandStarted(command);
         listener.commandEnded(command, null);
         listener.commandEnded(composite, null);
-        assertEquals("\t\tOK: TestCommand" + NEW_LINE + "\t\tOK: Composite" + NEW_LINE, output
-                .toString());
+        assertEquals("\t\tOK: TestCommand" + NEW_LINE + "\t\tOK: Composite" + NEW_LINE, output.toString());
     }
 }

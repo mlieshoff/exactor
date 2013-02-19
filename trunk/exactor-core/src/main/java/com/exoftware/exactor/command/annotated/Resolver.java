@@ -44,6 +44,8 @@ import java.util.List;
  */
 public interface Resolver<T, X extends AnnotatedCommand> {
     T resolve(ParameterType parameterType, X command);
+
     boolean validate(ParameterType parameterType, X command);
+
     List<String> getParameterNames();
 }

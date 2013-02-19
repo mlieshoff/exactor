@@ -47,5 +47,5 @@ import java.lang.annotation.Target;
  * @author Michael Lieshoff
  */
 public @interface Description {
-     String text();
+    String text();
 }

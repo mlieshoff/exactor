@@ -38,27 +38,22 @@ import com.exoftware.exactor.Command;
 import com.exoftware.exactor.Script;
 
 /**
- *
  * @author Brian Swan
  */
-public class MockExecutionSummary extends ExecutionSummary
-{
+public class MockExecutionSummary extends ExecutionSummary {
     public boolean executionStartedCalled;
     public boolean scriptStartedCalled;
     public boolean commandEndedCalled;
 
-    public void executionStarted()
-    {
+    public void executionStarted() {
         executionStartedCalled = true;
     }
 
-    public void scriptStarted( Script s )
-    {
+    public void scriptStarted(Script s) {
         scriptStartedCalled = true;
     }
 
-    public void commandEnded( Command c, Throwable t )
-    {
+    public void commandEnded(Command c, Throwable t) {
         commandEndedCalled = true;
     }
 }

@@ -49,8 +49,7 @@ import java.util.StringTokenizer;
  * @author Greg Wilkins (gregw)
  * @see java.util.StringTokenizer
  */
-public class QuotedStringTokenizer extends StringTokenizer
-{
+public class QuotedStringTokenizer extends StringTokenizer {
     private final static String WHITESPACE = "\t\n\r";
 
     private String _string;
@@ -62,76 +61,61 @@ public class QuotedStringTokenizer extends StringTokenizer
     private int _i = 0;
     private int _lastStart = 0;
 
-    public QuotedStringTokenizer( String str, String delim, boolean returnTokens, boolean returnQuotes )
-    {
-        super( "" );
+    public QuotedStringTokenizer(String str, String delim, boolean returnTokens, boolean returnQuotes) {
+        super("");
         _string = str;
-        if( delim != null )
+        if (delim != null) {
             _delim = delim;
+        }
         _returnTokens = returnTokens;
         _returnQuotes = returnQuotes;
-
-        if( _delim.indexOf( '\'' ) >= 0 || _delim.indexOf( '"' ) >= 0 )
-            throw new Error( "Can't use quotes as delimiters: " + _delim );
-
-        _token = new StringBuffer( _string.length() > 1024 ? 512 : _string.length() / 2 );
+        if (_delim.indexOf('\'') >= 0 || _delim.indexOf('"') >= 0) {
+            throw new Error("Can't use quotes as delimiters: " + _delim);
+        }
+        _token = new StringBuffer(_string.length() > 1024 ? 512 : _string.length() / 2);
     }
 
-    public QuotedStringTokenizer( String str, String delim, boolean returnTokens )
-    {
-        this( str, delim, returnTokens, false );
+    public QuotedStringTokenizer(String str, String delim, boolean returnTokens) {
+        this(str, delim, returnTokens, false);
     }
 
-    public QuotedStringTokenizer( String str, String delim )
-    {
-        this( str, delim, false, false );
+    public QuotedStringTokenizer(String str, String delim) {
+        this(str, delim, false, false);
     }
 
-    public QuotedStringTokenizer( String str )
-    {
-        this( str, null, false, false );
+    public QuotedStringTokenizer(String str) {
+        this(str, null, false, false);
     }
 
-    public boolean hasMoreTokens()
-    {
+    public boolean hasMoreTokens() {
         // Already found a token
-        if( _hasToken )
+        if (_hasToken) {
             return true;
-
+        }
         _lastStart = _i;
-
         int state = 0;
         boolean escape = false;
-        while( _i < _string.length() )
-        {
-            char c = _string.charAt( _i++ );
-
-            switch( state )
-            {
+        while (_i < _string.length()) {
+            char c = _string.charAt(_i++);
+            switch (state) {
                 case 0: // Start
-                    if( _delim.indexOf( c ) >= 0 )
-                    {
-                        if( _returnTokens )
-                        {
-                            _token.append( c );
+                    if (_delim.indexOf(c) >= 0) {
+                        if (_returnTokens) {
+                            _token.append(c);
                             return _hasToken = true;
                         }
-                    }
-                    else if( c == '\'' )
-                    {
-                        if( _returnQuotes )
-                            _token.append( c );
+                    } else if (c == '\'') {
+                        if (_returnQuotes) {
+                            _token.append(c);
+                        }
                         state = 2;
-                    }
-                    else if( c == '\"' )
-                    {
-                        if( _returnQuotes )
-                            _token.append( c );
+                    } else if (c == '\"') {
+                        if (_returnQuotes) {
+                            _token.append(c);
+                        }
                         state = 3;
-                    }
-                    else
-                    {
-                        _token.append( c );
+                    } else {
+                        _token.append(c);
                         _hasToken = true;
                         state = 1;
                     }
@@ -139,115 +123,99 @@ public class QuotedStringTokenizer extends StringTokenizer
 
                 case 1: // Token
                     _hasToken = true;
-                    if( _delim.indexOf( c ) >= 0 )
-                    {
-                        if( _returnTokens )
+                    if (_delim.indexOf(c) >= 0) {
+                        if (_returnTokens) {
                             _i--;
+                        }
                         return _hasToken;
-                    }
-                    else if( c == '\'' )
-                    {
-                        if( _returnQuotes )
-                            _token.append( c );
+                    } else if (c == '\'') {
+                        if (_returnQuotes) {
+                            _token.append(c);
+                        }
                         state = 2;
-                    }
-                    else if( c == '\"' )
-                    {
-                        if( _returnQuotes )
-                            _token.append( c );
+                    } else if (c == '\"') {
+                        if (_returnQuotes) {
+                            _token.append(c);
+                        }
                         state = 3;
-                    }
-                    else
-                        _token.append( c );
+                    } else
+                        _token.append(c);
                     continue;
 
 
                 case 2: // Single Quote
                     _hasToken = true;
-                    if( escape )
-                    {
+                    if (escape) {
                         escape = false;
-                        _token.append( c );
-                    }
-                    else if( c == '\'' )
-                    {
-                        if( _returnQuotes )
-                            _token.append( c );
+                        _token.append(c);
+                    } else if (c == '\'') {
+                        if (_returnQuotes) {
+                            _token.append(c);
+                        }
                         state = 1;
-                    }
-                    else if( c == '\\' )
-                    {
-                        if( _returnQuotes )
-                            _token.append( c );
+                    } else if (c == '\\') {
+                        if (_returnQuotes) {
+                            _token.append(c);
+                        }
                         escape = true;
-                    }
-                    else
-                        _token.append( c );
+                    } else
+                        _token.append(c);
                     continue;
 
 
                 case 3: // Double Quote
                     _hasToken = true;
-                    if( escape )
-                    {
+                    if (escape) {
                         escape = false;
-                        _token.append( c );
-                    }
-                    else if( c == '\"' )
-                    {
-                        if( _returnQuotes )
-                            _token.append( c );
+                        _token.append(c);
+                    } else if (c == '\"') {
+                        if (_returnQuotes) {
+                            _token.append(c);
+                        }
                         state = 1;
-                    }
-                    else if( c == '\\' )
-                    {
-                        if( _returnQuotes )
-                            _token.append( c );
+                    } else if (c == '\\') {
+                        if (_returnQuotes) {
+                            _token.append(c);
+                        }
                         escape = true;
-                    }
-                    else
-                        _token.append( c );
+                    } else
+                        _token.append(c);
             }
         }
-
         return _hasToken;
     }
 
-    public String nextToken() throws NoSuchElementException
-    {
-        if( !hasMoreTokens() || _token == null )
+    public String nextToken() throws NoSuchElementException {
+        if (!hasMoreTokens() || _token == null) {
             throw new NoSuchElementException();
+        }
         String t = _token.toString();
-        _token.setLength( 0 );
+        _token.setLength(0);
         _hasToken = false;
         return t;
     }
 
-    public String nextToken( String delim ) throws NoSuchElementException
-    {
+    public String nextToken(String delim) throws NoSuchElementException {
         _delim = delim;
         _i = _lastStart;
-        _token.setLength( 0 );
+        _token.setLength(0);
         _hasToken = false;
         return nextToken();
     }
 
-    public boolean hasMoreElements()
-    {
+    public boolean hasMoreElements() {
         return hasMoreTokens();
     }
 
-    public Object nextElement() throws NoSuchElementException
-    {
+    public Object nextElement() throws NoSuchElementException {
         return nextToken();
     }
 
     /**
      * Not implemented.
      */
-    public int countTokens()
-    {
-        throw new UnsupportedOperationException( "The countTokens method is not supported" );
+    public int countTokens() {
+        throw new UnsupportedOperationException("The countTokens method is not supported");
     }
 
 
@@ -258,28 +226,23 @@ public class QuotedStringTokenizer extends StringTokenizer
      * empty string.
      *
      * @param s The string to quote.
-     *
      * @return quoted string
      */
-    public static String quote( String s, String delim )
-    {
-        if( s == null )
+    public static String quote(String s, String delim) {
+        if (s == null) {
             return null;
-        if( s.length() == 0 )
+        }
+        if (s.length() == 0) {
             return "\"\"";
-
-
-        for( int i = 0; i < s.length(); i++ )
-        {
-            char c = s.charAt( i );
-            if( c == '"' || c == '\\' || c == '\'' || delim.indexOf( c ) >= 0 )
-            {
-                StringBuffer b = new StringBuffer( s.length() + 8 );
-                quote( b, s );
+        }
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == '"' || c == '\\' || c == '\'' || delim.indexOf(c) >= 0) {
+                StringBuffer b = new StringBuffer(s.length() + 8);
+                quote(b, s);
                 return b.toString();
             }
         }
-
         return s;
     }
 
@@ -289,27 +252,22 @@ public class QuotedStringTokenizer extends StringTokenizer
      * @param buf The StringBuffer
      * @param s   The String to quote.
      */
-    public static void quote( StringBuffer buf, String s )
-    {
-        synchronized( buf )
-        {
-            buf.append( '"' );
-            for( int i = 0; i < s.length(); i++ )
-            {
-                char c = s.charAt( i );
-                if( c == '"' )
-                {
-                    buf.append( "\\\"" );
+    public static void quote(StringBuffer buf, String s) {
+        synchronized (buf) {
+            buf.append('"');
+            for (int i = 0; i < s.length(); i++) {
+                char c = s.charAt(i);
+                if (c == '"') {
+                    buf.append("\\\"");
                     continue;
                 }
-                if( c == '\\' )
-                {
-                    buf.append( "\\\\" );
+                if (c == '\\') {
+                    buf.append("\\\\");
                     continue;
                 }
-                buf.append( c );
+                buf.append(c);
             }
-            buf.append( '"' );
+            buf.append('"');
         }
     }
 
@@ -317,52 +275,33 @@ public class QuotedStringTokenizer extends StringTokenizer
      * Unquote a string.
      *
      * @param s The string to unquote.
-     *
      * @return quoted string
      */
-    public static String unquote( String s )
-    {
-        if( s == null )
+    public static String unquote(String s) {
+        if (s == null) {
             return null;
-        if( s.length() < 2 )
+        }
+        if (s.length() < 2) {
             return s;
-
-        char first = s.charAt( 0 );
-        char last = s.charAt( s.length() - 1 );
-        if( first != last || (first != '"' && first != '\'') )
+        }
+        char first = s.charAt(0);
+        char last = s.charAt(s.length() - 1);
+        if (first != last || (first != '"' && first != '\'')) {
             return s;
-
-        StringBuffer b = new StringBuffer( s.length() - 2 );
-        synchronized( b )
-        {
+        }
+        StringBuffer b = new StringBuffer(s.length() - 2);
+        synchronized (b) {
             boolean quote = false;
-            for( int i = 1; i < s.length() - 1; i++ )
-            {
-                char c = s.charAt( i );
-
-                if( c == '\\' && !quote )
-                {
+            for (int i = 1; i < s.length() - 1; i++) {
+                char c = s.charAt(i);
+                if (c == '\\' && !quote) {
                     quote = true;
                     continue;
                 }
                 quote = false;
-                b.append( c );
+                b.append(c);
             }
-
             return b.toString();
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

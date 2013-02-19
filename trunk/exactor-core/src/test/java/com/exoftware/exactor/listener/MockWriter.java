@@ -38,27 +38,22 @@ import java.io.IOException;
 import java.io.StringWriter;
 
 /**
- *
  * @author Brian Swan
  */
-public class MockWriter extends StringWriter
-{
+public class MockWriter extends StringWriter {
     public boolean closeCalled;
     public boolean flushCalled;
     public boolean writeCalled;
 
-    public void close() throws IOException
-    {
+    public void close() throws IOException {
         closeCalled = true;
     }
 
-    public void flush()
-    {
+    public void flush() {
         flushCalled = true;
     }
 
-    public void write( String str )
-    {
+    public void write(String str) {
         writeCalled = true;
     }
 }

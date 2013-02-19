@@ -66,7 +66,7 @@ abstract class Parallelity implements Runnable {
         try {
             while (running) {
                 runIntern();
-                turns ++;
+                turns++;
                 try {
                     Thread.sleep(pause);
                 } catch (InterruptedException e) {

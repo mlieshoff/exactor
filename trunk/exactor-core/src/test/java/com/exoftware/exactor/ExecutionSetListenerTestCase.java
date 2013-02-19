@@ -39,8 +39,7 @@ import junit.framework.TestCase;
 /**
  * @author Brian Swan
  */
-public abstract class ExecutionSetListenerTestCase extends TestCase implements ExecutionSetListener
-{
+public abstract class ExecutionSetListenerTestCase extends TestCase implements ExecutionSetListener {
     protected int executionSetStartedCount;
     protected int executionSetEndedCount;
     protected int executionStartedCount;
@@ -53,36 +52,30 @@ public abstract class ExecutionSetListenerTestCase extends TestCase implements E
     protected Command commandedEndedParameter;
     protected Throwable commandEndedThrowable;
 
-    public void executionSetStarted( ExecutionSet es )
-    {
+    public void executionSetStarted(ExecutionSet es) {
         executionSetStartedCount++;
     }
 
-    public void executionSetEnded( ExecutionSet es )
-    {
+    public void executionSetEnded(ExecutionSet es) {
         executionSetEndedCount++;
     }
 
-    public void scriptStarted( Script s )
-    {
+    public void scriptStarted(Script s) {
         scriptStartedParameter = s;
         executionStartedCount++;
     }
 
-    public void scriptEnded( Script s )
-    {
+    public void scriptEnded(Script s) {
         scriptEndedParameter = s;
         executionEndedCount++;
     }
 
-    public void commandStarted( Command c )
-    {
+    public void commandStarted(Command c) {
         commandedStartedParameter = c;
         commandStartedCount++;
     }
 
-    public void commandEnded( Command c, Throwable t )
-    {
+    public void commandEnded(Command c, Throwable t) {
         commandedEndedParameter = c;
         commandEndedThrowable = t;
         commandEndedCount++;

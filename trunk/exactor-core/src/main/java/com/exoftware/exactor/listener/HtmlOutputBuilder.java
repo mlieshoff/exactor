@@ -2,9 +2,8 @@ package com.exoftware.exactor.listener;
 
 import java.text.MessageFormat;
 
-public class HtmlOutputBuilder
-{
-    private static final String NL = System.getProperty( "line.separator" );
+public class HtmlOutputBuilder {
+    private static final String NL = System.getProperty("line.separator");
     private static final String PASS_VALUE = "Pass";
     private static final String FAIL_VALUE = "Fail";
     private static final String PASS_LINE_VALUE = "LinePass";
@@ -63,33 +62,31 @@ public class HtmlOutputBuilder
         return MessageFormat.format(PACKAGE_SUMMARY_ROW, data);
     }
 
-    public String buildPackageSummaryTable( PackageSummary[] summaries )
-    {
-        StringBuffer result = new StringBuffer( PACKAGE_SUMMARY_TABLE_HEADER );
-        for( int i = 0; i < summaries.length; i++ )
-            result.append( buildPackageSummaryRow( summaries[i] ) );
-
-        result.append( TABLE_FOOTER );
+    public String buildPackageSummaryTable(PackageSummary[] summaries) {
+        StringBuffer result = new StringBuffer(PACKAGE_SUMMARY_TABLE_HEADER);
+        for (int i = 0; i < summaries.length; i++) {
+            result.append(buildPackageSummaryRow(summaries[i]));
+        }
+        result.append(TABLE_FOOTER);
         return result.toString();
     }
 
     public String buildScriptSummaryRow(ScriptSummary summary) {
         Object[] data = new Object[3];
         data[0] = summary.getName();
-        data[1] = passValue( summary.hasPassed() );
+        data[1] = passValue(summary.hasPassed());
         data[2] = time(summary.getExecutionTime());
         return MessageFormat.format(SCRIPT_SUMMARY_ROW, data);
     }
 
-    public String buildScriptSummaryTable( PackageSummary summary )
-    {
+    public String buildScriptSummaryTable(PackageSummary summary) {
         String[] data = new String[]{summary.getPackageName()};
-        String header = MessageFormat.format( SCRIPT_SUMMARY_TABLE_HEADER, data );
-        StringBuffer result = new StringBuffer( header );
-        for( int i = 0; i < summary.getScriptSummaries().length; i++ )
-            result.append( buildScriptSummaryRow( summary.getScriptSummaries()[i] ) );
-
-        result.append( TABLE_FOOTER );
+        String header = MessageFormat.format(SCRIPT_SUMMARY_TABLE_HEADER, data);
+        StringBuffer result = new StringBuffer(header);
+        for (int i = 0; i < summary.getScriptSummaries().length; i++) {
+            result.append(buildScriptSummaryRow(summary.getScriptSummaries()[i]));
+        }
+        result.append(TABLE_FOOTER);
         return result.toString();
     }
 
@@ -100,16 +97,14 @@ public class HtmlOutputBuilder
         data[2] = lineText(summary.getLine());
         data[3] = resultText(summary.getErrorText());
         data[4] = time(summary.getExecutionTime());
-        return MessageFormat.format( LINE_SUMMARY_ROW, data );
+        return MessageFormat.format(LINE_SUMMARY_ROW, data);
     }
 
-    private String lineText( String line )
-    {
+    private String lineText(String line) {
         return line.length() == 0 ? NBSP : line;
     }
 
-    private String resultText( String errorText )
-    {
+    private String resultText(String errorText) {
         return errorText.length() == 0 ? RESULT_OK : errorText;
     }
 
@@ -117,55 +112,48 @@ public class HtmlOutputBuilder
         return String.valueOf(time);
     }
 
-    private String passValue( boolean b )
-    {
+    private String passValue(boolean b) {
         return b ? PASS_VALUE : FAIL_VALUE;
     }
 
-    private String passValue( String s )
-    {
+    private String passValue(String s) {
         return s.length() == 0 ? PASS_LINE_VALUE : FAIL_LINE_VALUE;
     }
 
-    public String buildLineSummaryTable( ScriptSummary summary )
-    {
+    public String buildLineSummaryTable(ScriptSummary summary) {
         String[] data = new String[]{summary.getName()};
-        String header = MessageFormat.format( LINE_SUMMARY_TABLE_HEADER, data );
-        StringBuffer result = new StringBuffer( header );
-        for( int i = 0; i < summary.getLineSummaries().length; i++ )
-            result.append( buildLineSummaryRow( i, summary.getLineSummaries()[i] ) );
-
-        result.append( TABLE_FOOTER );
+        String header = MessageFormat.format(LINE_SUMMARY_TABLE_HEADER, data);
+        StringBuffer result = new StringBuffer(header);
+        for (int i = 0; i < summary.getLineSummaries().length; i++) {
+            result.append(buildLineSummaryRow(i, summary.getLineSummaries()[i]));
+        }
+        result.append(TABLE_FOOTER);
         return result.toString();
     }
 
-    public String buildHtmlHeader()
-    {
+    public String buildHtmlHeader() {
         return HTML_HEADER;
     }
 
-    public String buildHtmlFooter()
-    {
+    public String buildHtmlFooter() {
         return HTML_FOOTER;
     }
 
-    public String buildScriptSummaryTables( PackageSummary[] summaries )
-    {
+    public String buildScriptSummaryTables(PackageSummary[] summaries) {
         StringBuffer result = new StringBuffer();
-        for( int i = 0; i < summaries.length; i++ )
-            result.append( buildScriptSummaryTable( summaries[i] ) );
-
+        for (int i = 0; i < summaries.length; i++) {
+            result.append(buildScriptSummaryTable(summaries[i]));
+        }
         return result.toString();
     }
 
-    public String buildLineSummaryTables( PackageSummary[] summaries )
-    {
+    public String buildLineSummaryTables(PackageSummary[] summaries) {
         StringBuffer result = new StringBuffer();
-        for( int i = 0; i < summaries.length; i++ )
-        {
+        for (int i = 0; i < summaries.length; i++) {
             PackageSummary packageSummary = summaries[i];
-            for( int j = 0; j < packageSummary.getScriptSummaries().length; j++ )
-                result.append( buildLineSummaryTable( packageSummary.getScriptSummaries()[j] ) );
+            for (int j = 0; j < packageSummary.getScriptSummaries().length; j++) {
+                result.append(buildLineSummaryTable(packageSummary.getScriptSummaries()[j]));
+            }
         }
         return result.toString();
     }

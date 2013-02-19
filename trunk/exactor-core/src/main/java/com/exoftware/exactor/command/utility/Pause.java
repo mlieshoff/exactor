@@ -9,10 +9,8 @@ import com.exoftware.exactor.Command;
  * Pause 1000
  * </code>
  */
-public class Pause extends Command
-{
-    public void execute() throws Exception
-    {
+public class Pause extends Command {
+    public void execute() throws Exception {
         Thread.sleep(getParameter(0).intValue());
     }
 }

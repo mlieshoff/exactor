@@ -51,15 +51,15 @@ import java.util.List;
  * @author Michael Lieshoff
  */
 public enum ParallelityParameters implements ParameterDefinition {
-    @Description(text="Value for command class.")
+    @Description(text = "Value for command class.")
     COMMAND(new CommandResolver("command")),
-    @Description(text="Value for a pause in milli-seconds.")
+    @Description(text = "Value for a pause in milli-seconds.")
     PAUSE(new LongResolver("pause")),
-    @Description(text="Value for a timeout in milli-seconds.")
+    @Description(text = "Value for a timeout in milli-seconds.")
     TIMEOUT(new LongResolver("timeout")),
-    @Description(text="Value for turns.")
+    @Description(text = "Value for turns.")
     TURNS(new IntegerResolver("turns")),
-    @Description(text="Value for waiting in milli-seconds.")
+    @Description(text = "Value for waiting in milli-seconds.")
     WAIT(new LongResolver("wait"));
 
     private Resolver resolver;

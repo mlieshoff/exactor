@@ -15,6 +15,6 @@ public class Constants {
     public static final String NEW_LINE = System.getProperty("line.separator");
 
     public static String pathToTestFile(String testfile) {
-       return Constants.DATA_DIR + testfile;
+        return Constants.DATA_DIR + testfile;
     }
 }

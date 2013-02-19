@@ -1,32 +1,27 @@
 package com.exoftware.exactor.extensions;
 
-import com.exoftware.exactor.*;
+import com.exoftware.exactor.Command;
+import com.exoftware.exactor.ExecutionSet;
+import com.exoftware.exactor.ExecutionSetListener;
+import com.exoftware.exactor.Parameter;
+import com.exoftware.exactor.Script;
 import com.exoftware.exactor.command.Composite;
 
 /**
  * See method comment on <code> public void commandStarted( Command c )</code>.
  */
 
-public class SquareBracketParameterSubstitutionExtension implements ExecutionSetListener
-{
-    public void executionSetStarted( ExecutionSet es )
-    {
-
+public class SquareBracketParameterSubstitutionExtension implements ExecutionSetListener {
+    public void executionSetStarted(ExecutionSet es) {
     }
 
-    public void executionSetEnded( ExecutionSet es )
-    {
-
+    public void executionSetEnded(ExecutionSet es) {
     }
 
-    public void scriptStarted( Script s )
-    {
-
+    public void scriptStarted(Script s) {
     }
 
-    public void scriptEnded( Script s )
-    {
-
+    public void scriptEnded(Script s) {
     }
 
     /**
@@ -36,26 +31,21 @@ public class SquareBracketParameterSubstitutionExtension implements ExecutionSet
      *
      * @param c command about to be executed
      */
-    public void commandStarted( Command c )
-    {
-        if ( c instanceof Composite )
-            copyCompositeParametersIntoScriptContext( c );
-    }
-
-    private void copyCompositeParametersIntoScriptContext( Command c )
-    {
-        Parameter[] parameters = c.getParameters();
-
-        for ( int i = 0; i < parameters.length; i++ )
-        {
-            Parameter parameter = parameters[i];
-
-            c.getScript().getContext().put( "" + i, parameter.stringValue() );
+    public void commandStarted(Command c) {
+        if (c instanceof Composite) {
+            copyCompositeParametersIntoScriptContext(c);
         }
     }
 
-    public void commandEnded( Command c, Throwable t )
-    {
+    private void copyCompositeParametersIntoScriptContext(Command c) {
+        Parameter[] parameters = c.getParameters();
+        for (int i = 0; i < parameters.length; i++) {
+            Parameter parameter = parameters[i];
+            c.getScript().getContext().put("" + i, parameter.stringValue());
+        }
+    }
+
+    public void commandEnded(Command c, Throwable t) {
         //todo remove params??
     }
 }

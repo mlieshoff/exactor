@@ -37,8 +37,7 @@ package com.exoftware.exactor;
 /**
  * @author Brian Swan
  */
-public class MockExecutionSet extends ExecutionSet
-{
+public class MockExecutionSet extends ExecutionSet {
     public int scriptStartedCount;
     public int scriptEndedCount;
     public int commandStartedCount;
@@ -49,26 +48,22 @@ public class MockExecutionSet extends ExecutionSet
     public Command commandedEndedParameter;
     public Throwable commandEndedThrowable;
 
-    public void fireScriptStarted( Script s )
-    {
+    public void fireScriptStarted(Script s) {
         scriptStartedParameter = s;
         scriptStartedCount++;
     }
 
-    public void fireScriptEnded( Script s )
-    {
+    public void fireScriptEnded(Script s) {
         scriptEndedParameter = s;
         scriptEndedCount++;
     }
 
-    public void fireCommandStarted( Command c )
-    {
+    public void fireCommandStarted(Command c) {
         commandedStartedParameter = c;
         commandStartedCount++;
     }
 
-    public void fireCommandEnded( Command c, Throwable t )
-    {
+    public void fireCommandEnded(Command c, Throwable t) {
         commandedEndedParameter = c;
         commandEndedThrowable = t;
         commandEndedCount++;

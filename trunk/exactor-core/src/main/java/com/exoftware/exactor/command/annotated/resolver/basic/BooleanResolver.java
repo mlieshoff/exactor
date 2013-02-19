@@ -42,7 +42,7 @@ import com.exoftware.exactor.command.annotated.resolver.SingleFieldResolver;
  *
  * @author Michael Lieshoff
  */
-public class BooleanResolver extends SingleFieldResolver<Boolean, AnnotatedCommand>{
+public class BooleanResolver extends SingleFieldResolver<Boolean, AnnotatedCommand> {
 
     public BooleanResolver(String field) {
         super(field);

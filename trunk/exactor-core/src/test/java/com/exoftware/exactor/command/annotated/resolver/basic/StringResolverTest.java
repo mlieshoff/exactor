@@ -34,10 +34,9 @@
  *****************************************************************/
 package com.exoftware.exactor.command.annotated.resolver.basic;
 
-import junit.framework.TestCase;
-
 import com.exoftware.exactor.command.annotated.AnnotatedCommand;
 import com.exoftware.exactor.command.annotated.resolver.MockedCommand;
+import junit.framework.TestCase;
 
 /**
  * This class is a test for class StringResolver.
