@@ -11,7 +11,7 @@ public class AbbotAppletViewer extends AbstractAbbotCommand {
     }
 
     protected ReplacementDefinition[] getReplacementDefinitions() {
-        return new ReplacementDefinition[] {
+        return new ReplacementDefinition[]{
                 new ReplacementDefinition(0, "", "archive"),
                 new ReplacementDefinition(1, "", "code"),
                 new ReplacementDefinition(2, "", "height"),

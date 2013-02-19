@@ -5,7 +5,11 @@ import com.exoftware.exactor.command.abbot.Util;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Properties;
 
 /**
  * Experimental.
@@ -44,7 +48,7 @@ public class AbbotAliasGenerator {
     }
 
     private static void processClass(String componentClazzName, String testerClazzName, HashSet aliasesComposite,
-            HashSet aliasesEile) throws ClassNotFoundException, IOException {
+                                     HashSet aliasesEile) throws ClassNotFoundException, IOException {
         Class testerClazz = Class.forName(testerClazzName);
         ArrayList actionMethods = extractActionMethods(testerClazz);
         for (Iterator iterator = actionMethods.iterator(); iterator.hasNext(); ) {

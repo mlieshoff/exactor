@@ -16,7 +16,7 @@ public class AbbotAnnotation extends AbstractAbbotCommand {
     }
 
     protected ReplacementDefinition[] getReplacementDefinitions() {
-        return new ReplacementDefinition[] {
+        return new ReplacementDefinition[]{
                 new ReplacementDefinition(0, "", "component"),
                 new ReplacementDefinition(1, "", "userDismiss"),
                 new ReplacementDefinition(2, "", "x"),
