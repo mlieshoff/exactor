@@ -116,7 +116,8 @@ public class AbbotActionTest extends TestCase {
 
         public Component findComponent(String name) {
             actualComponentName = name;
-            return new Component() {};
+            return new Component() {
+            };
         }
     }
 

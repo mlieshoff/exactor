@@ -17,7 +17,7 @@ public class AbbotAction extends AbstractAbbotCommand {
     }
 
     protected ReplacementDefinition[] getReplacementDefinitions() {
-        return new ReplacementDefinition[] {
+        return new ReplacementDefinition[]{
                 new ReplacementDefinition(0, "", "class"),
                 new ReplacementDefinition(1, "", "method"),
                 new ReplacementDefinition(2, "", "args")

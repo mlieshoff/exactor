@@ -2,7 +2,11 @@ package com.exoftware.exactor.command.abbot;
 
 import abbot.finder.AWTHierarchy;
 import abbot.finder.TestHierarchy;
-import abbot.script.*;
+import abbot.script.ComponentReference;
+import abbot.script.InvalidScriptException;
+import abbot.script.Script;
+import abbot.script.Step;
+import abbot.script.StepRunner;
 import com.exoftware.exactor.command.swing.AbstractSwingCommand;
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
@@ -83,6 +87,7 @@ public abstract class AbstractAbbotCommand extends AbstractSwingCommand {
     }
 
     protected abstract ReplacementDefinition[] getReplacementDefinitions();
+
     protected abstract String getTemplateXML();
 
     protected void findAndLoadComponent() {
