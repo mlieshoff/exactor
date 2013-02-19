@@ -1,12 +1,11 @@
 package com.exoftware.exactor.command.abbot.converter;
 
-import java.io.File;
-
-import junit.framework.TestCase;
-
 import com.exoftware.exactor.Constants;
 import com.exoftware.exactor.command.abbot.Util;
 import com.exoftware.util.FileCollector;
+import junit.framework.TestCase;
+
+import java.io.File;
 
 public class AbbotToExactorConverterTest extends TestCase {
 
@@ -27,43 +26,43 @@ public class AbbotToExactorConverterTest extends TestCase {
         assertComponentXMLToExactorScript("AbbotComponent \"CLASS\" \"ID\" \"NAME\" \"INDEX\" \"PARENT\" \"WINDOW\" "
                 + "\"ROOT\" \"TITLE\" \"TAG\" \"ICON\" \"INVOKER\" \"BORDERTITLE\"",
                 "   <component class=\"CLASS\" \n"
-                + "              id=\"ID\"\n"
-                + "              index=\"INDEX\"\n"
-                + "              name=\"NAME\"\n"
-                + "              parent=\"PARENT\"\n"
-                + "              window=\"WINDOW\"\n"
-                + "              root=\"ROOT\"\n"
-                + "              title=\"TITLE\"\n"
-                + "              tag=\"TAG\"\n"
-                + "              icon=\"ICON\"\n"
-                + "              invoker=\"INVOKER\"\n"
-                + "              borderTitle=\"BORDERTITLE\"/>");
+                        + "              id=\"ID\"\n"
+                        + "              index=\"INDEX\"\n"
+                        + "              name=\"NAME\"\n"
+                        + "              parent=\"PARENT\"\n"
+                        + "              window=\"WINDOW\"\n"
+                        + "              root=\"ROOT\"\n"
+                        + "              title=\"TITLE\"\n"
+                        + "              tag=\"TAG\"\n"
+                        + "              icon=\"ICON\"\n"
+                        + "              invoker=\"INVOKER\"\n"
+                        + "              borderTitle=\"BORDERTITLE\"/>");
     }
 
     public void testConvertAbbotEventXMLToExactorScript() throws Exception {
         assertComponentXMLToExactorScript("AbbotEvent \"COMPONENT\" \"KIND\" \"TYPE\" \"X\" \"Y\" \"KEYCODE\" "
                 + "\"MODIFIERS\"",
                 "    <event component=\"COMPONENT\" "
-                + "           kind=\"KIND\" "
-                + "           type=\"TYPE\" "
-                + "           x=\"X\" "
-                + "           y=\"Y\" "
-                + "           keyCode=\"KEYCODE\" "
-                + "           modifiers=\"MODIFIERS\"  />");
+                        + "           kind=\"KIND\" "
+                        + "           type=\"TYPE\" "
+                        + "           x=\"X\" "
+                        + "           y=\"Y\" "
+                        + "           keyCode=\"KEYCODE\" "
+                        + "           modifiers=\"MODIFIERS\"  />");
     }
 
     public void testConvertAbbotLaunchXMLToExactorScript() throws Exception {
         assertEquals("AbbotLaunch \"com.exoftware.exactor.ide.ExactorIDE\" \"main\" \"[]\" \".\"",
                 AbbotToExactorConverter.processElement(Util.createElement(
-                "<launch args=\"[]\" class=\"com.exoftware.exactor.ide.ExactorIDE\" classpath=\".\" method=\"main\" />")
-                , false));
+                        "<launch args=\"[]\" class=\"com.exoftware.exactor.ide.ExactorIDE\" classpath=\".\" method=\"main\" />")
+                        , false));
     }
 
     public void testConvertAbbotLaunchXMLToExactorScript_ChangeBackSlashesToForward() throws Exception {
         assertEquals("AbbotLaunch \"com.exoftware.exactor.ide.ExactorIDE\" \"main\" \"[]\" \"c:/adir/ajar.jar\"",
                 AbbotToExactorConverter.processElement(Util.createElement(
-                "<launch args=\"[]\" class=\"com.exoftware.exactor.ide.ExactorIDE\" classpath=\"c:\\adir\\ajar.jar\" "
-                + "method=\"main\" />"), false));
+                        "<launch args=\"[]\" class=\"com.exoftware.exactor.ide.ExactorIDE\" classpath=\"c:\\adir\\ajar.jar\" "
+                                + "method=\"main\" />"), false));
     }
 
     public void testConvertAbbotActionXMLToExactorScript() throws Exception {

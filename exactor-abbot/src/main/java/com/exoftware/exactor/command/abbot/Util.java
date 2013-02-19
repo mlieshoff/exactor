@@ -9,7 +9,7 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
 
-import java.awt.Component;
+import java.awt.*;
 import java.io.*;
 import java.util.Collection;
 
@@ -17,8 +17,7 @@ import java.util.Collection;
  * Utility class containing methods used by the various Exactor Abbot commands.
  */
 
-public class Util
-{
+public class Util {
     /**
      * Create a JDom element from an XML string.
      *
@@ -26,13 +25,11 @@ public class Util
      * @return JDom element
      * @throws Exception
      */
-    public static Element createElement( String xml ) throws Exception
-    {
-        StringReader reader = new StringReader( xml );
+    public static Element createElement(String xml) throws Exception {
+        StringReader reader = new StringReader(xml);
         SAXBuilder builder = new SAXBuilder();
-        Document doc = builder.build( reader );
+        Document doc = builder.build(reader);
         Element el = doc.getRootElement();
-
         return el;
     }
 
@@ -43,131 +40,101 @@ public class Util
      * @return file content
      * @throws IOException
      */
-    public static String getFileContent( String fileName ) throws IOException
-    {
+    public static String getFileContent(String fileName) throws IOException {
         FileReader fReader = null;
         BufferedReader reader = null;
         StringBuffer result = new StringBuffer();
-
-        try
-        {
-            fReader = new FileReader( fileName );
-            reader = new BufferedReader( fReader );
+        try {
+            fReader = new FileReader(fileName);
+            reader = new BufferedReader(fReader);
             String line = reader.readLine();
-            while ( line != null )
-            {
-                result.append( line + "\n" );
+            while (line != null) {
+                result.append(line + "\n");
                 line = reader.readLine();
             }
-        }
-        finally
-        {
-            if ( reader != null )
+        } finally {
+            if (reader != null) {
                 reader.close();
-            if ( fReader != null )
+            }
+            if (fReader != null) {
                 reader.close();
+            }
         }
-
         return result.toString();
     }
 
-    static public String resolveTester( String className ) throws ClassNotFoundException
-    {
+    static public String resolveTester(String className) throws ClassNotFoundException {
         MyStep step = createStep();
-
-        return step.resolveTester( className ).getClass().getName();
+        return step.resolveTester(className).getClass().getName();
     }
 
-    private static MyStep createStep()
-    {
+    private static MyStep createStep() {
         return new MyStep();
     }
 
-    private static class MyStep extends Step
-    {
-        public MyStep()
-        {
-            super( new Resolver()
-            {
-                public ComponentReference getComponentReference( Component comp )
-                {
+    private static class MyStep extends Step {
+        public MyStep() {
+            super(new Resolver() {
+                public ComponentReference getComponentReference(Component comp) {
                     return null;
                 }
 
-                public ComponentReference addComponent( Component comp )
-                {
+                public ComponentReference addComponent(Component comp) {
                     return null;
                 }
 
-                public void addComponentReference( ComponentReference ref )
-                {
-
+                public void addComponentReference(ComponentReference ref) {
                 }
 
-                public Collection getComponentReferences()
-                {
+                public Collection getComponentReferences() {
                     return null;
                 }
 
-                public ComponentReference getComponentReference( String refid )
-                {
+                public ComponentReference getComponentReference(String refid) {
                     return null;
                 }
 
-                public Hierarchy getHierarchy()
-                {
+                public Hierarchy getHierarchy() {
                     return null;
                 }
 
-                public ClassLoader getContextClassLoader()
-                {
+                public ClassLoader getContextClassLoader() {
                     return null;
                 }
 
-                public File getDirectory()
-                {
+                public File getDirectory() {
                     return null;
                 }
 
-                public void setProperty( String name, Object value )
-                {
-
+                public void setProperty(String name, Object value) {
                 }
 
-                public Object getProperty( String name )
-                {
+                public Object getProperty(String name) {
                     return null;
                 }
 
-                public String getContext( Step step )
-                {
+                public String getContext(Step step) {
                     return null;
                 }
-            }, "" );
+            }, "");
         }
 
-        protected ComponentTester resolveTester( String className ) throws ClassNotFoundException
-        {
-            return super.resolveTester( className );
+        protected ComponentTester resolveTester(String className) throws ClassNotFoundException {
+            return super.resolveTester(className);
         }
 
-        protected void runStep() throws Throwable
-        {
-
+        protected void runStep() throws Throwable {
         }
 
-        public String getXMLTag()
-        {
+        public String getXMLTag() {
             return null;
         }
 
-        public String getUsage()
-        {
+        public String getUsage() {
             return null;
         }
 
-        public String getDefaultDescription()
-        {
+        public String getDefaultDescription() {
             return null;
         }
     }
