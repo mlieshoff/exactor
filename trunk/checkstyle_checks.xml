@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+    "-//Puppy Crawl//DTD Check Configuration 1.2//EN"
+    "http://www.puppycrawl.com/dtds/configuration_1_2.dtd">
+
+<module name="Checker">
+    <property name="charset" value="UTF-8" />
+
+    <module name="SuppressionFilter">
+        <property name="file" value="./checkstyle_suppressions.xml" />
+    </module>
+
+    <module name="SuppressionCommentFilter" />
+
+    <module name="TreeWalker">
+        <module name="EmptyBlock">
+            <property name="option" value="text" />
+        </module>
+        <module name="LeftCurly" />
+        <module name="NeedBraces">
+            <property name="tokens" value="LITERAL_DO, LITERAL_ELSE, LITERAL_IF, LITERAL_FOR, LITERAL_WHILE"/>
+        </module>
+        <module name="RightCurly" />
+        <module name="AvoidNestedBlocks" >
+            <property name="allowInSwitchCase" value="true" />
+        </module>
+
+        <module name="CovariantEquals" />
+        <module name="EmptyStatement" />
+        <module name="EqualsHashCode" />
+        <module name="HiddenField">
+            <property name="ignoreConstructorParameter" value="true" />
+            <property name="ignoreSetter" value="true" />
+        </module>
+        <module name="IllegalInstantiation" />
+        <module name="InnerAssignment" />
+        <module name="MissingSwitchDefault" />
+        <module name="SimplifyBooleanExpression" />
+        <module name="SimplifyBooleanReturn" />
+        <module name="StringLiteralEquality" />
+        <module name="SuperClone" />
+        <module name="SuperFinalize" />
+        <module name="PackageDeclaration"/>
+        <module name="DefaultComesLast" />
+
+        <module name="RedundantImport" />
+        <module name="UpperEll" />
+        <module name="ArrayTypeStyle" />
+
+        <module name="ModifierOrder" />
+
+        <!--module name="LineLength"-->
+
+        <module name="MethodParamPad"/>
+        <module name="TypecastParenPad" />
+
+        <module name="FileContentsHolder" />
+
+    </module>
+</module>
