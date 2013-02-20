@@ -36,36 +36,29 @@ package com.exoftware.exactor.command.swt.framework;
 
 import org.eclipse.swt.widgets.Widget;
 
-public abstract class ControlPropertyGetter extends ControlPropertyManager
-{
-    public ControlPropertyGetter( Widget control )
-    {
-        super( control );
+public abstract class ControlPropertyGetter extends ControlPropertyManager {
+    public ControlPropertyGetter(Widget control) {
+        super(control);
         useReflectionToGetOrSetProperty();
     }
 
-    protected Object[] getObjectParameters()
-    {
+    protected Object[] getObjectParameters() {
         return new Object[]{};
     }
 
-    String convertBooleanResultToString()
-    {
-        return convertBooleanToString( getMethodResultAsBoolean() );
+    String convertBooleanResultToString() {
+        return convertBooleanToString(getMethodResultAsBoolean());
     }
 
-    private boolean getMethodResultAsBoolean()
-    {
+    private boolean getMethodResultAsBoolean() {
         return ((Boolean) getMethodResult()).booleanValue();
     }
 
-    protected boolean isResultNull()
-    {
+    protected boolean isResultNull() {
         return getMethodResult() == null;
     }
 
-    String getMethodResultAsString()
-    {
+    String getMethodResultAsString() {
         return (getMethodResult() == null) ? "" : (String) getMethodResult();
     }
 }

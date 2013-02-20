@@ -36,20 +36,16 @@ package com.exoftware.exactor.command.swt.framework;
 
 import org.eclipse.swt.widgets.Widget;
 
-public class ComboBoxEntriesGetter extends ControlPropertyGetter
-{
-    public ComboBoxEntriesGetter( Widget control )
-    {
-        super( control );
+public class ComboBoxEntriesGetter extends ControlPropertyGetter {
+    public ComboBoxEntriesGetter(Widget control) {
+        super(control);
     }
 
-    public String get()
-    {
+    public String get() {
         return isResultNull() ? "" : getMethodResultAsString();
     }
 
-    protected String getMethodName()
-    {
+    protected String getMethodName() {
         return "buildListOfDataEntries";
     }
 }

@@ -36,22 +36,18 @@ package com.exoftware.exactor.command.swt.framework;
 
 import org.eclipse.swt.widgets.Widget;
 
-public class ControlVisibleGetter extends ControlPropertyGetter
-{
+public class ControlVisibleGetter extends ControlPropertyGetter {
     private static final String IS_VISIBLE_METHOD = "isVisible";
 
-    public ControlVisibleGetter( Widget control )
-    {
-        super( control );
+    public ControlVisibleGetter(Widget control) {
+        super(control);
     }
 
-    public String get()
-    {
+    public String get() {
         return convertBooleanResultToString();
     }
 
-    protected String getMethodName()
-    {
+    protected String getMethodName() {
         return IS_VISIBLE_METHOD;
     }
 }

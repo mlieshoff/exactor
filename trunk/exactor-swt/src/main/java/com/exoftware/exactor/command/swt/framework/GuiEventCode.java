@@ -36,67 +36,54 @@ package com.exoftware.exactor.command.swt.framework;
 
 import org.eclipse.swt.SWT;
 
-public class GuiEventCode
-{
+public class GuiEventCode {
     private int guiEventCode;
 
-    private GuiEventCode( int guiEventCode )
-    {
+    private GuiEventCode(int guiEventCode) {
         this.guiEventCode = guiEventCode;
     }
 
-    public static GuiEventCode selected()
-    {
-        return new GuiEventCode( SWT.Selection );
+    public static GuiEventCode selected() {
+        return new GuiEventCode(SWT.Selection);
     }
 
-    public static GuiEventCode click()
-    {
-        return new GuiEventCode( SWT.MouseUp );
+    public static GuiEventCode click() {
+        return new GuiEventCode(SWT.MouseUp);
     }
 
-    public static GuiEventCode keyUp()
-    {
-        return new GuiEventCode( SWT.KeyUp );
+    public static GuiEventCode keyUp() {
+        return new GuiEventCode(SWT.KeyUp);
     }
 
-    public static GuiEventCode focusIn()
-    {
-        return new GuiEventCode( SWT.FocusIn );
+    public static GuiEventCode focusIn() {
+        return new GuiEventCode(SWT.FocusIn);
     }
 
-    public int getAsInt()
-    {
+    public int getAsInt() {
         return guiEventCode;
     }
 
-    public static GuiEventCode modify()
-    {
-        return new GuiEventCode( SWT.Modify );
+    public static GuiEventCode modify() {
+        return new GuiEventCode(SWT.Modify);
     }
 
-    public static GuiEventCode mouseEnter()
-    {
-        return new GuiEventCode( SWT.MouseEnter );
+    public static GuiEventCode mouseEnter() {
+        return new GuiEventCode(SWT.MouseEnter);
     }
 
-    public static GuiEventCode mouseExit()
-    {
-        return new GuiEventCode( SWT.MouseExit );
+    public static GuiEventCode mouseExit() {
+        return new GuiEventCode(SWT.MouseExit);
     }
 
-    public static GuiEventCode focusOut()
-    {
-        return new GuiEventCode( SWT.FocusOut );
+    public static GuiEventCode focusOut() {
+        return new GuiEventCode(SWT.FocusOut);
     }
 
-    public static GuiEventCode resize()
-    {
-        return new GuiEventCode( SWT.RESIZE );
+    public static GuiEventCode resize() {
+        return new GuiEventCode(SWT.RESIZE);
     }
 
-    public static GuiEventCode doubleClick()
-    {
-        return new GuiEventCode( SWT.MouseDoubleClick );
+    public static GuiEventCode doubleClick() {
+        return new GuiEventCode(SWT.MouseDoubleClick);
     }
 }

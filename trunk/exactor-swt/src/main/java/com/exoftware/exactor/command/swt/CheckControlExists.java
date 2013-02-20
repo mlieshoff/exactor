@@ -36,23 +36,15 @@ package com.exoftware.exactor.command.swt;
 
 import org.eclipse.swt.widgets.Widget;
 
-public class CheckControlExists extends AbstractSwtCommand
-{
-    public void execute() throws Exception
-    {
-        assertEquals( "wrong value",
-                getParameter( 1 ).booleanValue(),
-                findExistingControl() != null );
+public class CheckControlExists extends AbstractSwtCommand {
+    public void execute() throws Exception {
+        assertEquals("wrong value", getParameter(1).booleanValue(), findExistingControl() != null);
     }
 
-    private Widget findExistingControl()
-    {
-        try
-        {
+    private Widget findExistingControl() {
+        try {
             return findControl();
-        }
-        catch( Throwable e )
-        {
+        } catch (Throwable e) {
             return null;
         }
     }

@@ -36,12 +36,8 @@ package com.exoftware.exactor.command.swt;
 
 import com.exoftware.exactor.command.swt.framework.ControlVisibleGetter;
 
-public class CheckControlVisible extends AbstractSwtCommand
-{
-    public void execute() throws Exception
-    {
-        assertEquals( "wrong value",
-                getParameter( 1 ).stringValue(),
-                new ControlVisibleGetter( findControl() ).get() );
+public class CheckControlVisible extends AbstractSwtCommand {
+    public void execute() throws Exception {
+        assertEquals("wrong value", getParameter(1).stringValue(), new ControlVisibleGetter(findControl()).get());
     }
 }

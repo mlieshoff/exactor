@@ -36,12 +36,8 @@ package com.exoftware.exactor.command.swt;
 
 import com.exoftware.exactor.command.swt.framework.ControlTextGetter;
 
-public class CheckValueOfText extends AbstractSwtCommand
-{
-    public void execute()
-    {
-        assertEquals( "wrong text",
-                getParameter( 1 ).stringValue(),
-                new ControlTextGetter( findControl() ).get() );
+public class CheckValueOfText extends AbstractSwtCommand {
+    public void execute() {
+        assertEquals("wrong text", getParameter(1).stringValue(), new ControlTextGetter(findControl()).get());
     }
 }

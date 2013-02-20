@@ -36,12 +36,8 @@ package com.exoftware.exactor.command.swt;
 
 import com.exoftware.exactor.command.swt.framework.TableRowGetter;
 
-public class CheckValueOfRow extends AbstractSwtCommand
-{
-    public void execute() throws Exception
-    {
-        assertEquals( "wrong value",
-                getParameter( 1 ).stringValue(),
-                new TableRowGetter( findControl() ).get() );
+public class CheckValueOfRow extends AbstractSwtCommand {
+    public void execute() throws Exception {
+        assertEquals("wrong value", getParameter(1).stringValue(), new TableRowGetter(findControl()).get());
     }
 }

@@ -36,35 +36,29 @@ package com.exoftware.exactor.command.swt.framework;
 
 import org.eclipse.swt.widgets.Widget;
 
-public class ControlSelectionSetter extends ControlPropertyManager
-{
+public class ControlSelectionSetter extends ControlPropertyManager {
     private boolean booleanProperty;
 
-    public ControlSelectionSetter( Widget control, boolean booleanProperty )
-    {
-        super( control );
+    public ControlSelectionSetter(Widget control, boolean booleanProperty) {
+        super(control);
         this.booleanProperty = booleanProperty;
         useReflectionToGetOrSetProperty();
     }
 
-    public static void setSelection( Widget control, boolean booleanProperty )
-    {
-        new ControlSelectionSetter( control, booleanProperty );
+    public static void setSelection(Widget control, boolean booleanProperty) {
+        new ControlSelectionSetter(control, booleanProperty);
     }
 
-    protected String getMethodName()
-    {
+    protected String getMethodName() {
         return "setSelection";
     }
 
-    protected Class[] getClassParameters()
-    {
+    protected Class[] getClassParameters() {
         return new Class[]{boolean.class};
     }
 
-    protected Object[] getObjectParameters()
-    {
-        return new Object[]{new Boolean( booleanProperty )};
+    protected Object[] getObjectParameters() {
+        return new Object[]{new Boolean(booleanProperty)};
     }
 
 }

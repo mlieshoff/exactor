@@ -36,19 +36,16 @@ package com.exoftware.exactor.command.swt.framework;
 
 import org.eclipse.swt.widgets.Display;
 
-public class DisplayFactory
-{
+public class DisplayFactory {
     private static Display display;
 
-    public static Display get()
-    {
-        if( display == null )
+    public static Display get() {
+        if (display == null)
             display = new Display();
         return display;
     }
 
-    public static void destroy()
-    {
+    public static void destroy() {
         display.dispose();
         display = null;
     }

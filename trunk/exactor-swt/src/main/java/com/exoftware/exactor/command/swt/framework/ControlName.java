@@ -36,108 +36,84 @@ package com.exoftware.exactor.command.swt.framework;
 
 import org.eclipse.swt.widgets.Widget;
 
-public class ControlName
-{
+public class ControlName {
     private String controlName;
 
-    public ControlName( ControlName lhs, String rhs )
-    {
-        this( lhs.toString() + upperTheFirstLetter( rhs ) );
+    public ControlName(ControlName lhs, String rhs) {
+        this(lhs.toString() + upperTheFirstLetter(rhs));
     }
 
-    private static String upperTheFirstLetter( String rhs )
-    {
-        return rhs.length() == 0 ?
-                "" :
-                Character.toUpperCase( rhs.charAt( 0 ) ) + rhs.substring( 1 );
+    private static String upperTheFirstLetter(String rhs) {
+        return rhs.length() == 0 ? "" : Character.toUpperCase(rhs.charAt(0)) + rhs.substring(1);
     }
 
-    private ControlName( Object controlData )
-    {
-        this( (String) controlData );
+    private ControlName(Object controlData) {
+        this((String) controlData);
     }
 
-    public ControlName( String controlName )
-    {
+    public ControlName(String controlName) {
         this.controlName = (controlName == null) ? "" : controlName;
     }
 
-    public boolean equals( Object obj )
-    {
+    public boolean equals(Object obj) {
         ControlName rhs = (ControlName) obj;
-        return controlName.equals( rhs.controlName );
+        return controlName.equals(rhs.controlName);
     }
 
-    public String toString()
-    {
+    public String toString() {
         return controlName;
     }
 
-    public static ControlName getControlName( Widget control )
-    {
-        return controlDataIsValid( control ) ?
-                new ControlName( control.getData() ) :
-                unnamed();
+    public static ControlName getControlName(Widget control) {
+        return controlDataIsValid(control) ? new ControlName(control.getData()) : unnamed();
     }
 
-    private static ControlName unnamed()
-    {
-        return new ControlName( "" );
+    private static ControlName unnamed() {
+        return new ControlName("");
     }
 
-    private static boolean controlDataIsValid( Widget control )
-    {
-        return controlIsNotNull( control ) && controlDataIsOfTypeString( control );
+    private static boolean controlDataIsValid(Widget control) {
+        return controlIsNotNull(control) && controlDataIsOfTypeString(control);
     }
 
-    private static boolean controlIsNotNull( Widget control )
-    {
+    private static boolean controlIsNotNull(Widget control) {
         return control != null;
     }
 
-    private static boolean controlDataIsOfTypeString( Widget control )
-    {
+    private static boolean controlDataIsOfTypeString(Widget control) {
         return control.getData() instanceof String;
     }
 
-    public static void setControlName( Widget control, String controlName )
-    {
-        setControlName( control, new ControlName( controlName ) );
+    public static void setControlName(Widget control, String controlName) {
+        setControlName(control, new ControlName(controlName));
     }
 
-    public static void setControlName( Widget control, ControlName controlName )
-    {
-        control.setData( controlName.toString() );
+    public static void setControlName(Widget control, ControlName controlName) {
+        control.setData(controlName.toString());
     }
 
-    public boolean hasIndex()
-    {
+    public boolean hasIndex() {
         return getIndexOfOpenBracket() != -1;
     }
 
-    private int getIndexOfOpenBracket()
-    {
-        return controlName.indexOf( "(" );
+    private int getIndexOfOpenBracket() {
+        return controlName.indexOf("(");
     }
 
-    public static boolean hasIndex( Widget control )
-    {
-        return getControlName( control ).hasIndex();
+    public static boolean hasIndex(Widget control) {
+        return getControlName(control).hasIndex();
     }
 
-    public static int extractControlNameIndex( Widget control )
-    {
-        return getControlName( control ).extractIndex();
+    public static int extractControlNameIndex(Widget control) {
+        return getControlName(control).extractIndex();
     }
 
-    private int extractIndex()
-    {
-        return hasIndex() ? Integer.parseInt( extractIndexAsString() ) : -1;
+    private int extractIndex() {
+        return hasIndex() ? Integer.parseInt(extractIndexAsString()) : -1;
     }
 
-    private String extractIndexAsString()
-    {
+    private String extractIndexAsString() {
         final int startIndex = getIndexOfOpenBracket() + 1;
-        return controlName.substring( startIndex, startIndex + 1 );
+        return controlName.substring(startIndex, startIndex + 1);
     }
 }

@@ -36,12 +36,8 @@ package com.exoftware.exactor.command.swt;
 
 import com.exoftware.exactor.command.swt.framework.ControlEnabledGetter;
 
-public class CheckControlEnabled extends AbstractSwtCommand
-{
-    public void execute() throws Exception
-    {
-        assertEquals( "wrong value",
-                getParameter( 1 ).stringValue(),
-                new ControlEnabledGetter( findControl() ).get() );
+public class CheckControlEnabled extends AbstractSwtCommand {
+    public void execute() throws Exception {
+        assertEquals("wrong value", getParameter(1).stringValue(), new ControlEnabledGetter(findControl()).get());
     }
 }

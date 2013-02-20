@@ -34,13 +34,12 @@
  *****************************************************************/
 package com.exoftware.exactor.command.swt.framework;
 
-public class ClassParameterBuilder
-{
-    public static Class[] buildParameterClasses( Object[] parameterObjects )
-    {
+public class ClassParameterBuilder {
+    public static Class[] buildParameterClasses(Object[] parameterObjects) {
         Class[] parameterClasses = new Class[parameterObjects.length];
-        for( int i = 0; i < parameterObjects.length; i++ )
+        for (int i = 0; i < parameterObjects.length; i++) {
             parameterClasses[i] = parameterObjects[i].getClass();
+        }
         return parameterClasses;
     }
 }

@@ -39,41 +39,35 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Widget;
 
-public class ControlSelectionGetter
-{
+public class ControlSelectionGetter {
     private Widget control;
 
-    public ControlSelectionGetter( Widget control )
-    {
+    public ControlSelectionGetter(Widget control) {
         this.control = control;
     }
 
-    public String get()
-    {
-        return String.valueOf( getSelection() );
+    public String get() {
+        return String.valueOf(getSelection());
     }
 
-    private boolean getSelection()
-    {
-        if( control instanceof Button )
+    private boolean getSelection() {
+        if (control instanceof Button) {
             return ((Button) control).getSelection();
-        else if( control instanceof TableItem )
+        } else if (control instanceof TableItem) {
             return hasIndexAndCurrentRowIsSelected();
+        }
         return false;
     }
 
-    private boolean hasIndexAndCurrentRowIsSelected()
-    {
-        return ControlName.hasIndex( control ) && isCurrentRowSelected();
+    private boolean hasIndexAndCurrentRowIsSelected() {
+        return ControlName.hasIndex(control) && isCurrentRowSelected();
     }
 
-    private boolean isCurrentRowSelected()
-    {
-        return getTable().getSelectionIndex() == ControlName.extractControlNameIndex( control );
+    private boolean isCurrentRowSelected() {
+        return getTable().getSelectionIndex() == ControlName.extractControlNameIndex(control);
     }
 
-    private Table getTable()
-    {
+    private Table getTable() {
         return ((TableItem) control).getParent();
     }
 }
