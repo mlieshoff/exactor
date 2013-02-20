@@ -34,16 +34,14 @@
  *****************************************************************/
 package acceptance;
 
-import com.exoftware.exactor.Command;
 import calculator.Calculator;
+import com.exoftware.exactor.Command;
 
 /**
  * @author Brian Swan
  */
-public class StartCalculator extends Command
-{
-    public void execute() throws Exception
-    {
+public class StartCalculator extends Command {
+    public void execute() throws Exception {
         Calculator.clear();
     }
 }

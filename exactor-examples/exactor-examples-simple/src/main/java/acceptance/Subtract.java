@@ -34,19 +34,16 @@
  *****************************************************************/
 package acceptance;
 
-import com.exoftware.exactor.Command;
 import calculator.Calculator;
+import com.exoftware.exactor.Command;
 
 /**
  * @author Brian Swan
  */
-public class Subtract extends Command
-{
-    public void execute() throws Exception
-    {
-        for( int i = 0; i < countParameters(); i++ )
-        {
-            Calculator.subtract( Calculator.getResult(), getParameter( i ).intValue() );
+public class Subtract extends Command {
+    public void execute() throws Exception {
+        for (int i = 0; i < countParameters(); i++) {
+            Calculator.subtract(Calculator.getResult(), getParameter(i).intValue());
         }
     }
 }
