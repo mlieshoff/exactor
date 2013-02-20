@@ -50,10 +50,10 @@ public class TestPackageSummary extends TestCase {
         assertFalse(summary.getScriptSummaries()[0].hasPassed());
     }
 
-    private void assertSummary(PackageSummary summary, int expectedRuns, int expectedFailures, int expectedErrors) {
-        assertEquals("Incorrect run count", expectedRuns, summary.getScriptsRunCount());
-        assertEquals("Incorrect failure count", expectedFailures, summary.getFailureCount());
-        assertEquals("Incorrect error count", expectedErrors, summary.getErrorCount());
+    private void assertSummary(PackageSummary s, int expectedRuns, int expectedFailures, int expectedErrors) {
+        assertEquals("Incorrect run count", expectedRuns, s.getScriptsRunCount());
+        assertEquals("Incorrect failure count", expectedFailures, s.getFailureCount());
+        assertEquals("Incorrect error count", expectedErrors, s.getErrorCount());
     }
 
 }

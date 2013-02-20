@@ -47,5 +47,5 @@ public abstract class AbstractSwingAssertCommand extends AbstractSwingCommand {
         }
     }
 
-    abstract protected void doExecute() throws Exception;
+    protected abstract void doExecute() throws Exception;
 }

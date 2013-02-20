@@ -63,9 +63,9 @@ public class ScriptSummary {
     }
 
     private String removeExtension(File scriptFile) {
-        String name = scriptFile.getName();
-        int endIndex = name.lastIndexOf(".");
-        return endIndex == -1 ? name : name.substring(0, endIndex);
+        String s = scriptFile.getName();
+        int endIndex = s.lastIndexOf(".");
+        return endIndex == -1 ? s : s.substring(0, endIndex);
     }
 
     public String getName() {

@@ -114,10 +114,10 @@ public class ExecutionSummary {
         return System.currentTimeMillis();
     }
 
-    private String packageForScript(Script script, String packageBase) {
+    private String packageForScript(Script script, String pkgBase) {
         String scriptPath = script.getAbsolutePath();
         String scriptDir = scriptPath.substring(0, scriptPath.length() - script.getName().length());
-        String result = ClassFinder.toPackageName(scriptDir.substring(packageBase.length()));
+        String result = ClassFinder.toPackageName(scriptDir.substring(pkgBase.length()));
         if (result.endsWith(ClassFinder.PACKAGE_SEPARATOR)) {
             return result.substring(0, result.length() - 1);
         }

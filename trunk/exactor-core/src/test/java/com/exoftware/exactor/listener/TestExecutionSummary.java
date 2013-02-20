@@ -121,9 +121,9 @@ public class TestExecutionSummary extends TestCase {
         assertEquals("multipledirs.dir1", summary.getPackageSummaries()[1].getPackageName());
     }
 
-    private void assertSummary(ExecutionSummary summary, int expectedRuns, int expectedFailures, int expectedErrors) {
-        assertEquals(expectedRuns, summary.getScriptsRunCount());
-        assertEquals(expectedFailures, summary.getFailureCount());
-        assertEquals(expectedErrors, summary.getErrorCount());
+    private void assertSummary(ExecutionSummary s, int expectedRuns, int expectedFailures, int expectedErrors) {
+        assertEquals(expectedRuns, s.getScriptsRunCount());
+        assertEquals(expectedFailures, s.getFailureCount());
+        assertEquals(expectedErrors, s.getErrorCount());
     }
 }

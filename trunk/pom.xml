@@ -277,4 +277,17 @@
             <uniqueVersion>false</uniqueVersion>
         </snapshotRepository>
     </distributionManagement>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.9.1</version>
+                <configuration>
+                    <configLocation>./checkstyle_checks</configLocation>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>

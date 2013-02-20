@@ -147,6 +147,8 @@ class GenerateCommandsDoclet {
             case 3:
                 result.append("Three parameters are expected, ");
                 break;
+            default:
+                result.append("One or three parameters are expected, ");
         }
         result.append(getParameterNames(parameters, ", "));
         result.append(".");

@@ -106,16 +106,18 @@ public class SimpleListener implements ExecutionSetListener {
     }
 
     public void commandStarted(Command c) {
-        if (c instanceof Composite)
+        if (c instanceof Composite) {
             compositeLevel++;
+        }
     }
 
     public void commandEnded(Command c, Throwable t) {
-        if (c instanceof Composite)
+        if (c instanceof Composite) {
             compositeLevel--;
-
-        if (compositeLevel == 0)
+        }
+        if (compositeLevel == 0) {
             outputCommandResult(c, t);
+        }
     }
 
     protected void outputCommandResult(Command c, Throwable t) {

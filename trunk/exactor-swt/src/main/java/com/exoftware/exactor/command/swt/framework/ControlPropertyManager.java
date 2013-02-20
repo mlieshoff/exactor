@@ -60,6 +60,7 @@ public abstract class ControlPropertyManager {
         try {
             createAndInvokeMethod();
         } catch (NoSuchMethodException ignored) {
+            // ignore
         } catch (SecurityException e) {
             throw e;
         }
@@ -79,8 +80,11 @@ public abstract class ControlPropertyManager {
         try {
             invokeMethod();
         } catch (IllegalAccessException e) {
+            // ignore
         } catch (IllegalArgumentException e) {
+            // ignore
         } catch (InvocationTargetException e) {
+            // ignore
         }
     }
 

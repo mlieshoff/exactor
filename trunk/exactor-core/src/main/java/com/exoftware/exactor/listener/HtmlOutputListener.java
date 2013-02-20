@@ -93,29 +93,29 @@ public class HtmlOutputListener implements ExecutionSetListener {
         }
     }
 
-    private void writeHtml(Writer html, HtmlOutputBuilder builder) throws IOException {
-        html.write(builder.buildHtmlHeader());
-        html.write(builder.buildSummaryTable(summary));
-        html.write(builder.buildPackageSummaryTable(summary.getPackageSummaries()));
-        html.write(builder.buildScriptSummaryTables(summary.getPackageSummaries()));
-        html.write(builder.buildLineSummaryTables(summary.getPackageSummaries()));
-        html.write(builder.buildHtmlFooter());
-        html.flush();
-        html.close();
+    private void writeHtml(Writer writer, HtmlOutputBuilder builder) throws IOException {
+        writer.write(builder.buildHtmlHeader());
+        writer.write(builder.buildSummaryTable(summary));
+        writer.write(builder.buildPackageSummaryTable(summary.getPackageSummaries()));
+        writer.write(builder.buildScriptSummaryTables(summary.getPackageSummaries()));
+        writer.write(builder.buildLineSummaryTables(summary.getPackageSummaries()));
+        writer.write(builder.buildHtmlFooter());
+        writer.flush();
+        writer.close();
     }
 
-    private void writeStyleSheet(Writer styleSheet, InputStream inputStream) throws IOException {
+    private void writeStyleSheet(Writer writer, InputStream inputStream) throws IOException {
         InputStreamReader streamReader = new InputStreamReader(inputStream);
         BufferedReader in = new BufferedReader(streamReader);
         try {
             String line = in.readLine();
             while (line != null) {
-                styleSheet.write(line);
+                writer.write(line);
                 line = in.readLine();
             }
         } finally {
-            styleSheet.flush();
-            styleSheet.close();
+            writer.flush();
+            writer.close();
             inputStream.close();
             streamReader.close();
             in.close();
