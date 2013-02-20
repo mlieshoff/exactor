@@ -65,7 +65,13 @@ public class Doccer {
             for (Field field : command.getDeclaredFields()) {
                 Param param = field.getAnnotation(Param.class);
                 if (param != null) {
-                    metas.add(getMeta(param));
+                    Meta meta = getMeta(param);
+                    if (meta == null) {
+                        System.out.printf("WARN No meta-data: %s - %s -%s\n", wrappedClass.getClass().getName(), field.getName(),
+                                param.name());
+                    } else {
+                        metas.add(getMeta(param));
+                    }
                 }
             }
             data.add(new Doc(command.getSimpleName(), command.getAnnotation(Description.class), metas));

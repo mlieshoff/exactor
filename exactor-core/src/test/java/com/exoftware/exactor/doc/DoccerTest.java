@@ -35,6 +35,7 @@
 package com.exoftware.exactor.doc;
 
 import com.exoftware.exactor.command.annotated.DoclessCommand;
+import com.exoftware.exactor.command.annotated.DoclessNamespace;
 import com.exoftware.exactor.command.annotated.FooCommand;
 import com.exoftware.exactor.command.annotated.FooNamespace;
 import com.exoftware.exactor.command.annotated.ParameterType;
@@ -62,7 +63,7 @@ public class DoccerTest extends TestCase {
             if (doc.name.equals(FooCommand.class.getSimpleName())) {
                 assertEquals("The command defines the classical foo.", doc.description.text());
                 for (Doccer.Meta meta : doc.metas) {
-                    if ("string".equals(meta.param.name())) {
+                    if ("STRING".equals(meta.param.name())) {
                         assertEquals("The parameter defines a string.", meta.description.text());
                         assertEquals(FooNamespace.class, meta.param.namespace());
                         assertEquals(ParameterType.MANDATORY, meta.param.type());
@@ -72,9 +73,9 @@ public class DoccerTest extends TestCase {
             } else if (doc.name.equals(DoclessCommand.class.getSimpleName())) {
                 assertNull(doc.description);
                 for (Doccer.Meta meta : doc.metas) {
-                    if ("string".equals(meta.param.name())) {
-                        assertNull(meta.description.text());
-                        assertEquals(FooNamespace.class, meta.param.namespace());
+                    if ("STRING".equals(meta.param.name())) {
+                        assertNull(meta.description);
+                        assertEquals(DoclessNamespace.class, meta.param.namespace());
                         assertEquals(ParameterType.MANDATORY, meta.param.type());
                         assertTrue(meta.parameterDefinition.getParameterNames().contains("string"));
                     }
