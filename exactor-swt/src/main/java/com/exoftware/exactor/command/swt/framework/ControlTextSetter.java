@@ -36,31 +36,26 @@ package com.exoftware.exactor.command.swt.framework;
 
 import org.eclipse.swt.widgets.Widget;
 
-public class ControlTextSetter extends ControlPropertyManager
-{
+public class ControlTextSetter extends ControlPropertyManager {
     private static final String SET_TEXT_METHOD = "setText";
 
     private String textToSet;
 
-    private ControlTextSetter( Widget control, String textToSet )
-    {
-        super( control );
+    private ControlTextSetter(Widget control, String textToSet) {
+        super(control);
         this.textToSet = textToSet;
         useReflectionToGetOrSetProperty();
     }
 
-    public static void setText( Widget control, String textToSet )
-    {
-        new ControlTextSetter( control, textToSet );
+    public static void setText(Widget control, String textToSet) {
+        new ControlTextSetter(control, textToSet);
     }
 
-    protected String getMethodName()
-    {
+    protected String getMethodName() {
         return SET_TEXT_METHOD;
     }
 
-    protected Object[] getObjectParameters()
-    {
+    protected Object[] getObjectParameters() {
         return new Object[]{textToSet};
     }
 }

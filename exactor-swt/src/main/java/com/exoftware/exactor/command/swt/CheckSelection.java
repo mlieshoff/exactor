@@ -36,12 +36,8 @@ package com.exoftware.exactor.command.swt;
 
 import com.exoftware.exactor.command.swt.framework.ControlSelectionGetter;
 
-public class CheckSelection extends AbstractSwtCommand
-{
-    public void execute() throws Exception
-    {
-        assertEquals( "wrong value",
-                getParameter( 1 ).stringValue(),
-                new ControlSelectionGetter( findControl() ).get() );
+public class CheckSelection extends AbstractSwtCommand {
+    public void execute() throws Exception {
+        assertEquals("wrong value", getParameter(1).stringValue(), new ControlSelectionGetter(findControl()).get());
     }
 }

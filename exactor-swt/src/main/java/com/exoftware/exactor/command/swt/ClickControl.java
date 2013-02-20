@@ -36,10 +36,8 @@ package com.exoftware.exactor.command.swt;
 
 import com.exoftware.exactor.command.swt.framework.GuiEvent;
 
-public class ClickControl extends AbstractSwtCommand
-{
-    public void execute() throws Exception
-    {
-        GuiEvent.sendClickEventToControl( findControl() );
+public class ClickControl extends AbstractSwtCommand {
+    public void execute() throws Exception {
+        GuiEvent.sendClickEventToControl(findControl());
     }
 }

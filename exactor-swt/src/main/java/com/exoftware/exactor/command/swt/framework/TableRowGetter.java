@@ -37,82 +37,71 @@ package com.exoftware.exactor.command.swt.framework;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Widget;
 
-public class TableRowGetter
-{
+public class TableRowGetter {
     private static final String ERROR_MESSAGE = "<This is not a table>";
 
     private Widget control;
     private String rowDescription = "";
 
-    public TableRowGetter( Widget control )
-    {
+    public TableRowGetter(Widget control) {
         this.control = control;
         performGet();
     }
 
-    private void performGet()
-    {
-        if( isControlATableItem() )
+    private void performGet() {
+        if (isControlATableItem()) {
             buildTableRowDescription();
-        else
+        } else {
             buildErrorMessage();
+        }
     }
 
-    private boolean isControlATableItem()
-    {
-        return control.getClass().equals( TableItem.class );
+    private boolean isControlATableItem() {
+        return control.getClass().equals(TableItem.class);
     }
 
-    private void buildErrorMessage()
-    {
+    private void buildErrorMessage() {
         rowDescription = ERROR_MESSAGE;
     }
 
-    private void buildTableRowDescription()
-    {
+    private void buildTableRowDescription() {
         buildRowDescription();
         removeTrailingComma();
     }
 
-    private void removeTrailingComma()
-    {
-        if( hasColumns() )
+    private void removeTrailingComma() {
+        if (hasColumns()) {
             unguardedRemoveTrailingComma();
+        }
     }
 
-    private boolean hasColumns()
-    {
+    private boolean hasColumns() {
         return getNumberOfColumns() > 0;
     }
 
-    private void unguardedRemoveTrailingComma()
-    {
-        rowDescription = rowDescription.substring( 0, rowDescription.length() - 1 );
+    private void unguardedRemoveTrailingComma() {
+        rowDescription = rowDescription.substring(0, rowDescription.length() - 1);
     }
 
-    private void buildRowDescription()
-    {
-        for( int i = 0; i < getNumberOfColumns(); i++ )
-            rowDescription += getCell( i ) + ",";
+    private void buildRowDescription() {
+        for (int i = 0; i < getNumberOfColumns(); i++) {
+            rowDescription += getCell(i) + ",";
+        }
     }
 
-    private String getCell( int index )
-    {
-        return getTableItem().getText( index );
+    private String getCell(int index) {
+        return getTableItem().getText(index);
     }
 
-    private int getNumberOfColumns()
-    {
+    private int getNumberOfColumns() {
         return getTableItem().getParent().getColumnCount();
     }
 
-    private TableItem getTableItem()
-    {
+    private TableItem getTableItem() {
         return (TableItem) control;
     }
 
-    public String get()
-    {
+    public String get() {
         return rowDescription;
     }
 }

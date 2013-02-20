@@ -39,8 +39,7 @@ import org.eclipse.swt.widgets.Widget;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public abstract class ControlPropertyManager
-{
+public abstract class ControlPropertyManager {
     private Widget control;
     private Method method;
     private Object result;
@@ -49,92 +48,67 @@ public abstract class ControlPropertyManager
 
     protected abstract Object[] getObjectParameters();
 
-    public ControlPropertyManager( Widget control )
-    {
+    public ControlPropertyManager(Widget control) {
         this.control = control;
     }
 
-    private void invokeMethod() throws IllegalAccessException, InvocationTargetException
-    {
-        result = getMethod().invoke( getControl(), getObjectParameters() );
+    private void invokeMethod() throws IllegalAccessException, InvocationTargetException {
+        result = getMethod().invoke(getControl(), getObjectParameters());
     }
 
-    void useReflectionToGetOrSetProperty()
-    {
-        try
-        {
+    void useReflectionToGetOrSetProperty() {
+        try {
             createAndInvokeMethod();
-        }
-        catch( NoSuchMethodException ignored )
-        {
-        }
-        catch( SecurityException e )
-        {
+        } catch (NoSuchMethodException ignored) {
+        } catch (SecurityException e) {
             throw e;
         }
     }
 
-    private void createAndInvokeMethod() throws NoSuchMethodException
-    {
-        setMethod( createMethod( getMethodName(), getClassParameters() ) );
+    private void createAndInvokeMethod() throws NoSuchMethodException {
+        setMethod(createMethod(getMethodName(), getClassParameters()));
         invokeMethodCatchingException();
     }
 
-    Class[] getClassParameters()
-    {
-        return ClassParameterBuilder.buildParameterClasses( getObjectParameters() );
+    Class[] getClassParameters() {
+        return ClassParameterBuilder.buildParameterClasses(getObjectParameters());
     }
 
 
-    private void invokeMethodCatchingException()
-    {
-        try
-        {
+    private void invokeMethodCatchingException() {
+        try {
             invokeMethod();
-        }
-        catch( IllegalAccessException e )
-        {
-        }
-        catch( IllegalArgumentException e )
-        {
-        }
-        catch( InvocationTargetException e )
-        {
+        } catch (IllegalAccessException e) {
+        } catch (IllegalArgumentException e) {
+        } catch (InvocationTargetException e) {
         }
     }
 
-    private Class getControlClass()
-    {
+    private Class getControlClass() {
         return control.getClass();
     }
 
-    private Widget getControl()
-    {
+    private Widget getControl() {
         return control;
     }
 
-    private Method createMethod( String methodName, Class[] classParameters ) throws NoSuchMethodException
-    {
-        return getControlClass().getMethod( methodName, classParameters );
+    private Method createMethod(String methodName, Class[] classParameters) throws NoSuchMethodException {
+        return getControlClass().getMethod(methodName, classParameters);
     }
 
-    private void setMethod( Method method )
-    {
+    private void setMethod(Method method) {
         this.method = method;
     }
 
-    private Method getMethod()
-    {
+    private Method getMethod() {
         return method;
     }
 
-    Object getMethodResult()
-    {
+    Object getMethodResult() {
         return result;
     }
 
-    String convertBooleanToString( boolean booleanProperty )
-    {
+    String convertBooleanToString(boolean booleanProperty) {
         return booleanProperty ? "true" : "false";
     }
 

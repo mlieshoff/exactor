@@ -40,29 +40,24 @@ import com.exoftware.exactor.command.swt.framework.ControlSearcher;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Widget;
 
-public abstract class AbstractSwtCommand extends Command
-{
+public abstract class AbstractSwtCommand extends Command {
     public static final String ROOT_SWT_SHELL = "RootComposite";
 
-    protected Widget findControl()
-    {
-        String controlName = getParameter( 0 ).stringValue();
-        ControlSearcher controlSearcher = new ControlSearcher( getRootComposite(), new ControlName( controlName ) );
+    protected Widget findControl() {
+        String controlName = getParameter(0).stringValue();
+        ControlSearcher controlSearcher = new ControlSearcher(getRootComposite(), new ControlName(controlName));
         Widget control = controlSearcher.searchForControl();
-
-        if( control == null )
-            fail( "could not find control: " + controlName );
-
+        if (control == null) {
+            fail("could not find control: " + controlName);
+        }
         return control;
     }
 
-    private Composite getRootComposite()
-    {
-        Composite rootComposite = (Composite) getScript().getContext().get( ROOT_SWT_SHELL );
-
-        if( rootComposite == null )
-            fail( ROOT_SWT_SHELL + " has not been added to context" );
-
+    private Composite getRootComposite() {
+        Composite rootComposite = (Composite) getScript().getContext().get(ROOT_SWT_SHELL);
+        if (rootComposite == null) {
+            fail(ROOT_SWT_SHELL + " has not been added to context");
+        }
         return rootComposite;
     }
 }

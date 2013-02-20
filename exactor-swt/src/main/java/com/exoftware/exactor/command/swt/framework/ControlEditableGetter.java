@@ -36,20 +36,16 @@ package com.exoftware.exactor.command.swt.framework;
 
 import org.eclipse.swt.widgets.Widget;
 
-public class ControlEditableGetter extends ControlPropertyGetter
-{
-    public ControlEditableGetter( Widget control )
-    {
-        super( control );
+public class ControlEditableGetter extends ControlPropertyGetter {
+    public ControlEditableGetter(Widget control) {
+        super(control);
     }
 
-    public String get()
-    {
+    public String get() {
         return convertBooleanResultToString();
     }
 
-    protected String getMethodName()
-    {
+    protected String getMethodName() {
         return "getEditable";
     }
 

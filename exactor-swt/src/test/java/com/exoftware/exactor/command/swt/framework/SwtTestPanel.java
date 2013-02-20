@@ -13,8 +13,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 
-public class SwtTestPanel extends Composite
-{
+public class SwtTestPanel extends Composite {
     public static final int NUM_COLUMNS = 3;
     public static final String NUM1_HEADER_TEXT = "Number 1";
     public static final String NUM2_HEADER_TEXT = "Number 2";
@@ -43,28 +42,24 @@ public class SwtTestPanel extends Composite
     private Table table;
     private Button testButton;
 
-    public SwtTestPanel( Composite composite )
-    {
-        super( composite, SWT.NONE );
+    public SwtTestPanel(Composite composite) {
+        super(composite, SWT.NONE);
         setUp();
     }
 
-    private void setUp()
-    {
+    private void setUp() {
         setLayout();
         addComponents();
         addCalculateButtonListener();
     }
 
-    private void setLayout()
-    {
+    private void setLayout() {
         final GridLayout gridLayout = new GridLayout();
         gridLayout.numColumns = NUM_COLUMNS;
-        setLayout( gridLayout );
+        setLayout(gridLayout);
     }
 
-    private void addComponents()
-    {
+    private void addComponents() {
         addLabels();
         addTextBoxes();
         addCalculateButton();
@@ -76,92 +71,76 @@ public class SwtTestPanel extends Composite
 
     }
 
-    private void addTable()
-    {
-        table = new Table( this, SWT.BORDER );
-        ControlName.setControlName( table, "tblTable" );
+    private void addTable() {
+        table = new Table(this, SWT.BORDER);
+        ControlName.setControlName(table, "tblTable");
     }
 
-    private void addOptionButtons()
-    {
-        option1 = new Button( this, SWT.RADIO );
-        ControlName.setControlName( option1, "optTest" );
-        option2 = new Button( this, SWT.RADIO );
-        ControlName.setControlName( option2, "optTest1" );
-        option3 = new Button( this, SWT.RADIO );
-        ControlName.setControlName( option3, "optTest2" );
+    private void addOptionButtons() {
+        option1 = new Button(this, SWT.RADIO);
+        ControlName.setControlName(option1, "optTest");
+        option2 = new Button(this, SWT.RADIO);
+        ControlName.setControlName(option2, "optTest1");
+        option3 = new Button(this, SWT.RADIO);
+        ControlName.setControlName(option3, "optTest2");
     }
 
-    private void addListenerLabel()
-    {
-        GuiEvent.addClickListener( clickControl, new Listener()
-        {
-            public void handleEvent( Event event )
-            {
+    private void addListenerLabel() {
+        GuiEvent.addClickListener(clickControl, new Listener() {
+            public void handleEvent(Event event) {
                 clickControlMessageSent = true;
             }
-        } );
+        });
 
     }
 
-    private void addCheckBox()
-    {
-        check = new Button( this, SWT.CHECK );
-        ControlName.setControlName( check, CHECK_BOX );
+    private void addCheckBox() {
+        check = new Button(this, SWT.CHECK);
+        ControlName.setControlName(check, CHECK_BOX);
     }
 
-    private void addComboBox()
-    {
-        combo = new Combo( this, SWT.BORDER );
-
-        ControlName.setControlName( combo, COMBO_BOX );
+    private void addComboBox() {
+        combo = new Combo(this, SWT.BORDER);
+        ControlName.setControlName(combo, COMBO_BOX);
     }
 
-    private void addCalculateButton()
-    {
-        testButton = new Button( this, SWT.PUSH );
-        testButton.setText( CALCULATE_TEXT );
-        ControlName.setControlName( testButton, CTRL_BUTTON );
+    private void addCalculateButton() {
+        testButton = new Button(this, SWT.PUSH);
+        testButton.setText(CALCULATE_TEXT);
+        ControlName.setControlName(testButton, CTRL_BUTTON);
     }
 
-    private void addTextBoxes()
-    {
-        txtTest = createTextBox( CTRL_TEXT );
-        uneditable = createTextBox( "txtUneditable" );
-        uneditable.setEditable( false );
-        disabled = createTextBox( "txtDisabled" );
-        disabled.setEnabled( false );
+    private void addTextBoxes() {
+        txtTest = createTextBox(CTRL_TEXT);
+        uneditable = createTextBox("txtUneditable");
+        uneditable.setEditable(false);
+        disabled = createTextBox("txtDisabled");
+        disabled.setEnabled(false);
     }
 
-    private Text createTextBox( String controlName )
-    {
-        final Text text = new Text( this, SWT.BORDER );
-        ControlName.setControlName( text, controlName );
+    private Text createTextBox(String controlName) {
+        final Text text = new Text(this, SWT.BORDER);
+        ControlName.setControlName(text, controlName);
         return text;
     }
 
-    private void addLabels()
-    {
-        clickControl = createHeaderLabel( "lblSwtTest" );
+    private void addLabels() {
+        clickControl = createHeaderLabel("lblSwtTest");
     }
 
-    private Label createHeaderLabel( String headerText )
-    {
-        Label label = new Label( this, SWT.NONE );
-        label.setText( headerText );
-        ControlName.setControlName( label, headerText );
+    private Label createHeaderLabel(String headerText) {
+        Label label = new Label(this, SWT.NONE);
+        label.setText(headerText);
+        ControlName.setControlName(label, headerText);
         return label;
     }
 
-    private void addCalculateButtonListener()
-    {
-        testButton.addSelectionListener( new SelectionAdapter()
-        {
-            public void widgetSelected( SelectionEvent event )
-            {
+    private void addCalculateButtonListener() {
+        testButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent event) {
                 testButtonPressed = true;
             }
-        } );
+        });
     }
 
 }

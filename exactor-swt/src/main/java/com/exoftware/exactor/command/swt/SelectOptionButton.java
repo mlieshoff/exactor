@@ -39,32 +39,30 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Control;
 
-public class SelectOptionButton extends AbstractSwtCommand
-{
-    public void execute() throws Exception
-    {
-        if( isControlAButton() )
+public class SelectOptionButton extends AbstractSwtCommand {
+    public void execute() throws Exception {
+        if (isControlAButton()) {
             selectThisButtonAndDeselectOthers();
+        }
     }
 
-    private boolean isControlAButton()
-    {
+    private boolean isControlAButton() {
         return findControl() instanceof Button;
     }
 
-    private void selectThisButtonAndDeselectOthers() throws Exception
-    {
-        getOptionButton().setSelection( true );
+    private void selectThisButtonAndDeselectOthers() throws Exception {
+        getOptionButton().setSelection(true);
         Control[] children = getOptionButton().getParent().getChildren();
-        for( int i = 0; i < children.length; i++ )
-            if( children[i] instanceof Button && ((children[i].getStyle() & SWT.RADIO) != 0) && children[i] != getOptionButton() )
-                ((Button) children[i]).setSelection( false );
-        GuiEvent.sendSelectionEventToControl( getOptionButton() );
-
+        for (int i = 0; i < children.length; i++) {
+            if (children[i] instanceof Button && ((children[i].getStyle() & SWT.RADIO) != 0)
+                    && children[i] != getOptionButton()) {
+                ((Button) children[i]).setSelection(false);
+            }
+        }
+        GuiEvent.sendSelectionEventToControl(getOptionButton());
     }
 
-    private Button getOptionButton() throws Exception
-    {
+    private Button getOptionButton() throws Exception {
         return (Button) findControl();
     }
 }

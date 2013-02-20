@@ -37,11 +37,9 @@ package com.exoftware.exactor.command.swt;
 import com.exoftware.exactor.command.swt.framework.ControlSelectionSetter;
 import com.exoftware.exactor.command.swt.framework.GuiEvent;
 
-public class ClickCheckbox extends AbstractSwtCommand
-{
-    public void execute() throws Exception
-    {
-        ControlSelectionSetter.setSelection( findControl(), getParameter( 1 ).booleanValue() );
-        GuiEvent.sendSelectionEventToControl( findControl() );
+public class ClickCheckbox extends AbstractSwtCommand {
+    public void execute() throws Exception {
+        ControlSelectionSetter.setSelection(findControl(), getParameter(1).booleanValue());
+        GuiEvent.sendSelectionEventToControl(findControl());
     }
 }

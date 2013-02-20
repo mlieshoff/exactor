@@ -36,12 +36,9 @@ package com.exoftware.exactor.command.swt;
 
 import com.exoftware.exactor.command.swt.framework.ControlTextSetter;
 
-public class InputText extends AbstractSwtCommand
-{
-    public void execute() throws Exception
-    {
-        ControlTextSetter.setText( findControl(),
-                getParameter( 1 ).stringValue() );
+public class InputText extends AbstractSwtCommand {
+    public void execute() throws Exception {
+        ControlTextSetter.setText(findControl(), getParameter(1).stringValue());
     }
 }
 

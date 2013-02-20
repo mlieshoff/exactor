@@ -36,22 +36,18 @@ package com.exoftware.exactor.command.swt.framework;
 
 import org.eclipse.swt.widgets.Widget;
 
-public class ControlTextGetter extends ControlPropertyGetter
-{
+public class ControlTextGetter extends ControlPropertyGetter {
     private static final String GET_TEXT_METHOD = "getText";
 
-    public ControlTextGetter( Widget control )
-    {
-        super( control );
+    public ControlTextGetter(Widget control) {
+        super(control);
     }
 
-    public String get()
-    {
+    public String get() {
         return getMethodResultAsString();
     }
 
-    protected String getMethodName()
-    {
+    protected String getMethodName() {
         return GET_TEXT_METHOD;
     }
 }

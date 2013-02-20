@@ -34,113 +34,104 @@
  *****************************************************************/
 package com.exoftware.exactor.command.swt.framework;
 
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.Widget;
 
-public class ControlSearcher
-{
+public class ControlSearcher {
     private Composite rootComposite;
     private ControlName key;
     private Widget match;
 
-    public ControlSearcher( Composite rootComposite, ControlName key )
-    {
+    public ControlSearcher(Composite rootComposite, ControlName key) {
         this.rootComposite = rootComposite;
         this.key = key;
         search();
     }
 
-    private void search()
-    {
+    private void search() {
         searchTheRootComposite();
         searchTheRootShellsAndMenu();
     }
 
-    private void searchTheRootComposite()
-    {
-        searchChildren( rootComposite.getChildren() );
+    private void searchTheRootComposite() {
+        searchChildren(rootComposite.getChildren());
     }
 
-    private void searchTheRootShellsAndMenu()
-    {
+    private void searchTheRootShellsAndMenu() {
         searchTheRootShells();
         searchTheRootMenuItems();
     }
 
-    private void searchTheRootMenuItems()
-    {
-        if( hasAMenuBar() )
-            searchChildren( rootComposite.getShell().getMenuBar().getItems() );
+    private void searchTheRootMenuItems() {
+        if (hasAMenuBar()) {
+            searchChildren(rootComposite.getShell().getMenuBar().getItems());
+        }
     }
 
-    private boolean hasAMenuBar()
-    {
+    private boolean hasAMenuBar() {
         return rootComposite.getShell().getMenuBar() != null;
     }
 
-    private void searchTheRootShells()
-    {
-        searchChildren( rootComposite.getShell().getShells() );
+    private void searchTheRootShells() {
+        searchChildren(rootComposite.getShell().getShells());
     }
 
-    private void searchChildren( Widget[] children )
-    {
-        for( int i = 0; i < children.length; i++ )
-            searchThisControl( children[i] );
+    private void searchChildren(Widget[] children) {
+        for (int i = 0; i < children.length; i++) {
+            searchThisControl(children[i]);
+        }
     }
 
-    private void searchThisControl( Widget control )
-    {
-        if( thisControlIsAMatch( control ) )
-            saveReferenceToControl( control );
-        else
-            recursivelySearchThisControlsChildren( control );
+    private void searchThisControl(Widget control) {
+        if (thisControlIsAMatch(control)) {
+            saveReferenceToControl(control);
+        } else {
+            recursivelySearchThisControlsChildren(control);
+        }
     }
 
-    private void recursivelySearchThisControlsChildren( Widget control )
-    {
-        if( control instanceof Table )
-            searchTableItems( control );
-        else if( control instanceof MenuItem )
-            searchMenuItems( control );
-        else if( control instanceof Composite )
-            searchCompositeChildren( control );
+    private void recursivelySearchThisControlsChildren(Widget control) {
+        if (control instanceof Table) {
+            searchTableItems(control);
+        } else if (control instanceof MenuItem) {
+            searchMenuItems(control);
+        } else if (control instanceof Composite) {
+            searchCompositeChildren(control);
+        }
     }
 
-    private void searchMenuItems( Widget control )
-    {
+    private void searchMenuItems(Widget control) {
         Menu menu = ((MenuItem) control).getMenu();
-        if( menu != null )
-            searchChildren( menu.getItems() );
+        if (menu != null) {
+            searchChildren(menu.getItems());
+        }
     }
 
-    private void searchCompositeChildren( Widget control )
-    {
-        searchChildren( ((Composite) control).getChildren() );
+    private void searchCompositeChildren(Widget control) {
+        searchChildren(((Composite) control).getChildren());
     }
 
-    private void searchTableItems( Widget control )
-    {
-        searchChildren( ((Table) control).getChildren() );
-        searchChildren( ((Table) control).getItems() );
+    private void searchTableItems(Widget control) {
+        searchChildren(((Table) control).getChildren());
+        searchChildren(((Table) control).getItems());
     }
 
-    private void saveReferenceToControl( Widget control )
-    {
+    private void saveReferenceToControl(Widget control) {
         match = control;
     }
 
-    private boolean thisControlIsAMatch( Widget control )
-    {
-        return ControlName.getControlName( control ).equals( key );
+    private boolean thisControlIsAMatch(Widget control) {
+        return ControlName.getControlName(control).equals(key);
     }
 
-    public boolean exists()
-    {
+    public boolean exists() {
         return match != null;
     }
 
-    public Widget searchForControl()
-    {
+    public Widget searchForControl() {
         return match;
     }
 

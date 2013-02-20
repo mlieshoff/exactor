@@ -36,12 +36,8 @@ package com.exoftware.exactor.command.swt;
 
 import com.exoftware.exactor.command.swt.framework.ComboBoxEntriesGetter;
 
-public class CheckComboBoxEntries extends AbstractSwtCommand
-{
-    public void execute() throws Exception
-    {
-        assertEquals( "wrong value",
-                getParameter( 1 ).stringValue(),
-                new ComboBoxEntriesGetter( findControl() ).get() );
+public class CheckComboBoxEntries extends AbstractSwtCommand {
+    public void execute() throws Exception {
+        assertEquals("wrong value", getParameter(1).stringValue(), new ComboBoxEntriesGetter(findControl()).get());
     }
 }
