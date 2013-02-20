@@ -44,7 +44,7 @@ public class Idioms {
     /**
      * This class support an idiom to do something until a timeout was reached, or something returns true.
      */
-    public static abstract class UntilTimeoutDo {
+    public abstract static class UntilTimeoutDo {
         public boolean run(long timeout) {
             for (long i = 0, stop = System.currentTimeMillis(); i < stop + timeout; i = System.currentTimeMillis()) {
                 if (action()) {

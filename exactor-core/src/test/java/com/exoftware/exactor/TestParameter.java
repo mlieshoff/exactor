@@ -119,9 +119,9 @@ public class TestParameter extends TestCase {
     }
 
     public void testSetCommand() {
-        SampleCommand command = new SampleCommand();
-        parameter.setCommand(command);
-        assertSame(command, parameter.getCommand());
+        SampleCommand c = new SampleCommand();
+        parameter.setCommand(c);
+        assertSame(c, parameter.getCommand());
     }
 
     public void testSubstitutionFromScriptContext() {

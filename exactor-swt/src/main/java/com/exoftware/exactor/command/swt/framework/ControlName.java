@@ -55,11 +55,18 @@ public class ControlName {
         this.controlName = (controlName == null) ? "" : controlName;
     }
 
+    @Override
     public boolean equals(Object obj) {
         ControlName rhs = (ControlName) obj;
         return controlName.equals(rhs.controlName);
     }
 
+    @Override
+    public int hashCode() {
+        return controlName != null ? controlName.hashCode() : 0;
+    }
+
+    @Override
     public String toString() {
         return controlName;
     }

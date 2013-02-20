@@ -102,8 +102,8 @@ public class Runner {
         this.baseDir = setBaseDir(this.file);
     }
 
-    private String setBaseDir(File file) {
-        return file.isDirectory() ? file.getAbsolutePath() : file.getParent();
+    private String setBaseDir(File dir) {
+        return dir.isDirectory() ? dir.getAbsolutePath() : dir.getParent();
     }
 
     /**

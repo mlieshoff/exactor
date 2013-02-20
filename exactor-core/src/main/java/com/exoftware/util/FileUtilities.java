@@ -43,10 +43,12 @@ public class FileUtilities {
                 result.append((char) reader.read());
             }
         } finally {
-            if (reader != null)
+            if (reader != null) {
                 reader.close();
-            if (fReader != null)
+            }
+            if (fReader != null) {
                 fReader.close();
+            }
         }
         return result.toString();
     }

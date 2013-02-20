@@ -50,7 +50,7 @@ import java.util.StringTokenizer;
  * @see java.util.StringTokenizer
  */
 public class QuotedStringTokenizer extends StringTokenizer {
-    private final static String WHITESPACE = "\t\n\r";
+    private static final String WHITESPACE = "\t\n\r";
 
     private String _string;
     private String _delim = WHITESPACE;
@@ -102,7 +102,8 @@ public class QuotedStringTokenizer extends StringTokenizer {
                     if (_delim.indexOf(c) >= 0) {
                         if (_returnTokens) {
                             _token.append(c);
-                            return _hasToken = true;
+                            _hasToken = true;
+                            return _hasToken;
                         }
                     } else if (c == '\'') {
                         if (_returnQuotes) {
@@ -120,7 +121,6 @@ public class QuotedStringTokenizer extends StringTokenizer {
                         state = 1;
                     }
                     continue;
-
                 case 1: // Token
                     _hasToken = true;
                     if (_delim.indexOf(c) >= 0) {
@@ -138,11 +138,10 @@ public class QuotedStringTokenizer extends StringTokenizer {
                             _token.append(c);
                         }
                         state = 3;
-                    } else
+                    } else {
                         _token.append(c);
+                    }
                     continue;
-
-
                 case 2: // Single Quote
                     _hasToken = true;
                     if (escape) {
@@ -158,11 +157,10 @@ public class QuotedStringTokenizer extends StringTokenizer {
                             _token.append(c);
                         }
                         escape = true;
-                    } else
+                    } else {
                         _token.append(c);
+                    }
                     continue;
-
-
                 case 3: // Double Quote
                     _hasToken = true;
                     if (escape) {
@@ -178,8 +176,11 @@ public class QuotedStringTokenizer extends StringTokenizer {
                             _token.append(c);
                         }
                         escape = true;
-                    } else
+                    } else {
                         _token.append(c);
+                    }
+                    break;
+                default:
             }
         }
         return _hasToken;

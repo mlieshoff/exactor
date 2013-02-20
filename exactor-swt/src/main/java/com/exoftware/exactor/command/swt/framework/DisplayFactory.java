@@ -40,8 +40,9 @@ public class DisplayFactory {
     private static Display display;
 
     public static Display get() {
-        if (display == null)
+        if (display == null) {
             display = new Display();
+        }
         return display;
     }
 

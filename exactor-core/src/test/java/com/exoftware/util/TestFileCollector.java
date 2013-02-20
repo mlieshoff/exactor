@@ -122,9 +122,9 @@ public class TestFileCollector extends TestCase {
         assertContains("multiplefiles", files);
     }
 
-    private void assertContains(String name, File[] files) {
-        for (int i = 0; i < files.length; i++) {
-            if (files[i].getName().equals(name)) {
+    private void assertContains(String name, File[] fa) {
+        for (int i = 0; i < fa.length; i++) {
+            if (fa[i].getName().equals(name)) {
                 return;
             }
         }

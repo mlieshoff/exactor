@@ -67,7 +67,7 @@ public class Util {
         return result.toString();
     }
 
-    static public String resolveTester(String className) throws ClassNotFoundException {
+    public static String resolveTester(String className) throws ClassNotFoundException {
         MyStep step = createStep();
         return step.resolveTester(className).getClass().getName();
     }

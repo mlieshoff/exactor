@@ -263,8 +263,8 @@ public class Parameter {
         return command;
     }
 
-    private String replaceSubstitutions(String value, Map map) {
-        StringBuffer result = new StringBuffer(value);
+    private String replaceSubstitutions(String s, Map map) {
+        StringBuffer result = new StringBuffer(s);
         int subStart = result.indexOf(SUBSTITUTION_START);
         int subEnd = result.indexOf(SUBSTITUTION_END);
         while (subStart != -1 && subEnd != -1 & subEnd > subStart) {
