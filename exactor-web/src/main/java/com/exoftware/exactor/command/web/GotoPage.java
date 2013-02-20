@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class GotoPage extends WebCommand
-{
+public class GotoPage extends WebCommand {
     /**
      * Execute the command. Patch sumbitted by Alex Chaffee.
      * One parameter is expected, url.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().gotoPage( getParameter( 0 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().gotoPage(getParameter(0).stringValue());
     }
 }

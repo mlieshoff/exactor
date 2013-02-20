@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class SetFormElement extends WebCommand
-{
+public class SetFormElement extends WebCommand {
     /**
      * Execute the command. Set the value of a form input element.
      * Two parameters are expected, formElementName, value.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().setFormElement( getParameter( 0 ).stringValue(), getParameter( 1 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().setFormElement(getParameter(0).stringValue(), getParameter(1).stringValue());
     }
 }

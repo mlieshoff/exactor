@@ -12,15 +12,13 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class DumpResponse extends WebCommand
-{
+public class DumpResponse extends WebCommand {
     /**
      * Execute the command. Dump html of current response to System.out - for debugging purposes.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
+    public void execute() throws Exception {
         getWebTester().dumpResponse();
     }
 }

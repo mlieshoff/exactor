@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class CheckFormElementPresentWithLabel extends WebCommand
-{
+public class CheckFormElementPresentWithLabel extends WebCommand {
     /**
      * Execute the command. Check that a form input element with a given label is present.
      * One parameter is expected, formElementLabel.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().assertFormElementPresentWithLabel( getParameter( 0 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().assertFormElementPresentWithLabel(getParameter(0).stringValue());
     }
 }

@@ -46,8 +46,7 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class SetWorkingForm extends WebCommand
-{
+public class SetWorkingForm extends WebCommand {
     /**
      * Execute the command. Begin interaction with a specified form.  If form interaction methods are called without
      * explicitly calling this method first, jWebUnit will attempt to determine itself which form
@@ -58,8 +57,7 @@ public class SetWorkingForm extends WebCommand
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().setWorkingForm( getParameter( 0 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().setWorkingForm(getParameter(0).stringValue());
     }
 }

@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class CheckSubmitButtonPresent extends WebCommand
-{
+public class CheckSubmitButtonPresent extends WebCommand {
     /**
      * Execute the command. Check that a submit button with a given name is present.
      * One parameter is expected, buttonName.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().assertSubmitButtonPresent( getParameter( 0 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().assertSubmitButtonPresent(getParameter(0).stringValue());
     }
 }

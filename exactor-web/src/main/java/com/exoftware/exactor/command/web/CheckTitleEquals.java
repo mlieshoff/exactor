@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class CheckTitleEquals extends WebCommand
-{
+public class CheckTitleEquals extends WebCommand {
     /**
      * Execute the command. Check title of current html page in conversation matches an expected value.
      * One parameter is expected, title.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().assertTitleEquals( getParameter( 0 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().assertTitleEquals(getParameter(0).stringValue());
     }
 }

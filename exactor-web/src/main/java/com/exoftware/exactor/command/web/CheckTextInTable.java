@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class CheckTextInTable extends WebCommand
-{
+public class CheckTextInTable extends WebCommand {
     /**
      * Execute the command. Check that supplied text is present in a specific table.
      * Two parameters are expected, tableSummaryOrId, text.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().assertTextInTable( getParameter( 0 ).stringValue(), getParameter( 1 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().assertTextInTable(getParameter(0).stringValue(), getParameter(1).stringValue());
     }
 }

@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class CheckFormElementEquals extends WebCommand
-{
+public class CheckFormElementEquals extends WebCommand {
     /**
      * Execute the command. Check that a specific form element has an expected value.
      * Two parameters are expected, formElementName, expectedValue.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().assertFormElementEquals( getParameter( 0 ).stringValue(), getParameter( 1 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().assertFormElementEquals(getParameter(0).stringValue(), getParameter(1).stringValue());
     }
 }

@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class CheckKeyNotPresent extends WebCommand
-{
+public class CheckKeyNotPresent extends WebCommand {
     /**
      * Execute the command. Check that a web resource's value is not present.
      * One parameter is expected, key.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().assertKeyNotPresent( getParameter( 0 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().assertKeyNotPresent(getParameter(0).stringValue());
     }
 }

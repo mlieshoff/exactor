@@ -46,15 +46,13 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class SetBaseUrl extends WebCommand
-{
+public class SetBaseUrl extends WebCommand {
     /**
      * Execute the command.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().getTestContext().setBaseUrl( getParameter( 0 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().getTestContext().setBaseUrl(getParameter(0).stringValue());
     }
 }

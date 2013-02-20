@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class GotoRootWindow extends WebCommand
-{
+public class GotoRootWindow extends WebCommand {
     /**
      * Execute the command. Make the root window active.
      * .
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
+    public void execute() throws Exception {
         getWebTester().gotoRootWindow();
     }
 }

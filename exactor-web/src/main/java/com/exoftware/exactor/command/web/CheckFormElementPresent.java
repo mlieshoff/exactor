@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class CheckFormElementPresent extends WebCommand
-{
+public class CheckFormElementPresent extends WebCommand {
     /**
      * Execute the command. Check that a form input element with a given name is present.
      * One parameter is expected, formElementName.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().assertFormElementPresent( getParameter( 0 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().assertFormElementPresent(getParameter(0).stringValue());
     }
 }

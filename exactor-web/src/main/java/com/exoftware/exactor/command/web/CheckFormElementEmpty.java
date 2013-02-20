@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class CheckFormElementEmpty extends WebCommand
-{
+public class CheckFormElementEmpty extends WebCommand {
     /**
      * Execute the command. Check that a form element had no value / is empty.
      * One parameter is expected, formElementName.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().assertFormElementEmpty( getParameter( 0 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().assertFormElementEmpty(getParameter(0).stringValue());
     }
 }

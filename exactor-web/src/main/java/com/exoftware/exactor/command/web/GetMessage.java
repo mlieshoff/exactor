@@ -46,8 +46,7 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class GetMessage extends WebCommand
-{
+public class GetMessage extends WebCommand {
     /**
      * Execute the command. Return the value of a web resource based on its key. This translates to a
      * property file lookup with the locale based on the current TestContext.
@@ -55,8 +54,7 @@ public class GetMessage extends WebCommand
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().getMessage( getParameter( 0 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().getMessage(getParameter(0).stringValue());
     }
 }

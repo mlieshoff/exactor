@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class Reset extends WebCommand
-{
+public class Reset extends WebCommand {
     /**
      * Execute the command. Reset the current form.
      * .
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
+    public void execute() throws Exception {
         getWebTester().reset();
     }
 }

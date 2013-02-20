@@ -13,19 +13,18 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class DeselectCheckbox extends WebCommand
-{
+public class DeselectCheckbox extends WebCommand {
     /**
      * Execute the command.
      * One parameter is expected, checkBoxName. Optionally a value can be supplied.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        if( countParameters() == 2 )
-            getWebTester().uncheckCheckbox( getParameter( 0 ).stringValue(), getParameter( 1 ).stringValue() );
-        else
-            getWebTester().uncheckCheckbox( getParameter( 0 ).stringValue() );
+    public void execute() throws Exception {
+        if (countParameters() == 2) {
+            getWebTester().uncheckCheckbox(getParameter(0).stringValue(), getParameter(1).stringValue());
+        } else {
+            getWebTester().uncheckCheckbox(getParameter(0).stringValue());
+        }
     }
 }

@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class ClickLinkWithImage extends WebCommand
-{
+public class ClickLinkWithImage extends WebCommand {
     /**
      * Execute the command. Navigate by selection of a link with a given image.
      * One parameter is expected, imageFileName.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().clickLinkWithImage( getParameter( 0 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().clickLinkWithImage(getParameter(0).stringValue());
     }
 }

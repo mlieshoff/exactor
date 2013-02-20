@@ -47,8 +47,7 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class Submit extends WebCommand
-{
+public class Submit extends WebCommand {
     /**
      * Execute the command. Submit form - default submit button will be used
      * (unnamed submit button, or named button if there is only one on the form.
@@ -56,11 +55,11 @@ public class Submit extends WebCommand
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        if( countParameters() == 1 )
-            getWebTester().submit( getParameter( 0 ).stringValue() );
-        else
+    public void execute() throws Exception {
+        if (countParameters() == 1) {
+            getWebTester().submit(getParameter(0).stringValue());
+        } else {
             getWebTester().submit();
+        }
     }
 }

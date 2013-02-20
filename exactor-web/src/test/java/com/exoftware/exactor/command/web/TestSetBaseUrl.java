@@ -8,18 +8,15 @@ import com.exoftware.exactor.Parameter;
  *
  * @author Brian Swan
  */
-public class TestSetBaseUrl extends WebCommandTestCase
-{
-    protected Command getCommand()
-    {
+public class TestSetBaseUrl extends WebCommandTestCase {
+    protected Command getCommand() {
         return new SetBaseUrl();
     }
 
-    public void testDelagates() throws Exception
-    {
-        command.addParameter( new Parameter( "http://www.google.com" ) );
+    public void testDelagates() throws Exception {
+        command.addParameter(new Parameter("http://www.google.com"));
         command.execute();
         MockTestContext testContext = (MockTestContext) webTester.getTestContext();
-        assertEquals( "http://www.google.com", testContext.getBaseUrl() );
+        assertEquals("http://www.google.com", testContext.getBaseUrl());
     }
 }

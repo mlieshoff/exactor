@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class CheckFramePresent extends WebCommand
-{
+public class CheckFramePresent extends WebCommand {
     /**
      * Execute the command. Check that a frame with the given name is present.
      * One parameter is expected, frameName.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().assertFramePresent( getParameter( 0 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().assertFramePresent(getParameter(0).stringValue());
     }
 }

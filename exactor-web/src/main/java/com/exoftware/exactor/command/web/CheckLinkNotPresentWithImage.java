@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class CheckLinkNotPresentWithImage extends WebCommand
-{
+public class CheckLinkNotPresentWithImage extends WebCommand {
     /**
      * Execute the command. Check that a link containing a specified image is not present.
      * One parameter is expected, imageFileName.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().assertLinkNotPresentWithImage( getParameter( 0 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().assertLinkNotPresentWithImage(getParameter(0).stringValue());
     }
 }

@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class CheckRadioOptionNotSelected extends WebCommand
-{
+public class CheckRadioOptionNotSelected extends WebCommand {
     /**
      * Execute the command. Check that a specific option is not selected in a radio group.
      * Two parameters are expected, name, radioOption.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().assertRadioOptionNotSelected( getParameter( 0 ).stringValue(), getParameter( 1 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().assertRadioOptionNotSelected(getParameter(0).stringValue(), getParameter(1).stringValue());
     }
 }

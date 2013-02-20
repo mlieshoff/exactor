@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class ClickButton extends WebCommand
-{
+public class ClickButton extends WebCommand {
     /**
      * Execute the command. Click the button with the given id.
      * One parameter is expected, buttonId.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().clickButton( getParameter( 0 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().clickButton(getParameter(0).stringValue());
     }
 }

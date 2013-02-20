@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class ClickLink extends WebCommand
-{
+public class ClickLink extends WebCommand {
     /**
      * Execute the command. Navigate by selection of a link with given id.
      * One parameter is expected, linkId.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().clickLink( getParameter( 0 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().clickLink(getParameter(0).stringValue());
     }
 }

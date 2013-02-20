@@ -47,8 +47,7 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class CheckFormPresent extends WebCommand
-{
+public class CheckFormPresent extends WebCommand {
     /**
      * Execute the command. Check that there is a form present.
      * If a parameter is supplied the command checks for a form with the
@@ -56,11 +55,11 @@ public class CheckFormPresent extends WebCommand
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        if( countParameters() == 1 )
-            getWebTester().assertFormPresent( getParameter( 0 ).stringValue() );
-        else
+    public void execute() throws Exception {
+        if (countParameters() == 1) {
+            getWebTester().assertFormPresent(getParameter(0).stringValue());
+        } else {
             getWebTester().assertFormPresent();
+        }
     }
 }

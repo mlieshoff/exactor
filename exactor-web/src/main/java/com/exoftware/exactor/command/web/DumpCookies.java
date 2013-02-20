@@ -46,15 +46,13 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class DumpCookies extends WebCommand
-{
+public class DumpCookies extends WebCommand {
     /**
      * Execute the command.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
+    public void execute() throws Exception {
         getWebTester().dumpCookies();
     }
 }

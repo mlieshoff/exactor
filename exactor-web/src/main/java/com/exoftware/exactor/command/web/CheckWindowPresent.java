@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class CheckWindowPresent extends WebCommand
-{
+public class CheckWindowPresent extends WebCommand {
     /**
      * Execute the command. Check that a window with the given name is open.
      * One parameter is expected, windowName.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().assertWindowPresent( getParameter( 0 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().assertWindowPresent(getParameter(0).stringValue());
     }
 }

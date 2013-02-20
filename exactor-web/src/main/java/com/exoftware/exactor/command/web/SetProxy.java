@@ -49,12 +49,10 @@ import net.sourceforge.jwebunit.TestContext;
  *
  * @author Brian Swan
  */
-public class SetProxy extends WebCommand
-{
-    public void execute() throws Exception
-    {
+public class SetProxy extends WebCommand {
+    public void execute() throws Exception {
         TestContext context = getWebTester().getTestContext();
-        context.setProxyName( getParameter( 0 ).stringValue() );
-        context.setProxyPort( getParameter( 1 ).intValue() );
+        context.setProxyName(getParameter(0).stringValue());
+        context.setProxyPort(getParameter(1).intValue());
     }
 }
