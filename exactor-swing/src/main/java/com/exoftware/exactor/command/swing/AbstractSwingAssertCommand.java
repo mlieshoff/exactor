@@ -10,49 +10,42 @@ import java.lang.reflect.InvocationTargetException;
  *
  * @author Sean Hanly
  */
-public abstract class AbstractSwingAssertCommand extends AbstractSwingCommand
-{
-   private Exception exception = null;
+public abstract class AbstractSwingAssertCommand extends AbstractSwingCommand {
+    private Exception exception = null;
 
-   public synchronized void execute() throws Exception
-   {
-      exception = null;
-      SwingUtilities.invokeAndWait( new Runnable()
-      {
-         public void run()
-         {
-            try
-            {
-               doExecute();
+    public synchronized void execute() throws Exception {
+        exception = null;
+        SwingUtilities.invokeAndWait(new Runnable() {
+            public void run() {
+                try {
+                    doExecute();
+                } catch (Exception e) {
+                    exception = e;
+                }
             }
-            catch ( Exception e )
-            {
-               exception =  e;
-            }
-         }
-      } );
+        });
 
-      if ( exception != null )
-         handleException();
-   }
+        if (exception != null) {
+            handleException();
+        }
+    }
 
-   private void handleException() throws Exception
-   {
-      if(exception instanceof InvocationTargetException)
-         handleInvocationException();
-      else
-         throw exception;
-   }
+    private void handleException() throws Exception {
+        if (exception instanceof InvocationTargetException) {
+            handleInvocationException();
+        } else {
+            throw exception;
+        }
+    }
 
-   private void handleInvocationException() throws Exception
-   {
-      Throwable cause = ( ( InvocationTargetException ) exception ).getCause();
+    private void handleInvocationException() throws Exception {
+        Throwable cause = ((InvocationTargetException) exception).getCause();
+        if (cause instanceof AssertionFailedError) {
+            throw (AssertionFailedError) cause;
+        } else {
+            throw exception;
+        }
+    }
 
-      if(cause instanceof AssertionFailedError)
-         throw (AssertionFailedError) cause;
-      else
-         throw exception;
-   }
-
-   abstract protected void doExecute() throws Exception;
+    abstract protected void doExecute() throws Exception;
 }
