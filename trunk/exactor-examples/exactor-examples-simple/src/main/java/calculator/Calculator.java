@@ -37,37 +37,30 @@ package calculator;
 /**
  * @author Brian Swan
  */
-public class Calculator
-{
+public class Calculator {
     private static int result;
 
-    public static void clear()
-    {
+    public static void clear() {
         result = 0;
     }
 
-    public static void add( int op1, int op2 )
-    {
+    public static void add(int op1, int op2) {
         result = op1 + op2;
     }
 
-    public static int getResult()
-    {
+    public static int getResult() {
         return result;
     }
 
-    public static void subtract( int op1, int op2 )
-    {
+    public static void subtract(int op1, int op2) {
         result = op1 - op2;
     }
 
-    public static void multiply( int op1, int op2 )
-    {
+    public static void multiply(int op1, int op2) {
         result = op1 * op2;
     }
 
-    public static void divide( int op1, int op2 )
-    {
+    public static void divide(int op1, int op2) {
         result = op1 / op2;
     }
 }

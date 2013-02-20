@@ -34,16 +34,14 @@
  *****************************************************************/
 package acceptance;
 
-import com.exoftware.exactor.Command;
 import calculator.Calculator;
+import com.exoftware.exactor.Command;
 
 /**
  * @author Brian Swan
  */
-public class CheckResultEquals extends Command
-{
-    public void execute() throws Exception
-    {
-        assertEquals( getParameter( 0 ).intValue(), Calculator.getResult() );
+public class CheckResultEquals extends Command {
+    public void execute() throws Exception {
+        assertEquals(getParameter(0).intValue(), Calculator.getResult());
     }
 }

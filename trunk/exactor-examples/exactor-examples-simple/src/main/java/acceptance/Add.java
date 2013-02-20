@@ -40,13 +40,10 @@ import com.exoftware.exactor.Command;
 /**
  * @author Brian Swan
  */
-public class Add extends Command
-{
-    public void execute() throws Exception
-    {
-        for( int i = 0; i < countParameters(); i++ )
-        {
-            Calculator.add( Calculator.getResult(), getParameter( i ).intValue() );
+public class Add extends Command {
+    public void execute() throws Exception {
+        for (int i = 0; i < countParameters(); i++) {
+            Calculator.add(Calculator.getResult(), getParameter(i).intValue());
         }
     }
 }
