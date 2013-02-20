@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class CheckLinkNotPresent extends WebCommand
-{
+public class CheckLinkNotPresent extends WebCommand {
     /**
      * Execute the command. Check that no link with the given id is present in the response.
      * One parameter is expected, linkId.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().assertLinkNotPresent( getParameter( 0 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().assertLinkNotPresent(getParameter(0).stringValue());
     }
 }

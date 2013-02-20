@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class GetTestContext extends WebCommand
-{
+public class GetTestContext extends WebCommand {
     /**
      * Execute the command. Provide access to test context.
      * .
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
+    public void execute() throws Exception {
         getWebTester().getTestContext();
     }
 }

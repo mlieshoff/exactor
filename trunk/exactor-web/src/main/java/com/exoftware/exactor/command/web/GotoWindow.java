@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class GotoWindow extends WebCommand
-{
+public class GotoWindow extends WebCommand {
     /**
      * Execute the command. Make a given window active (current response will be window's contents).
      * One parameter is expected, windowName.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().gotoWindow( getParameter( 0 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().gotoWindow(getParameter(0).stringValue());
     }
 }

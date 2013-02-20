@@ -47,8 +47,7 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class CheckLinkNotPresentWithText extends WebCommand
-{
+public class CheckLinkNotPresentWithText extends WebCommand {
     /**
      * Execute the command. Check that no link containing the supplied text is present.
      * One parameter is expected, linkText. If more than one link with the same text is expected
@@ -56,11 +55,11 @@ public class CheckLinkNotPresentWithText extends WebCommand
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        if( countParameters() == 2 )
-            getWebTester().assertLinkNotPresentWithText( getParameter( 0 ).stringValue(), getParameter( 1 ).intValue() );
-        else
-            getWebTester().assertLinkNotPresentWithText( getParameter( 0 ).stringValue() );
+    public void execute() throws Exception {
+        if (countParameters() == 2) {
+            getWebTester().assertLinkNotPresentWithText(getParameter(0).stringValue(), getParameter(1).intValue());
+        } else {
+            getWebTester().assertLinkNotPresentWithText(getParameter(0).stringValue());
+        }
     }
 }

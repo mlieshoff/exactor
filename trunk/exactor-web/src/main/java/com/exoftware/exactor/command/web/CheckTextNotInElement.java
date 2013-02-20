@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class CheckTextNotInElement extends WebCommand
-{
+public class CheckTextNotInElement extends WebCommand {
     /**
      * Execute the command.
      * Two parameters are expected, elementID, text.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().assertTextNotInElement( getParameter( 0 ).stringValue(), getParameter( 1 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().assertTextNotInElement(getParameter(0).stringValue(), getParameter(1).stringValue());
     }
 }

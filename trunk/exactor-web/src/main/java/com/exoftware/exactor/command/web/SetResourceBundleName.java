@@ -46,15 +46,13 @@ package com.exoftware.exactor.command.web;
  *
  * @author Patsy Phelan
  */
-public class SetResourceBundleName extends WebCommand
-{
+public class SetResourceBundleName extends WebCommand {
     /**
      * Execute the command.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().getTestContext().setResourceBundleName( getParameter( 0 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().getTestContext().setResourceBundleName(getParameter(0).stringValue());
     }
 }

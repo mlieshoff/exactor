@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class CheckTitleEqualsKey extends WebCommand
-{
+public class CheckTitleEqualsKey extends WebCommand {
     /**
      * Execute the command. Check title of current html page matches the value of a specified web resource.
      * One parameter is expected, titleKey.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().assertTitleEqualsKey( getParameter( 0 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().assertTitleEqualsKey(getParameter(0).stringValue());
     }
 }

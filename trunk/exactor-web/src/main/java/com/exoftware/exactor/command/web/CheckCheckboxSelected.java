@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class CheckCheckboxSelected extends WebCommand
-{
+public class CheckCheckboxSelected extends WebCommand {
     /**
      * Execute the command. Check that a specific checkbox is selected.
      * One parameter is expected, checkBoxName.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().assertCheckboxSelected( getParameter( 0 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().assertCheckboxSelected(getParameter(0).stringValue());
     }
 }

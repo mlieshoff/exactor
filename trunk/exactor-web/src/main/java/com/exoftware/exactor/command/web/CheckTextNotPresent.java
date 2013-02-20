@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class CheckTextNotPresent extends WebCommand
-{
+public class CheckTextNotPresent extends WebCommand {
     /**
      * Execute the command. Check that supplied text is not present.
      * One parameter is expected, text.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().assertTextNotPresent( getParameter( 0 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().assertTextNotPresent(getParameter(0).stringValue());
     }
 }

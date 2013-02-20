@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class CheckElementPresent extends WebCommand
-{
+public class CheckElementPresent extends WebCommand {
     /**
      * Execute the command. Check that an element with a given id is present.
      * One parameter is expected, anID.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().assertElementPresent( getParameter( 0 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().assertElementPresent(getParameter(0).stringValue());
     }
 }

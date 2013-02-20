@@ -46,8 +46,7 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class ClickLinkWithTextAfterText extends WebCommand
-{
+public class ClickLinkWithTextAfterText extends WebCommand {
     /**
      * Execute the command. Search for labelText in the document, then search forward until
      * finding a link called linkText.  Click it.
@@ -55,8 +54,7 @@ public class ClickLinkWithTextAfterText extends WebCommand
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().clickLinkWithTextAfterText( getParameter( 0 ).stringValue(), getParameter( 1 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().clickLinkWithTextAfterText(getParameter(0).stringValue(), getParameter(1).stringValue());
     }
 }

@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class BeginAt extends WebCommand
-{
+public class BeginAt extends WebCommand {
     /**
      * Execute the command. Begin conversation at a url relative to the application root.
      * One parameter is expected, relativeURL.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().beginAt( getParameter( 0 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().beginAt(getParameter(0).stringValue());
     }
 }

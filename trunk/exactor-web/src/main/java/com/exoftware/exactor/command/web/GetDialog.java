@@ -46,8 +46,7 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class GetDialog extends WebCommand
-{
+public class GetDialog extends WebCommand {
     /**
      * Execute the command. Provides access to the httpunit wrapper for subclasses - in case functionality not
      * yet wrappered required by test.
@@ -55,8 +54,7 @@ public class GetDialog extends WebCommand
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
+    public void execute() throws Exception {
         getWebTester().getDialog();
     }
 }

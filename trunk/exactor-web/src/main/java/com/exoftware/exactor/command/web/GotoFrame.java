@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class GotoFrame extends WebCommand
-{
+public class GotoFrame extends WebCommand {
     /**
      * Execute the command. Make the named frame active (current response will be frame's contents).
      * One parameter is expected, frameName.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().gotoFrame( getParameter( 0 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().gotoFrame(getParameter(0).stringValue());
     }
 }

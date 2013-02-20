@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class CheckOptionEquals extends WebCommand
-{
+public class CheckOptionEquals extends WebCommand {
     /**
      * Execute the command. Check that the currently selected display value of a select box matches a given value.
      * Two parameters are expected, selectName, option.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().assertOptionEquals( getParameter( 0 ).stringValue(), getParameter( 1 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().assertOptionEquals(getParameter(0).stringValue(), getParameter(1).stringValue());
     }
 }

@@ -46,8 +46,7 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class CheckCookiePresent extends WebCommand
-{
+public class CheckCookiePresent extends WebCommand {
     /**
      * Execute the command. Checks to see if a cookie is present in the response.
      * Contributed by Vivek Venugopalan.
@@ -55,8 +54,7 @@ public class CheckCookiePresent extends WebCommand
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().assertCookiePresent( getParameter( 0 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().assertCookiePresent(getParameter(0).stringValue());
     }
 }

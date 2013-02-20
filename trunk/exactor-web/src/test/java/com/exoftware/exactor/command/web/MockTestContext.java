@@ -1,138 +1,110 @@
 package com.exoftware.exactor.command.web;
 
+import com.meterware.httpunit.WebClient;
+import net.sourceforge.jwebunit.TestContext;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import net.sourceforge.jwebunit.TestContext;
-
-import com.meterware.httpunit.WebClient;
-
 /**
  * @author Brian Swan
  */
-public class MockTestContext extends TestContext
-{
+public class MockTestContext extends TestContext {
     private String baseUrl;
 
-    public void setAuthorization( String s, String s1 )
-    {
+    public void setAuthorization(String s, String s1) {
     }
 
-    public void addCookie( String s, String s1 )
-    {
+    public void addCookie(String s, String s1) {
     }
 
-    public boolean hasAuthorization()
-    {
+    public boolean hasAuthorization() {
         return false;
     }
 
-    public boolean hasCookies()
-    {
+    public boolean hasCookies() {
         return false;
     }
 
-    public String getUser()
-    {
+    public String getUser() {
         return null;
     }
 
-    public String getPassword()
-    {
+    public String getPassword() {
         return null;
     }
 
-    public List getCookies()
-    {
+    public List getCookies() {
         return new ArrayList();
     }
 
-    public String getUserAgent()
-    {
+    public String getUserAgent() {
         return null;
     }
 
-    public void setUserAgent( String s )
-    {
+    public void setUserAgent(String s) {
     }
 
-    public boolean hasUserAgent()
-    {
+    public boolean hasUserAgent() {
         return false;
     }
 
-    public Locale getLocale()
-    {
+    public Locale getLocale() {
         return null;
     }
 
-    public void setLocale( Locale locale )
-    {
+    public void setLocale(Locale locale) {
     }
 
-    public String getEncodingScheme()
-    {
+    public String getEncodingScheme() {
         return null;
     }
 
-    public void setEncodingScheme( String s )
-    {
+    public void setEncodingScheme(String s) {
     }
 
-    public String toEncodedString( String s )
-    {
+    public String toEncodedString(String s) {
         return null;
     }
 
-    public void setResourceBundleName( String s )
-    {
+    public void setResourceBundleName(String s) {
     }
 
-    public String getResourceBundleName()
-    {
+    public String getResourceBundleName() {
         return null;
     }
 
-    public String getProxyName()
-    {
+    public String getProxyName() {
         return null;
     }
 
-    public void setProxyName( String s )
-    {
+    public void setProxyName(String s) {
     }
 
-    public int getProxyPort()
-    {
+    public int getProxyPort() {
         return 0;
     }
 
-    public void setProxyPort( int i )
-    {
+    public void setProxyPort(int i) {
     }
 
-    public boolean hasProxy()
-    {
+    public boolean hasProxy() {
         return false;
     }
 
-    public String getBaseUrl()
-    {
+    public String getBaseUrl() {
         return baseUrl;
     }
 
-    public void setBaseUrl( String s )
-    {
+    public void setBaseUrl(String s) {
         baseUrl = s;
     }
 
-    public void setWebClient( WebClient webClient )
-    {
+    public void setWebClient(WebClient webClient) {
     }
 
-    public WebClient getWebClient()
-    {
+    public WebClient getWebClient() {
         return null;
     }
 }

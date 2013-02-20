@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class CheckKeyInTable extends WebCommand
-{
+public class CheckKeyInTable extends WebCommand {
     /**
      * Execute the command. Check that the value of a given web resource is present in a specific table.
      * Two parameters are expected, tableSummaryOrId, key.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().assertKeyInTable( getParameter( 0 ).stringValue(), getParameter( 1 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().assertKeyInTable(getParameter(0).stringValue(), getParameter(1).stringValue());
     }
 }

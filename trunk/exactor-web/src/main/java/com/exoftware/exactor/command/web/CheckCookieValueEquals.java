@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class CheckCookieValueEquals extends WebCommand
-{
+public class CheckCookieValueEquals extends WebCommand {
     /**
      * Execute the command.
      * Two parameters are expected, cookieName, expectedValue.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().assertCookieValueEquals( getParameter( 0 ).stringValue(), getParameter( 1 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().assertCookieValueEquals(getParameter(0).stringValue(), getParameter(1).stringValue());
     }
 }

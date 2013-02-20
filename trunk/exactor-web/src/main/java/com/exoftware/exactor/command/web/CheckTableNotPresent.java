@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class CheckTableNotPresent extends WebCommand
-{
+public class CheckTableNotPresent extends WebCommand {
     /**
      * Execute the command. Check that a table with a given summary or id value is not present.
      * One parameter is expected, tableSummaryOrId.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().assertTableNotPresent( getParameter( 0 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().assertTableNotPresent(getParameter(0).stringValue());
     }
 }

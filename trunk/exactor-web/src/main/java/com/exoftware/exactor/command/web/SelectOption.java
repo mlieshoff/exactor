@@ -46,16 +46,14 @@ package com.exoftware.exactor.command.web;
  *
  * @author Brian Swan
  */
-public class SelectOption extends WebCommand
-{
+public class SelectOption extends WebCommand {
     /**
      * Execute the command. Select an option with a given display value in a select element.
      * Two parameters are expected, selectName, option.
      *
      * @throws Exception is an error occurs.
      */
-    public void execute() throws Exception
-    {
-        getWebTester().selectOption( getParameter( 0 ).stringValue(), getParameter( 1 ).stringValue() );
+    public void execute() throws Exception {
+        getWebTester().selectOption(getParameter(0).stringValue(), getParameter(1).stringValue());
     }
 }

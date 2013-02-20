@@ -42,8 +42,7 @@ import net.sourceforge.jwebunit.WebTester;
  *
  * @author Brian Swan
  */
-public class WebCommand extends Command
-{
+public class WebCommand extends Command {
     private static final String WEBTESTER_KEY = "webtester";
 
     /**
@@ -51,11 +50,10 @@ public class WebCommand extends Command
      *
      * @return the <code>WebTester</code> for this script context.
      */
-    public WebTester getWebTester()
-    {
-        if( !getScript().getContext().containsKey( WEBTESTER_KEY ) )
-            getScript().getContext().put( WEBTESTER_KEY, new WebTester() );
-
-        return (WebTester) getScript().getContext().get( WEBTESTER_KEY );
+    public WebTester getWebTester() {
+        if (!getScript().getContext().containsKey(WEBTESTER_KEY)) {
+            getScript().getContext().put(WEBTESTER_KEY, new WebTester());
+        }
+        return (WebTester) getScript().getContext().get(WEBTESTER_KEY);
     }
 }
