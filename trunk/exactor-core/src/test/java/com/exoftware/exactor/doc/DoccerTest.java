@@ -50,15 +50,8 @@ import java.util.Set;
  */
 public class DoccerTest extends TestCase {
 
-    private static final String[] IGNORES = new String[]{
-            "idea_rt.jar",
-            "tools.jar",
-            "rt.jar",
-            "org.eclipse.swt.gtk.linux.x86_64-4.2.1.jar"
-    };
-
     public void testDoc() throws NoSuchFieldException {
-        Set<Doccer.Doc> result = new Doccer().transform(IGNORES);
+        Set<Doccer.Doc> result = new Doccer().transform(new String[]{});
         for (Doccer.Doc doc : result) {
             if (doc.name.equals(FooCommand.class.getSimpleName())) {
                 assertEquals("The command defines the classical foo.", doc.description.text());
