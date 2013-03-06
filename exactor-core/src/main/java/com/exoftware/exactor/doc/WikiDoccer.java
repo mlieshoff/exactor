@@ -34,6 +34,8 @@
  *****************************************************************/
 package com.exoftware.exactor.doc;
 
+import com.exoftware.util.FileUtilities;
+
 import java.util.List;
 import java.util.Set;
 
@@ -42,16 +44,18 @@ import java.util.Set;
  */
 public class WikiDoccer {
 
-    public static void main(String[] args) throws NoSuchFieldException {
-//        if (args == null || args.length != 1) {
-//            System.out.println("Usage: WikiDoccer [outfile]");
-//            System.exit(1);
-//        }
-        String[] includeJars = new String[]{};
-        if (args != null && args.length == 1) {
-            includeJars = args[0].split("[,]");
+    public static void main(String[] args) throws Exception {
+        if (args == null || args.length < 1) {
+            System.out.println("Usage: WikiDoccer <outfile>  [list of included jars]");
+            System.out.println("       WikiDoccer myDocs.txt \"project1.jar,examples.jar\"");
+            System.exit(1);
         }
-        System.out.println(new WikiDoccer().doc(new Doccer().transform(includeJars)));
+        String[] includeJars = new String[]{};
+        if (args != null && args.length == 2) {
+            includeJars = args[1].split("[,]");
+        }
+        String out = new WikiDoccer().doc(new Doccer().transform(includeJars));
+        FileUtilities.writeToFile(args[0], out, false);
     }
 
     private String doc(Set<Doccer.Doc> docs) {
@@ -84,14 +88,6 @@ public class WikiDoccer {
             }
         }
         return s.toString();
-    }
-
-    private String anchor(String name) {
-        return line(String.format("{anchor:%s}", getString(name)));
-    }
-
-    private String link(String name) {
-        return line(String.format("[%s#there]", getString(name)));
     }
 
     private String h1(String name) {
