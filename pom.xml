@@ -114,8 +114,8 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
                     <overview>/exactor-core/src/test/overview.html</overview>
-                    <public>true</public>
-                    <version>[2.6]</version>
+                    <show>public</show>
+                    <version>true</version>
                     <aggregate>false</aggregate>
                     <excludePackageNames>*.internal*</excludePackageNames>
                     <detectJavaApiLink>false</detectJavaApiLink>
@@ -124,9 +124,10 @@
                     <links>
                         <link>http://java.sun.com/j2se/1.5.0/docs/api/</link>
                     </links>
-                    <group title="Exactor core" packages="com.exoftware.exactor"/>
-                    <group title="Exactor commands"
-                           packages="com.exoftware.exactor.command.web:com.exoftware.exactor.command.swt"/>
+                    <groups>
+                        <group title="Exactor core" packages="com.exoftware.exactor"/>
+                        <group title="Exactor commands" packages="com.exoftware.exactor.command.web:com.exoftware.exactor.command.swt"/>
+                    </groups>
                 </configuration>
                 <executions>
                     <execution>
@@ -149,7 +150,7 @@
 
     <modules>
         <module>exactor-core</module>
-        <module>exactor-core-act</module>
+        <!--module>exactor-core-act</module-->
         <module>exactor-abbot</module>
         <module>exactor-swing</module>
         <module>exactor-swt</module>
