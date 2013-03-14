@@ -82,9 +82,25 @@ public class ScriptParser {
         }
         Script result = new Script(file);
         String[] lines = FileUtilities.linesFromFile(file);
+        StringBuilder buffer = new StringBuilder();
+        int multiLine = -1;
         for (int i = 0; i < lines.length; i++) {
             String line = lines[i];
-            parseLine(result, line, i);
+            if (line.endsWith("\\")) {
+            	buffer.append(line.substring(0,  line.length() - 1));
+            	if (multiLine == -1) {
+            		multiLine = i;
+            	}
+            } else {
+            	if (buffer.length() > 0) {
+                	buffer.append(line);
+                    parseLine(result, buffer.toString(), multiLine);
+                    buffer.setLength(0);
+                    multiLine = -1;
+            	} else {
+                    parseLine(result, line, i);
+            	}
+            }
         }
         return result;
     }
