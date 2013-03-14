@@ -123,4 +123,15 @@ public class TestScriptParser extends TestCase {
         assertEquals(2, script.getCommand(0).getLineNumber());
         assertEquals(4, script.getCommand(1).getLineNumber());
     }
+    
+    public void testParseFileWithMultiLines() throws Exception {
+        file = new File(Constants.DATA_DIR + "multilines.act");
+        Script script = scriptParser.parse(file);
+        assertNotNull(script);
+        assertEquals(3, script.countCommands());
+        assertEquals(2, script.getCommand(0).getLineNumber());
+        assertEquals(6, script.getCommand(1).getLineNumber());
+        assertEquals(11, script.getCommand(2).getLineNumber());
+    }
+
 }
