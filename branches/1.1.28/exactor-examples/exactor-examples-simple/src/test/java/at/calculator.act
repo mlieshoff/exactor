@@ -1,0 +1,18 @@
+# Simple example of a calculator
+# acceptance test.
+
+# Test zero initially
+StartCalculator
+CheckResultEquals	 0
+
+# Test addition
+Add	                 4	5	1
+CheckResultEquals	10
+
+# Test subtraction
+Subtract	         6
+CheckResultEquals	 4
+Subtract 	         1	2
+CheckResultEquals	 1
+
+# more tests...

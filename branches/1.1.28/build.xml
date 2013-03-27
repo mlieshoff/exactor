@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="exactor" default="release">
+    <description>EXACTOR project.</description>
+
+    <property name="release.name" value="exactor"/>
+    <property name="release.version" value="1.1.28"/>
+    <property name="release.dir" value="target"/>
+
+    <property name="tmp.dir" value="tmp"/>
+
+    <property name="release.file" value="${release.dir}/${release.name}-${release.version}.zip"/>
+    <property name="release.doc.file" value="${release.dir}/${release.name}-docs-${release.version}.jar"/>
+
+    <target name="release" description="makes releases of all.">
+        <release-examples project="${release.name}-examples-composite"/>
+        <release-examples project="${release.name}-examples-simple"/>
+        <release-examples project="${release.name}-examples-swt"/>
+        <release-examples project="${release.name}-examples-web"/>
+        <release-project project="${release.name}-core"/>
+        <release-project project="${release.name}-swing"/>
+        <release-project project="${release.name}-abbot"/>
+        <release-project project="${release.name}-swt"/>
+        <release-project project="${release.name}-web"/>
+        <delete file="${release.file}"/>
+        <delete file="${release.dir}/${release.name}-${release.version}-tests.jar"/>
+        <zip destfile="${release.file}">
+            <zipfileset dir="target" prefix="">
+                <include name="**/*.*" />
+                <exclude name="site/**/*.*" />
+            </zipfileset>
+            <zipfileset dir="docs" prefix="docs">
+                <include name="**/*.*" />
+            </zipfileset>
+            <zipfileset dir="scripts" prefix="bin">
+                <include name="**/*.*" />
+            </zipfileset>
+        </zip>
+    </target>
+
+    <macrodef name="release-examples">
+        <attribute name="project"/>
+        <sequential>
+            <delete dir="${tmp.dir}"/>
+            <mkdir dir="${tmp.dir}"/>
+            <unzip src="exactor-examples/@{project}/target/@{project}-${release.version}.jar" dest="${tmp.dir}" />
+            <mkdir dir="${release.dir}"/>
+            <delete file="${release.dir}/@{project}-${release.version}.jar"/>
+            <zip destfile="${release.dir}/@{project}-${release.version}.jar">
+                <zipfileset dir="${tmp.dir}" prefix="">
+                    <include name="**/*" />
+                </zipfileset>
+            </zip>
+            <delete file="${release.dir}/@{project}-sources-${release.version}.jar"/>
+            <zip destfile="${release.dir}/@{project}-sources-${release.version}.jar">
+                <zipfileset dir="exactor-examples/@{project}/src/main" prefix="">
+                    <include name="**/*.*" />
+                </zipfileset>
+            </zip>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="release-project">
+        <attribute name="project"/>
+        <sequential>
+            <delete dir="${tmp.dir}"/>
+            <mkdir dir="${tmp.dir}"/>
+            <unzip src="@{project}/target/@{project}-${release.version}.jar" dest="${tmp.dir}" />
+            <mkdir dir="${release.dir}"/>
+            <delete file="${release.dir}/@{project}-${release.version}.jar"/>
+            <zip destfile="${release.dir}/@{project}-${release.version}.jar">
+                <zipfileset dir="${tmp.dir}" prefix="">
+                    <include name="**/*" />
+                </zipfileset>
+            </zip>
+            <delete file="${release.dir}/@{project}-sources-${release.version}.jar"/>
+            <zip destfile="${release.dir}/@{project}-sources-${release.version}.jar">
+                <zipfileset dir="@{project}/src/main" prefix="">
+                    <include name="**/*.*" />
+                </zipfileset>
+            </zip>
+            <delete file="${release.dir}/@{project}-docs-${release.version}.jar"/>
+            <zip destfile="${release.dir}/@{project}-docs-${release.version}.jar">
+                <zipfileset dir="@{project}/target/apidocs" prefix="">
+                    <include name="**/*.*" />
+                </zipfileset>
+            </zip>
+        </sequential>
+    </macrodef>
+
+        <!--replace file="${dist.docs.dir}/download.html" token="@release@" value="${ant.project.name}-${build.number}"/-->
+
+</project>

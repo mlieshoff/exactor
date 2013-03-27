@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>exactor</groupId>
+        <artifactId>exactor</artifactId>
+        <version>1.1.28</version>
+    </parent>
+    <groupId>exactor.abbot</groupId>
+    <artifactId>exactor-abbot</artifactId>
+    <packaging>jar</packaging>
+    <name>exactor-abbot</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>exactor.core</groupId>
+            <artifactId>exactor-core</artifactId>
+            <version>${version}</version>
+        </dependency>
+        <dependency>
+            <groupId>exactor.swing</groupId>
+            <artifactId>exactor-swing</artifactId>
+            <version>${version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>exactor.core</groupId>
+            <artifactId>exactor-core</artifactId>
+            <version>${version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>
