@@ -24,11 +24,6 @@
             <version>1.2</version>
         </dependency>
         <dependency>
-            <groupId>com.sun.phobos</groupId>
-            <artifactId>jdom</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
             <groupId>exactor.core</groupId>
             <artifactId>exactor-core</artifactId>
             <version>${version}</version>
