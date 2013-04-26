@@ -22,3 +22,17 @@ Then add following dependency (depends on what you want, as example exactor-core
     <scope>test</scope>
 </dependency>
 }}}
+
+You will need the wagon connector to access the google repo
+
+{{{
+<build>
+    <extensions>
+        <extension>
+            <groupId>org.jvnet.wagon-svn</groupId>
+            <artifactId>wagon-svn</artifactId>
+            <version>1.9</version>
+        </extension>
+    </extensions>
+</build>
+}}}
