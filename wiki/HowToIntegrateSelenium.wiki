@@ -1,5 +1,7 @@
 #summary How to integrate Selenium?
 
+[edit]In version 1.1.29 Selenium ist supported by default in the described way here with support for WebDrivers too.[/edit]
+
 Kerry Buckley
 
 November 16th, 2006 at 2:09 pm
