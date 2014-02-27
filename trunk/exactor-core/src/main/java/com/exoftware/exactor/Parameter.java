@@ -286,4 +286,13 @@ public class Parameter {
         return restartReplacementFrom;
     }
 
+    /**
+     * Returns the original value of the parameter.
+     *
+     * @return original value of the parameter.
+     */
+    public String originalValue() {
+        return value;
+    }
+
 }

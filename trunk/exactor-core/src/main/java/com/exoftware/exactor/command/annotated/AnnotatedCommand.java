@@ -40,11 +40,7 @@ import com.exoftware.exactor.ValueType;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Base class for all annotated commands executed by the framework.
@@ -109,6 +105,7 @@ public class AnnotatedCommand extends Command {
     private Set<String> registeredParameterKeys = new HashSet<String>();
     private Map<Param, Field> registeredParameters = new HashMap<Param, Field>();
     private Map<String, NamedParameter> namedParameters = new HashMap<String, NamedParameter>();
+    private List<String> substituteParameters = new ArrayList<>();
 
     public AnnotatedCommand() {
         Class<?> clazz = this.getClass();
@@ -150,7 +147,7 @@ public class AnnotatedCommand extends Command {
             field.setAccessible(true);
             ParameterDefinition parameterDefinition = getParameterDefinition(param);
             checkSettingOfMandatoryParams(parameterDefinition, param);
-            setField(parameterDefinition, param, field);
+            setField(this, parameterDefinition, param, field);
         }
     }
 
@@ -163,9 +160,9 @@ public class AnnotatedCommand extends Command {
         }
     }
 
-    private void setField(ParameterDefinition parameterDefinition, Param param, Field field)
+    private void setField(AnnotatedCommand annotatedCommand, ParameterDefinition parameterDefinition, Param param, Field field)
             throws IllegalAccessException {
-        Object value = parameterDefinition.resolve(param.type(), this);
+        Object value = parameterDefinition.resolve(param.type(), annotatedCommand);
         if (value != null) {
             field.set(this, value);
         }
@@ -183,6 +180,11 @@ public class AnnotatedCommand extends Command {
             NamedParameter namedParameter = new NamedParameter(array[0], value);
             super.addParameter(namedParameter);
             namedParameters.put(namedParameter.getName(), namedParameter);
+
+            if (value != null && value.startsWith("$")) {
+                substituteParameters.add(namedParameter.getName());
+            }
+
         } else {
             throw new IllegalArgumentException(String.format(
                     "parameter '%s' is not a named parameter and cannot be used in an annotated command!", value));
@@ -221,4 +223,40 @@ public class AnnotatedCommand extends Command {
         return namedParameters.values();
     }
 
+    @Override
+    public void substituteParameters(Parameter[] substitutions) throws RuntimeException {
+        if (substitutions != null && substitutions.length > 0) {
+            try {
+                AnnotatedCommand copy = getClass().newInstance();
+
+                for (int i = 0, n = substituteParameters.size(); i < n; i ++) {
+                    String name = substituteParameters.get(i);
+                    Parameter parameter = substitutions[i];
+
+                    Parameter newParameter = new Parameter(name + "=" + parameter.originalValue());
+                    copy.addParameter(newParameter);
+                }
+
+                for (Map.Entry<String, NamedParameter> entry : namedParameters.entrySet()) {
+                    Parameter newParameter = new Parameter(entry.getKey() + "=" + entry.getValue().originalValue());
+                    copy.addParameter(newParameter);
+                }
+
+                copy.setUp();
+
+                for (Map.Entry<Param, Field> entry : registeredParameters.entrySet()) {
+                    Param param = entry.getKey();
+                    Field field = entry.getValue();
+                    field.setAccessible(true);
+                    ParameterDefinition parameterDefinition = getParameterDefinition(param);
+                    checkSettingOfMandatoryParams(parameterDefinition, param);
+                    setField(copy, parameterDefinition, param, field);
+                }
+
+            } catch (InstantiationException | IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+    }
 }

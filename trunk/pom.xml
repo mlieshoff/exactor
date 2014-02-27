@@ -144,7 +144,6 @@
 
     <modules>
         <module>exactor-core</module>
-        <!--module>exactor-core-act</module-->
         <module>exactor-abbot</module>
         <module>exactor-swing</module>
         <module>exactor-swt</module>

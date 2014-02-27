@@ -1,5 +1,5 @@
 /******************************************************************
- * Copyright (c) 2012, Exoftware
+ * Copyright (c) 2014, Exoftware
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or
@@ -32,51 +32,31 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************/
-package com.exoftware.exactor.command.annotated;
+package com.exoftware.exactor.act;
 
-import com.exoftware.exactor.Parameter;
+import com.exoftware.exactor.command.annotated.AnnotatedCommand;
+import com.exoftware.exactor.command.annotated.Param;
+import com.exoftware.exactor.command.annotated.ParameterType;
 
 /**
- * This class defines a named parameter.
- *
  * @author Michael Lieshoff
  */
-public class NamedParameter extends Parameter {
+public class AnnotatedNotEquals extends AnnotatedCommand {
 
-    private String name;
+    @Param(namespace = Parameters.class, name = "ACTUAL", type = ParameterType.MANDATORY)
+    private String actual;
 
-    public NamedParameter(String name, String value) {
-        super(value);
-        this.name = name;
-    }
+    @Param(namespace = Parameters.class, name = "EXPECTED", type = ParameterType.MANDATORY)
+    private String expected;
 
-    @Override
-    public String stringValue() {
-        if (value != null) {
-            return super.stringValue();
-        }
-        return null;
-    }
+    @Param(namespace = Parameters.class, name = "MESSAGE", type = ParameterType.MANDATORY)
+    private String message;
 
     @Override
-    public String[] splittedString(String regexp) {
-        if (value != null) {
-            return super.splittedString(regexp);
-        }
-        return null;
-    }
+    public void execute() throws Exception {
+        setUp();
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("%s=%s", name, stringValue());
+        assertFalse(message, expected.equals(actual));
     }
 
 }

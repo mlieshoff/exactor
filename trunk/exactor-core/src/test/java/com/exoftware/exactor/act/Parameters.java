@@ -1,5 +1,5 @@
 /******************************************************************
- * Copyright (c) 2012, Exoftware
+ * Copyright (c) 2014, Exoftware
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or
@@ -32,51 +32,39 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************/
-package com.exoftware.exactor.command.annotated;
+package com.exoftware.exactor.act;
 
-import com.exoftware.exactor.Parameter;
+import com.exoftware.exactor.command.annotated.AnnotatedCommand;
+import com.exoftware.exactor.command.annotated.ParameterDefinition;
+import com.exoftware.exactor.command.annotated.ParameterType;
+import com.exoftware.exactor.command.annotated.Resolver;
+import com.exoftware.exactor.command.annotated.resolver.basic.StringResolver;
+
+import java.util.List;
 
 /**
- * This class defines a named parameter.
- *
  * @author Michael Lieshoff
  */
-public class NamedParameter extends Parameter {
+public enum Parameters implements ParameterDefinition {
 
-    private String name;
+    ACTUAL(new StringResolver("actual")),
+    EXPECTED(new StringResolver("expected")),
+    MESSAGE(new StringResolver("message"));
 
-    public NamedParameter(String name, String value) {
-        super(value);
-        this.name = name;
+    private Resolver resolver;
+
+    Parameters(Resolver resolver) {
+        this.resolver = resolver;
     }
 
     @Override
-    public String stringValue() {
-        if (value != null) {
-            return super.stringValue();
-        }
-        return null;
+    public List<String> getParameterNames() {
+        return resolver.getParameterNames();
     }
 
     @Override
-    public String[] splittedString(String regexp) {
-        if (value != null) {
-            return super.splittedString(regexp);
-        }
-        return null;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("%s=%s", name, stringValue());
+    public <T> T resolve(ParameterType parameterType, AnnotatedCommand annotatedCommand) {
+        return (T) resolver.resolve(parameterType, annotatedCommand);
     }
 
 }
