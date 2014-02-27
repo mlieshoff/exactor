@@ -1,0 +1,2 @@
+AnnotatedNotEquals  message=$0                  expected=$1     actual=$2
+AnnotatedNotEquals  message="Other expected!"   expected=lala   actual=$2

@@ -1,5 +1,5 @@
 /******************************************************************
- * Copyright (c) 2012, Exoftware
+ * Copyright (c) 2014, Exoftware
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or
@@ -32,51 +32,24 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************/
-package com.exoftware.exactor.command.annotated;
+package com.exoftware.exactor.act;
 
-import com.exoftware.exactor.Parameter;
+import com.exoftware.exactor.Runner;
+import com.exoftware.exactor.listener.HtmlOutputListener;
+import com.exoftware.exactor.listener.SimpleListener;
+import org.junit.Test;
 
 /**
- * This class defines a named parameter.
- *
  * @author Michael Lieshoff
  */
-public class NamedParameter extends Parameter {
+public class CoreAcceptanceTest {
 
-    private String name;
-
-    public NamedParameter(String name, String value) {
-        super(value);
-        this.name = name;
-    }
-
-    @Override
-    public String stringValue() {
-        if (value != null) {
-            return super.stringValue();
-        }
-        return null;
-    }
-
-    @Override
-    public String[] splittedString(String regexp) {
-        if (value != null) {
-            return super.splittedString(regexp);
-        }
-        return null;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("%s=%s", name, stringValue());
+    @Test
+    public void shouldRun() throws Exception {
+        Runner runner = new Runner("./exactor-core/src/test/resources/test");
+        runner.addListener(new HtmlOutputListener());
+        runner.addListener(new SimpleListener());
+        runner.run();
     }
 
 }
