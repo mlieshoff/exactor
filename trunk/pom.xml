@@ -56,12 +56,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>com.googlecode</groupId>
-                <artifactId>maven-idea-plugin</artifactId>
-                <version>1.6.1</version>
-            </plugin>
-
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.2</version>
@@ -120,9 +114,9 @@
                     <excludePackageNames>*.internal*</excludePackageNames>
                     <detectJavaApiLink>false</detectJavaApiLink>
                     <detectLinks>false</detectLinks>
-                    <source>1.6</source>
+                    <source>1.7</source>
                     <links>
-                        <link>http://java.sun.com/j2se/1.5.0/docs/api/</link>
+                        <link>http://java.sun.com/j2se/1.7.0/docs/api/</link>
                     </links>
                     <groups>
                         <group title="Exactor core" packages="com.exoftware.exactor"/>
@@ -203,7 +197,7 @@
                     <artifactId>tools</artifactId>
                     <scope>system</scope>
                     <systemPath>${java.home}/../lib/tools.jar</systemPath>
-                    <version>1.6.0</version>
+                    <version>1.7.0</version>
                 </dependency>
             </dependencies>
         </profile>
@@ -215,13 +209,6 @@
             <url>https://swt-repo.googlecode.com/svn/repo/</url>
         </repository>
     </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>maven-idea-plugin-repo</id>
-            <url>http://maven-idea-plugin.googlecode.com/svn/maven-repo</url>
-        </pluginRepository>
-    </pluginRepositories>
 
     <distributionManagement>
         <repository>
