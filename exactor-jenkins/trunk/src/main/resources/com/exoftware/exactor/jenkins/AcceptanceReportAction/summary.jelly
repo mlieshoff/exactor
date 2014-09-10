@@ -1,0 +1,36 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
+         xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+    <tr>
+        <j:choose>
+            <j:when test="${it.doesReportExists}">
+                <td>
+                    <img src="${rootURL}/plugin/acceptance-report-plugin/images/icon.gif" alt="${it.displayName} Icon"/>
+                </td>
+            </j:when>
+            <j:otherwise>
+                <td>
+                    <img src="${rootURL}/plugin/acceptance-report-plugin/images/icon-missing.gif"
+                         alt="${it.displayName} Icon"/>
+                </td>
+            </j:otherwise>
+        </j:choose>
+        <td style="vertical-align: middle;">
+            <j:choose>
+                <j:when test="${it.doesReportExists}">
+                    Acceptance Test <a href="${from.reportURL}">Report</a>.
+                </j:when>
+                <j:otherwise>
+                    Acceptance Test Report cannot be found!
+                </j:otherwise>
+            </j:choose>
+            <j:choose>
+                <j:when test="${it.doesExitReportExists}">
+                    <a href="${from.logURL}" type="text/html">Exit Log</a>
+                </j:when>
+                <j:otherwise>
+                    Exit Log not found!
+                </j:otherwise>
+            </j:choose>
+        </td>
+    </tr>
+</j:jelly>
