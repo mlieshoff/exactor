@@ -13,10 +13,7 @@ import org.junit.Test;
 import static junit.framework.Assert.assertTrue;
 
 /**
- * Class description here.
- *
  * @author Andoni del Olmo
- * @since 19.02.2014
  */
 @Ignore(value = "the urls must be mocked!!")
 public class JavaNetURLCheckerTest {

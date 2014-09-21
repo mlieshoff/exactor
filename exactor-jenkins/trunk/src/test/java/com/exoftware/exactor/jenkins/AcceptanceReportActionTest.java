@@ -11,7 +11,6 @@ import static org.mockito.Mockito.when;
 
 /**
  * @author Andoni del Olmo
- * @changed: AdO 23.03.2012 - Added
  */
 public class AcceptanceReportActionTest {
 

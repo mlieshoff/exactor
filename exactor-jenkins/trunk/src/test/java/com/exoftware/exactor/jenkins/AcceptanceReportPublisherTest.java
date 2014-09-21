@@ -2,25 +2,28 @@ package com.exoftware.exactor.jenkins;
 
 import hudson.model.FreeStyleProject;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.jvnet.hudson.test.HudsonTestCase;
+import org.jvnet.hudson.test.JenkinsRule;
+
+import static org.junit.Assert.assertEquals;
 
 /**
- * Class description here.
- *
  * @author Andoni del Olmo
- * @changed: AdO 15.03.2012 - Added
  */
-public class AcceptanceReportPublisherTest extends HudsonTestCase {
+public class AcceptanceReportPublisherTest {
+
+    @Rule
+    public JenkinsRule j = new JenkinsRule();
 
     private AcceptanceReportPublisher publisher;
     private FreeStyleProject project;
 
     @Before
     public void setUp() throws Exception {
-        super.setUp();
         this.publisher = new AcceptanceReportPublisher();
-        this.project = createFreeStyleProject();
+        this.project = j.createFreeStyleProject();
         this.project.getPublishersList().add(this.publisher);
     }
 

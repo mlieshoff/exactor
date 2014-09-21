@@ -4,43 +4,44 @@ package com.exoftware.exactor.jenkins;
 import hudson.maven.MavenModuleSet;
 import hudson.model.FreeStyleProject;
 import hudson.util.FormValidation;
-import org.junit.After;
 import org.junit.Before;
-import org.jvnet.hudson.test.HudsonTestCase;
+import org.junit.Rule;
+import org.junit.Test;
+import org.jvnet.hudson.test.JenkinsRule;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
- * Class description here.
- *
  * @author Andoni del Olmo
- * @changed: AdO 15.03.2012 - Added
  */
-public class AcceptanceReportPublisherDescriptorTest extends HudsonTestCase {
+public class AcceptanceReportPublisherDescriptorTest {
+
+    @Rule
+    public JenkinsRule j = new JenkinsRule();
 
     private AcceptanceReportPublisher publisher;
     private FreeStyleProject project;
 
     @Before
     public void setUp() throws Exception {
-        super.setUp();
         this.publisher = new AcceptanceReportPublisher();
-        this.project = createFreeStyleProject();
+        this.project = j.createFreeStyleProject();
         this.project.getPublishersList().add(this.publisher);
     }
 
-    @After
-    public void tearDown() throws Exception {
-        super.tearDown();
-    }
-
+    @Test
     public void testGetDisplayName() throws Exception {
         assertEquals("display name", "Acceptance Test Reporting", this.publisher.getDescriptor().getDisplayName());
     }
 
+    @Test
     public void testIsApplicable_forAnyProjectType() throws Exception {
         assertTrue("is applicable", this.publisher.getDescriptor().isApplicable(FreeStyleProject.class));
         assertTrue("is applicable", this.publisher.getDescriptor().isApplicable(MavenModuleSet.class));
     }
 
+    @Test
     public void testGetHelpFile() throws Exception {
         assertEquals("help file", "/plugin/acceptance-report-plugin/help/help-globalConfig.html",
                 this.publisher.getDescriptor().getHelpFile());

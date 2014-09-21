@@ -10,8 +10,6 @@ package com.exoftware.exactor.jenkins;
 import org.apache.commons.codec.binary.Base64;
 
 /**
- * Class description here.
- *
  * @author Andoni del Olmo
  */
 public class ServerAuth {
