@@ -47,16 +47,19 @@ public class AcceptanceReportPublisherDescriptorTest {
                 this.publisher.getDescriptor().getHelpFile());
     }
 
+    @Test
     public void testDoCheckReportBaseUrl_emptyValue() throws Exception {
         FormValidation formValidation = getPublisherDescriptor().doCheckReportBaseUrl("");
         assertTrue("there is an error", formValidation.kind.equals(FormValidation.Kind.ERROR));
     }
 
+    @Test
     public void testDoCheckReportBaseUrl_notValidURL() throws Exception {
         FormValidation formValidation = getPublisherDescriptor().doCheckReportBaseUrl("wrong URL");
         assertTrue("there is an error", formValidation.kind.equals(FormValidation.Kind.ERROR));
     }
 
+    @Test
     public void testDoCheckReportBaseUrl_validUrl() throws Exception {
         FormValidation formValidation = getPublisherDescriptor().doCheckReportBaseUrl("http://localhost:80");
         assertTrue("valid url", formValidation.kind.equals(FormValidation.Kind.OK));
