@@ -40,6 +40,7 @@ import junit.framework.TestCase;
  * @author Brian Swan
  */
 public class TestHtmlOutputListener extends TestCase {
+
     public void testExecutionSummaryCalls() {
         MockExecutionSummary summary = new MockExecutionSummary();
         HtmlOutputListener listener = new HtmlOutputListener(null, null, summary);
