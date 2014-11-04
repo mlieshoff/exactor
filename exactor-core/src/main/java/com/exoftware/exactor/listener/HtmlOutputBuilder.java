@@ -1,6 +1,7 @@
 package com.exoftware.exactor.listener;
 
 import java.text.MessageFormat;
+import java.util.Date;
 
 public class HtmlOutputBuilder {
     private static final String NL = System.getProperty("line.separator");
@@ -33,7 +34,7 @@ public class HtmlOutputBuilder {
             "<html xmlns=\"http://www.w3.org/1999/xhtml\">" + NL +
             "<head>" + NL +
             "<meta http-equiv=\"content-type\" content=\"text/html; charset=iso-8859-1\"/>" + NL +
-            "<title>Acceptance Test Results</title>" + NL +
+            "<title>Acceptance Test Results ({0,date,long})</title>" + NL +
             "<style type=\"text/css\" media=\"all\">@import \"style.css\";</style>" + NL +
             "</head>" + NL +
             "<body>" + NL;
@@ -132,7 +133,7 @@ public class HtmlOutputBuilder {
     }
 
     public String buildHtmlHeader() {
-        return HTML_HEADER;
+        return MessageFormat.format(HTML_HEADER, new Date());
     }
 
     public String buildHtmlFooter() {
