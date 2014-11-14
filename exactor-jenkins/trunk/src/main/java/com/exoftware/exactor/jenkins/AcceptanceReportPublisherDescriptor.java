@@ -46,7 +46,7 @@ public class AcceptanceReportPublisherDescriptor extends BuildStepDescriptor<Pub
 
     @Override
     public String getHelpFile() {
-        return "/plugin/acceptance-report-plugin/help/help-globalConfig.html";
+        return "/plugin/exactor-jenkins/help/help-globalConfig.html";
     }
 
     public FormValidation doCheckReportBaseUrl(@QueryParameter final String value)

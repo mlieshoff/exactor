@@ -3,21 +3,21 @@
 
     <f:entry title="Report Publishing URL:" field="reportBaseUrl"
              description="The base URL where the report will be found. (e.g. https://bridge.abbino-cloud.de/acceptance/aerzener)"
-             help="/plugin/acceptance-report-plugin/help/projectConfig/paramReportBaseUrl.html">
+             help="/plugin/exactor-jenkins/help/projectConfig/paramReportBaseUrl.html">
         <f:textbox/>
     </f:entry>
 
     <f:block>
         <table>
             <f:optionalBlock name="credentials" title="Add server authorization" checked="${instance.credentials!=null}"
-                             help="/plugin/acceptance-report-plugin/help/projectConfig/blockCredentials.html">
+                             help="/plugin/exactor-jenkins/help/projectConfig/blockCredentials.html">
                 <f:entry title="Username" field="serverAuthUsername"
-                         help="/plugin/acceptance-report-plugin/help/projectConfig/paramServerAuthUsername.html">
+                         help="/plugin/exactor-jenkins/help/projectConfig/paramServerAuthUsername.html">
                     <f:textbox field="serverAuthUsername" value="${instance.credentials.serverAuthUsername}"/>
                 </f:entry>
 
                 <f:entry title="Password" field="serverAuthPassword"
-                         help="/plugin/acceptance-report-plugin/help/projectConfig/paramServerAuthPassword.html">
+                         help="/plugin/exactor-jenkins/help/projectConfig/paramServerAuthPassword.html">
                     <f:password field="serverAuthPassword" value="${instance.credentials.serverAuthPassword}"/>
                 </f:entry>
 
@@ -30,25 +30,25 @@
 
     <f:entry title="Report Publishing directory:" field="publishDirectory"
              description="The directory under which the file will be publish. (e.g. /tmp/acceptance-report-aerzener)"
-             help="/plugin/acceptance-report-plugin/help/projectConfig/paramPublishDirectory.html">
+             help="/plugin/exactor-jenkins/help/projectConfig/paramPublishDirectory.html">
         <f:textbox/>
     </f:entry>
 
     <f:entry title="Report file name mask:" field="reportFileName"
              description="The report file mask. (e.g. acceptance-report-aerzener-{0}.html)"
-             help="/plugin/acceptance-report-plugin/help/projectConfig/paramReportFileName.html">
+             help="/plugin/exactor-jenkins/help/projectConfig/paramReportFileName.html">
         <f:textbox/>
     </f:entry>
 
     <f:entry title="Exit log file:" field="logPath"
              description="The act exit log. (e.g. /tmp/acceptance-report-aerzener/exit.log)"
-             help="/plugin/acceptance-report-plugin/help/projectConfig/paramLogPath.html">
+             help="/plugin/exactor-jenkins/help/projectConfig/paramLogPath.html">
         <f:textbox/>
     </f:entry>
 
     <f:entry field="project" title="Project build number:"
              description="Choose the project from where to get the version number"
-             help="/plugin/acceptance-report-plugin/help/projectConfig/paramProject.html">
+             help="/plugin/exactor-jenkins/help/projectConfig/paramProject.html">
         <f:select/>
     </f:entry>
 

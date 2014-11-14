@@ -4,12 +4,12 @@
         <j:choose>
             <j:when test="${it.doesReportExists}">
                 <td>
-                    <img src="${rootURL}/plugin/acceptance-report-plugin/images/icon.gif" alt="${it.displayName} Icon"/>
+                    <img src="${rootURL}/plugin/exactor-jenkins/images/icon.gif" alt="${it.displayName} Icon"/>
                 </td>
             </j:when>
             <j:otherwise>
                 <td>
-                    <img src="${rootURL}/plugin/acceptance-report-plugin/images/icon-missing.gif"
+                    <img src="${rootURL}/plugin/exactor-jenkins/images/icon-missing.gif"
                          alt="${it.displayName} Icon"/>
                 </td>
             </j:otherwise>

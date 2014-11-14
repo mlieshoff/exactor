@@ -43,7 +43,7 @@ public class AcceptanceReportPublisherDescriptorTest {
 
     @Test
     public void testGetHelpFile() throws Exception {
-        assertEquals("help file", "/plugin/acceptance-report-plugin/help/help-globalConfig.html",
+        assertEquals("help file", "/plugin/exactor-jenkins/help/help-globalConfig.html",
                 this.publisher.getDescriptor().getHelpFile());
     }
 
