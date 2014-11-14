@@ -2,7 +2,7 @@
          xmlns:t="/lib/hudson" xmlns:f="/lib/form">
 
     <f:entry title="Report Publishing URL:" field="reportBaseUrl"
-             description="The base URL where the report will be found. (e.g. https://bridge.abbino-cloud.de/acceptance/aerzener)"
+             description="The base URL where the report will be found. (e.g. http://domain.com/acceptance/myproject)"
              help="/plugin/exactor-jenkins/help/projectConfig/paramReportBaseUrl.html">
         <f:textbox/>
     </f:entry>
@@ -29,19 +29,19 @@
     </f:block>
 
     <f:entry title="Report Publishing directory:" field="publishDirectory"
-             description="The directory under which the file will be publish. (e.g. /tmp/acceptance-report-aerzener)"
+             description="The directory under which the file will be publish. (e.g. /tmp/acceptance-report-myproject)"
              help="/plugin/exactor-jenkins/help/projectConfig/paramPublishDirectory.html">
         <f:textbox/>
     </f:entry>
 
     <f:entry title="Report file name mask:" field="reportFileName"
-             description="The report file mask. (e.g. acceptance-report-aerzener-{0}.html)"
+             description="The report file mask. (e.g. acceptance-report-myproject-{0}.html)"
              help="/plugin/exactor-jenkins/help/projectConfig/paramReportFileName.html">
         <f:textbox/>
     </f:entry>
 
     <f:entry title="Exit log file:" field="logPath"
-             description="The act exit log. (e.g. /tmp/acceptance-report-aerzener/exit.log)"
+             description="The act exit log. (e.g. /tmp/acceptance-report-myproject/exit.log)"
              help="/plugin/exactor-jenkins/help/projectConfig/paramLogPath.html">
         <f:textbox/>
     </f:entry>

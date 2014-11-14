@@ -4,5 +4,5 @@
   Since we don't really have anything dynamic here, let's just use static HTML. 
 -->
 <div>
-  Acceptance Reporting creates a url link to the ACT report after the ACT Framework finishes running.
+  Acceptance Reporting creates a url link to the acceptance report after the Exactor finishes running.
 </div>
