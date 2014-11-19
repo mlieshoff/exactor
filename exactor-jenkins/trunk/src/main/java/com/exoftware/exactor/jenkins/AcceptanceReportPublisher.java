@@ -9,6 +9,8 @@ import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.BuildStepMonitor;
 import hudson.tasks.Publisher;
 import jenkins.model.Jenkins;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.slf4j.Logger;
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Andoni del Olmo
@@ -26,26 +29,25 @@ public class AcceptanceReportPublisher extends Publisher {
     private static final Logger LOGGER = LoggerFactory.getLogger(AcceptanceReportPublisher.class.getName());
 
     public String reportBaseUrl;
-    public String reportFileName;
-    public String logPath;
-    public String publishDirectory;
-    public String project;
     public CredentialsBlock credentials;
+    public String publishDirectory;
+    public String reportLocation;
+    public String logLocation;
+    public String project;
 
     // only for testing, do not use!!
     public AcceptanceReportPublisher() {
     }
 
     @DataBoundConstructor
-    public AcceptanceReportPublisher(String reportBaseUrl, String reportFileName,
-                                     String logPath, String publishDirectory, String project,
-                                     CredentialsBlock credentials) {
+    public AcceptanceReportPublisher(String reportBaseUrl, CredentialsBlock credentials, String publishDirectory, String reportLocation, String logLocation, String project) {
+
         this.reportBaseUrl = reportBaseUrl;
-        this.reportFileName = reportFileName;
-        this.logPath = logPath;
-        this.publishDirectory = publishDirectory;
-        this.project = project;
         this.credentials = credentials;
+        this.publishDirectory = publishDirectory;
+        this.reportLocation = reportLocation;
+        this.logLocation = logLocation;
+        this.project = project;
     }
 
     private String getReportBaseUrl() {
@@ -61,12 +63,12 @@ public class AcceptanceReportPublisher extends Publisher {
         return baseUrl;
     }
 
-    private String getReportFileName() {
-        return reportFileName;
+    private String getReportLocation() {
+        return reportLocation;
     }
 
-    private String getLogPath() {
-        return logPath;
+    private String getLogLocation() {
+        return logLocation;
     }
 
     private String getPublishDirectory() {
@@ -89,23 +91,29 @@ public class AcceptanceReportPublisher extends Publisher {
     @Override
     public boolean perform(AbstractBuild<?, ?> build, Launcher launcher, BuildListener listener)
             throws InterruptedException, IOException {
+
         String reportBaseUrlParam = getReportBaseUrl();
-        String reportFileNameParam = getReportFileName();
-        int buildNumberParam = getBuildNumber(build);
-        String logPathParam = getLogPath();
-        String publishDirectoryParam = getPublishDirectory();
         String authCredentials = getAuthCredentials(credentials);
+        String reportLocationParam = getReportLocation();
+        String logLocationParam = getLogLocation();
+        int buildNumberParam = getBuildNumber(build);
         if (LOGGER.isInfoEnabled())
             LOGGER.info("perform > reportBaseUrl[" + reportBaseUrlParam
-                    + "] reportFileName[" + reportFileNameParam
+                    + "] auth[" + authCredentials
+                    + "] reportLocationParam[" + reportLocationParam
+                    + "] logLocation[" + logLocationParam
                     + "] buildNumber[" + buildNumberParam
-                    + "] logPath[" + logPathParam
-                    + "] publishDirectory[" + publishDirectoryParam
-                    + "] auth[" + authCredentials + "].");
+                    + "].");
 
         boolean reportCreated = true;
-        build.addAction(new AcceptanceReportAction(reportBaseUrlParam, reportFileNameParam,
-                buildNumberParam, logPathParam, publishDirectoryParam, authCredentials));
+
+        final String reportFileName = getReportFileName(buildNumberParam);
+        final String logFileName = getLogFileName(buildNumberParam);
+
+        copyReportFile(reportLocationParam, reportFileName);
+        copyLogFile(logLocationParam, logFileName);
+
+        build.addAction(new AcceptanceReportAction(reportBaseUrlParam, authCredentials, reportFileName, logFileName));
         return reportCreated;
     }
 
@@ -114,23 +122,15 @@ public class AcceptanceReportPublisher extends Publisher {
         if (StringUtils.equals(build.getProject().getName(), this.project)) {
             buildNumber = build.getNumber();
         } else {
-            buildNumber = getCurrentBuildNumberForProject(this.project);
+            buildNumber = getBuildNumberForProject(this.project);
         }
         LOGGER.info("buildNumber [" + buildNumber + "].");
         return buildNumber;
     }
 
-    private int getCurrentBuildNumberForProject(String projectName) {
-        try {
-            int buildNumber;
-            ArrayList<Job> jobList = new ArrayList<Job>(Jenkins.getInstance().getItem(projectName).getAllJobs());
-            LOGGER.debug("project [" + projectName + "] has #" + jobList.size() + " job builds.");
-            buildNumber = jobList.get(jobList.size() - 1).getNextBuildNumber() - 1;
-            return buildNumber;
-        } catch (Exception e) {
-            LOGGER.error("Unable to retrieve build number for project \"" + projectName + "\".", e);
-            return 0;
-        }
+    private int getBuildNumberForProject(String projectName) {
+        final List<Job> jobList = new ArrayList<Job>(Jenkins.getInstance().getItem(projectName).getAllJobs());
+        return jobList.get(jobList.size() - 1).getLastCompletedBuild().getNumber();
     }
 
     private String getAuthCredentials(CredentialsBlock credentials) {
@@ -139,6 +139,46 @@ public class AcceptanceReportPublisher extends Publisher {
         } else {
             return "";
         }
+    }
+
+    private void copyReportFile(String reportFileName, String fileName) {
+        copyFileToPublishDirectory(reportFileName, fileName);
+    }
+
+    private void copyLogFile(String logFileName, String fileName) {
+        copyFileToPublishDirectory(logFileName, fileName);
+    }
+
+    private void copyFileToPublishDirectory(String srcFile, String fileName) {
+        if (LOGGER.isDebugEnabled())
+            LOGGER.debug("Copying [" + this.getPublishDirectory() + "] to [" + srcFile + "]...");
+        final File destFile = new File(getPublishDirectory(), fileName);
+        try {
+            FileUtils.copyFile(new File(srcFile), destFile, false);
+
+            if (LOGGER.isInfoEnabled())
+                LOGGER.info("Copy of [" + srcFile + "] to [" + destFile.getAbsolutePath() + "] was successful.");
+
+        } catch (IOException e) {
+            if (LOGGER.isWarnEnabled())
+                LOGGER.warn("Cannot copy file [" + this.logLocation
+                        + "] to publishing directory [" + destFile.getAbsolutePath()
+                        + "]. Reason: " + e.getMessage() + ".");
+        }
+    }
+
+    private String getReportFileName(int buildVersion) {
+        return getFileNameWithVersion(reportLocation, buildVersion);
+    }
+
+    private String getLogFileName(int buildVersion) {
+        return getFileNameWithVersion(logLocation, buildVersion);
+    }
+
+    private String getFileNameWithVersion(String location, int buildVersion) {
+        String name = FilenameUtils.getBaseName(location);
+        String extension = FilenameUtils.getExtension(location);
+        return name.concat(String.format("-%d", buildVersion)).concat(".").concat(extension);
     }
 
     @Override

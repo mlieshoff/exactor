@@ -75,8 +75,8 @@ class AcceptanceReportActionFactory {
     }
 
     public AcceptanceReportAction createAcceptanceReportAction() {
-        AcceptanceReportAction acceptanceReportAction = new AcceptanceReportAction(this.reportBasePath, this.reportFileName, this.buildVersion,
-                this.logPath, this.publishDirectory, "auth");
+        AcceptanceReportAction acceptanceReportAction = new AcceptanceReportAction(this.reportBasePath, "auth",
+                "", "");
         acceptanceReportAction.setUrlChecker(this.urlChecker);
         return acceptanceReportAction;
     }

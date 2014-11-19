@@ -7,6 +7,7 @@ import hudson.util.FormValidation;
 import hudson.util.ListBoxModel;
 import jenkins.model.Jenkins;
 import net.sf.json.JSONObject;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
@@ -84,25 +85,29 @@ public class AcceptanceReportPublisherDescriptor extends BuildStepDescriptor<Pub
         return FormValidation.ok();
     }
 
-    public FormValidation doCheckReportFileName(@QueryParameter final String value)
+    public FormValidation doCheckReportLocation(@QueryParameter final String value)
             throws IOException, ServletException {
         if (LOGGER.isDebugEnabled())
-            LOGGER.debug("doCheckReportFileName [" + value + "]");
+            LOGGER.debug("doCheckReportLocation [" + value + "]");
 
         if (StringUtils.isEmpty(value))
-            return FormValidation.error("Please set a valid file mask.");
-        if (!value.contains("{0}"))
-            return FormValidation.error("Please set a valid file mask. Missing \"{0}\" in the mask.");
+            return FormValidation.error("Please set a valid location.");
+        final File directory = new File(FilenameUtils.getFullPath(value));
+        if (!directory.exists() || !directory.isDirectory())
+            return FormValidation.error(String.format("Please set a valid location. Directory \"%s\" not valid.", directory));
         return FormValidation.ok();
     }
 
-    public FormValidation doCheckLogPath(@QueryParameter final String value)
+    public FormValidation doCheckLogLocation(@QueryParameter final String value)
             throws IOException, ServletException {
         if (LOGGER.isDebugEnabled())
-            LOGGER.info("doCheckLogPath [" + value + "]");
+            LOGGER.info("doCheckLogLocation [" + value + "]");
 
         if (StringUtils.isEmpty(value))
-            return FormValidation.error("Please set the path where the log file is located.");
+            return FormValidation.error("Please set a valid location.");
+        final File directory = new File(FilenameUtils.getFullPath(value));
+        if (!directory.exists() || !directory.isDirectory())
+            return FormValidation.error(String.format("Please set a valid location. Directory \"%s\" not valid.", directory));
         return FormValidation.ok();
     }
 

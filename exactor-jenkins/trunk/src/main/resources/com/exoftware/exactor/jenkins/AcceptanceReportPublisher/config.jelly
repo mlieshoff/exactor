@@ -28,21 +28,21 @@
         </table>
     </f:block>
 
-    <f:entry title="Report Publishing directory:" field="publishDirectory"
-             description="The directory under which the file will be publish. (e.g. /tmp/acceptance-report-myproject)"
+    <f:entry title="Report publishing directory:" field="publishDirectory"
+             description="The directory where the file will be publish. (e.g. /var/www/htdocs/acceptance-report/myproject)"
              help="/plugin/exactor-jenkins/help/projectConfig/paramPublishDirectory.html">
         <f:textbox/>
     </f:entry>
 
-    <f:entry title="Report file name mask:" field="reportFileName"
-             description="The report file mask. (e.g. acceptance-report-myproject-{0}.html)"
-             help="/plugin/exactor-jenkins/help/projectConfig/paramReportFileName.html">
+    <f:entry title="Report location:" field="reportLocation"
+             description="The location where the report file is created. (e.g. /tmp/acceptance-report/myproject/myproject.html)"
+             help="/plugin/exactor-jenkins/help/projectConfig/paramReportLocation.html">
         <f:textbox/>
     </f:entry>
 
-    <f:entry title="Exit log file:" field="logPath"
-             description="The act exit log. (e.g. /tmp/acceptance-report-myproject/exit.log)"
-             help="/plugin/exactor-jenkins/help/projectConfig/paramLogPath.html">
+    <f:entry title="Log file location:" field="logLocation"
+             description="The location of the log file. (e.g. /tmp/acceptance-report/myproject/myproject.log)"
+             help="/plugin/exactor-jenkins/help/projectConfig/paramLogLocation.html">
         <f:textbox/>
     </f:entry>
 

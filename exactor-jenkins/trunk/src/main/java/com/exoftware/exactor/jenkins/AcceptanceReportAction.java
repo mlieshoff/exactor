@@ -1,14 +1,9 @@
 package com.exoftware.exactor.jenkins;
 
 import hudson.model.Action;
-import org.apache.commons.io.FileUtils;
 import org.kohsuke.stapler.export.Exported;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.io.IOException;
-import java.text.MessageFormat;
 
 /**
  * @author Andoni del Olmo
@@ -17,26 +12,19 @@ public class AcceptanceReportAction implements Action {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AcceptanceReportAction.class.getName());
 
-    private static final String LOG_FILE_NAME = "at_out-{0}.log";
-
     @Exported(visibility = 0)
     private URLChecker urlChecker = new JavaNetURLChecker();
 
-    private String reportBasePath;
-    private String reportFileName;
-    private int buildVersion;
-    private String logPath;
-    private String publishDirectory;
+    private String reportBaseUrl;
     private String encodedAuthBytes;
+    private String reportFileName;
+    private String logFileName;
 
-    public AcceptanceReportAction(String reportBaseUrl, String reportFileName, int buildNumber, String logPath, String publishDirectory, String encodedAuthBytes) {
-        this.reportBasePath = reportBaseUrl;
-        this.reportFileName = reportFileName;
-        this.buildVersion = buildNumber;
-        this.logPath = logPath;
-        this.publishDirectory = publishDirectory;
+    public AcceptanceReportAction(String reportBaseUrl, String encodedAuthBytes, String reportFileName, String logFileName) {
+        this.reportBaseUrl = reportBaseUrl;
         this.encodedAuthBytes = encodedAuthBytes;
-        this.copyLogFile();
+        this.reportFileName = reportFileName;
+        this.logFileName = logFileName;
     }
 
     @Exported(visibility = 0)
@@ -110,7 +98,7 @@ public class AcceptanceReportAction implements Action {
      */
     @Exported(name = "reportURL")
     public String getReportURL() {
-        return this.reportBasePath + getReportFileName();
+        return this.reportBaseUrl + this.reportFileName;
     }
 
     /**
@@ -120,43 +108,7 @@ public class AcceptanceReportAction implements Action {
      */
     @Exported(name = "logURL")
     public String getLogURL() {
-        return this.reportBasePath + getLogFileName();
+        return this.reportBaseUrl + this.logFileName;
     }
 
-    private String getReportFileName() {
-        Object[] data = new Object[1];
-        data[0] = getBuildNumber();
-        return MessageFormat.format(this.reportFileName, data);
-    }
-
-    private String getBuildNumber() {
-        return Integer.toString(buildVersion);
-    }
-
-    private String getLogFileName() {
-        Object[] data = new Object[1];
-        data[0] = this.buildVersion;
-        return MessageFormat.format(LOG_FILE_NAME, data);
-    }
-
-    private String getApachePublishLogFile() {
-        return this.publishDirectory + getLogFileName();
-    }
-
-    private void copyLogFile() {
-        if (LOGGER.isDebugEnabled())
-            LOGGER.debug("Copying [" + this.logPath + "] to [" + getApachePublishLogFile() + "]...");
-        try {
-            FileUtils.copyFile(new File(this.logPath), new File(getApachePublishLogFile()));
-
-            if (LOGGER.isInfoEnabled())
-                LOGGER.info("Copy of [" + this.logPath + "] to [" + getApachePublishLogFile() + "] was successful.");
-
-        } catch (IOException e) {
-            if (LOGGER.isWarnEnabled())
-                LOGGER.warn("Cannot add exit log file [" + this.logPath
-                        + "] to publishing directory [" + getApachePublishLogFile()
-                        + "]. Reason: " + e.getMessage() + ".");
-        }
-    }
 }
