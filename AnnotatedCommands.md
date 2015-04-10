@@ -1,0 +1,81 @@
+# Annotated commands #
+
+Command classes can define parameters with assigned annotations. The inherited class **AnnotatedCommand** resolves and set this parameters by calling a method named **setUp()**. Manually resolving is not more necessary.
+
+```
+public class OrderBookCommand {
+   @Param(namespace=FooParameters.class, name="USER_ID")
+   private int user;
+   @Param(namespace=FooParameters.class, name="BOOK")
+   private Book book;
+   @Param(namespace=FooParameters.class, name="TRACK", type=ParameterType.OPTIONAL)
+   private boolean tracking;
+
+    public void execute() throws Exception {
+        setUp();
+        if (tracking) {
+            ...
+        }
+        if (user >= 1000) {
+            ...
+        }
+    }
+}
+```
+
+This is the class for doing something with a book. There is a member **userId**, an object of type book and one optional member called **tracking**.
+
+There is an enum class called **FooParameters** act as namespace for the annotated parameter. The name **USER\_ID** refers to an enum constant in the defined namespace class.
+
+```
+public enum FooParameters implements ParameterDefinition {
+    BOOK(Arrays.asList("isbn", "title"), new Resolver<Book, AnnotatedCommand>() {
+        @Override
+        public Book resolve(ParameterType parameterType, AnnotatedCommand command) {
+            Book book = new Book();
+            book.setIsbn(command.getParameterByName("isbn").stringValue());
+            book.seTitle(command.getParameterByName("title").stringValue());
+            return book;
+        }
+
+        @Override
+        public List<String> getParameterNames() {
+            return Arrays.asList("isbn", "title");
+        }
+    }),
+    TRACK(Arrays.asList("tracking"), new Resolver<Boolean, AnnotatedCommand>() {
+        @Override
+        public Boolean resolve(ParameterType parameterType, AnnotatedCommand command) {
+            return command.getParameterByName("tracking").booleanValue();
+        }
+
+        @Override
+        public List<String> getParameterNames() {
+            return Arrays.asList("tracking");
+        }
+    }),
+    USER_ID(Arrays.asList("user"), new Resolver<Boolean, AnnotatedCommand>() {
+        @Override
+        public Integer resolve(ParameterType parameterType, AnnotatedCommand command) {
+            return command.getParameterByName("user").intValue();
+        }
+
+        @Override
+        public List<String> getParameterNames() {
+            return Arrays.asList("user");
+        }
+    });
+}
+```
+
+Our acceptance test looks like following:
+
+```
+BookOrderCommand title=lala isbn=test1234 user=4711
+```
+
+or with tracking enabled:
+
+```
+BookOrderCommand title=lala isbn=test1234 user=4711 tracking=true
+```
