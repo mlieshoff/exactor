@@ -42,6 +42,9 @@
         </license>
     </licenses>
 
+    <properties>
+        <version.abbot>0.13.1</version.abbot>
+    </properties>
     <!--mailingLists> <mailingList> <name>exactor User List</name> <subscribe>
         </subscribe> <unsubscribe> </unsubscribe> <post> </post> <archive> </archive>
         <otherArchives> <otherArchive> </otherArchive> </otherArchives> </mailingList>
@@ -92,6 +95,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.0</version>
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
@@ -101,11 +105,13 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>changelog-maven-plugin</artifactId>
+                <version>2.0-beta-1</version>
             </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9</version>
                 <configuration>
                     <overview>/exactor-core/src/test/overview.html</overview>
                     <show>public</show>
@@ -120,7 +126,8 @@
                     </links>
                     <groups>
                         <group title="Exactor core" packages="com.exoftware.exactor"/>
-                        <group title="Exactor commands" packages="com.exoftware.exactor.command.web:com.exoftware.exactor.command.swt"/>
+                        <group title="Exactor commands"
+                               packages="com.exoftware.exactor.command.web:com.exoftware.exactor.command.swt"/>
                     </groups>
                 </configuration>
                 <executions>
@@ -167,6 +174,62 @@
     </dependencies>
 
     <profiles>
+        <profile>
+            <id>install-abbot</id>
+            <activation>
+                <file>
+                    <missing>${env.M2_HOME}/repository/abbot/abbot/${version.abbot}</missing>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.googlecode.maven-download-plugin</groupId>
+                        <artifactId>download-maven-plugin</artifactId>
+                        <version>1.2.1</version>
+                        <executions>
+                            <execution>
+                                <id>download-abbot</id>
+                                <phase>initialize</phase>
+                                <goals>
+                                    <goal>wget</goal>
+                                </goals>
+                                <configuration>
+                                    <url>
+                                        http://sourceforge.net/projects/abbot/files/abbot/${version.abbot}/abbot-${version.abbot}.zip
+                                    </url>
+                                    <unpack>true</unpack>
+                                    <outputDirectory>${project.build.directory}</outputDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-install-plugin</artifactId>
+                        <version>2.5.2</version>
+                        <executions>
+                            <execution>
+                                <id>install-dependency</id>
+                                <phase>initialize</phase>
+                                <goals>
+                                    <goal>install-file</goal>
+                                </goals>
+                                <configuration>
+                                    <groupId>abbot</groupId>
+                                    <artifactId>abbot</artifactId>
+                                    <version>${version.abbot}</version>
+                                    <packaging>jar</packaging>
+                                    <file>
+                                        ${project.build.directory}/abbot-${version.abbot}/lib/abbot.jar
+                                    </file>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <profile>
             <id>mac</id>
             <activation>

@@ -16,7 +16,7 @@
         <dependency>
             <groupId>abbot</groupId>
             <artifactId>abbot</artifactId>
-            <version>0.13.1</version>
+            <version>${version.abbot}</version>
         </dependency>
         <dependency>
             <groupId>bsh</groupId>
@@ -31,21 +31,20 @@
         <dependency>
             <groupId>exactor.core</groupId>
             <artifactId>exactor-core</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>exactor.swing</groupId>
             <artifactId>exactor-swing</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>exactor.core</groupId>
             <artifactId>exactor-core</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
     </dependencies>
-
 </project>
