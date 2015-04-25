@@ -51,9 +51,9 @@
         </mailingLists-->
 
     <scm>
-        <connection>scm:svn:http://exactor.googlecode.com/svn/trunk</connection>
-        <developerConnection>scm:svn:https://exactor.googlecode.com/svn/trunk</developerConnection>
-        <url>http://code.google.com/p/exactor/source/browse/#svn/trunk</url>
+        <url>git:git@github.com:mlieshoff/exactor.git</url>
+        <connection>scm:git:git@github.com:mlieshoff/exactor.git</connection>
+        <developerConnection>scm:git:git@github.com:mlieshoff/exactor.git</developerConnection>
     </scm>
 
     <build>

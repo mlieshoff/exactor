@@ -66,4 +66,9 @@
         </profile>
     </profiles>
 
+    <scm>
+        <url>git:git@github.com:mlieshoff/exactor.git</url>
+        <connection>scm:git:git@github.com:mlieshoff/exactor.git</connection>
+        <developerConnection>scm:git:git@github.com:mlieshoff/exactor.git</developerConnection>
+    </scm>
 </project>
