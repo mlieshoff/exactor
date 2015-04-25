@@ -178,7 +178,7 @@
             <id>install-abbot</id>
             <activation>
                 <file>
-                    <missing>${env.M2_HOME}/repository/abbot/abbot/${version.abbot}</missing>
+                    <missing>${user.home}/.m2/repository/abbot/abbot/${version.abbot}/abbot-${version.abbot}.jar</missing>
                 </file>
             </activation>
             <build>
