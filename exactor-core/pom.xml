@@ -11,11 +11,15 @@
     <artifactId>exactor-core</artifactId>
     <packaging>jar</packaging>
     <name>exactor-core</name>
+
     <dependencies>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
         </dependency>
     </dependencies>
 </project>

@@ -39,15 +39,14 @@ package com.exoftware.exactor.act;
 import com.exoftware.exactor.Runner;
 import com.exoftware.exactor.listener.HtmlOutputListener;
 import com.exoftware.exactor.listener.SimpleListener;
-import org.junit.Test;
+import junit.framework.TestCase;
 
 /**
  * @author Michael Lieshoff
  */
-public class CoreAcceptanceTest {
+public class CoreAcceptanceTest extends TestCase{
 
-    @Test
-    public void shouldRun() throws Exception {
+    public void testShouldRun() throws Exception {
         Runner runner = new Runner(System.getProperty("user.dir") + "/src/test/resources/test");
         runner.addListener(new HtmlOutputListener());
         runner.addListener(new SimpleListener());

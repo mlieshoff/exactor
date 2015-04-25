@@ -159,26 +159,28 @@
         <module>exactor-examples</module>
     </modules>
 
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.1</version>
-        </dependency>
-    </dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>3.8.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.1</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <profiles>
         <profile>
             <id>install-abbot</id>
             <activation>
                 <file>
-                    <missing>${user.home}/.m2/repository/abbot/abbot/${version.abbot}/abbot-${version.abbot}.jar</missing>
+                    <missing>${user.home}/.m2/repository/abbot/abbot/${version.abbot}/abbot-${version.abbot}.jar
+                    </missing>
                 </file>
             </activation>
             <build>

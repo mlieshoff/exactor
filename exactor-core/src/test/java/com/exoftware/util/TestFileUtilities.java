@@ -13,6 +13,12 @@ public class TestFileUtilities extends TestCase {
         new File(Constants.pathToTestFile("deleteme.txt")).delete();
     }
 
+    @Override
+    protected void tearDown() throws Exception {
+        super.tearDown();
+        new File(Constants.pathToTestFile("deleteme.txt")).delete();
+    }
+
     public void testGetFileContent() throws IOException {
         assertEquals("abc\r\n" + "def\r\n" + "123\r\n", FileUtilities.getFileContent(Constants.pathToTestFile(
                 "file.txt")));

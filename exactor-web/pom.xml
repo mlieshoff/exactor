@@ -26,7 +26,7 @@
         <dependency>
             <groupId>exactor.core</groupId>
             <artifactId>exactor-core</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 

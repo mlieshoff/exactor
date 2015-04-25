@@ -16,7 +16,7 @@
         <dependency>
             <groupId>exactor.swt</groupId>
             <artifactId>exactor-swt</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
