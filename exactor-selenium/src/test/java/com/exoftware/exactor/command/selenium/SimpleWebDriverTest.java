@@ -1,23 +1,24 @@
-/******************************************************************
+/**
+ * ***************************************************************
  * Copyright (c) 2014, Exoftware
  * All rights reserved.
- *
+ * <p/>
  * Redistribution and use in source and binary forms, with or
  * without modification, are permitted provided that the following
  * conditions are met:
- *
- *   * Redistributions of source code must retain the above
- *     copyright notice, this list of conditions and the following
- *     disclaimer.
- *   * Redistributions in binary form must reproduce the above
- *     copyright notice, this list of conditions and the following
- *     disclaimer in the documentation and/or other materials
- *     provided with the distribution.
- *   * Neither the name of the Exoftware, Exactor nor the names
- *     of its contributors may be used to endorse or promote
- *     products derived from this software without specific
- *     prior written permission.
- *
+ * <p/>
+ * * Redistributions of source code must retain the above
+ * copyright notice, this list of conditions and the following
+ * disclaimer.
+ * * Redistributions in binary form must reproduce the above
+ * copyright notice, this list of conditions and the following
+ * disclaimer in the documentation and/or other materials
+ * provided with the distribution.
+ * * Neither the name of the Exoftware, Exactor nor the names
+ * of its contributors may be used to endorse or promote
+ * products derived from this software without specific
+ * prior written permission.
+ * <p/>
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
  * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
  * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
@@ -31,7 +32,8 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *****************************************************************/
+ * ***************************************************************
+ */
 package com.exoftware.exactor.command.selenium;
 
 import com.exoftware.exactor.Runner;
@@ -41,17 +43,23 @@ import com.exoftware.exactor.listener.SimpleListener;
 import org.junit.Test;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.io.File;
+import java.io.FileWriter;
+
 /**
  * @author Michael Lieshoff
  */
-public class SimpleWebDriverTest {
+public class SimpleWebDriverTest extends GeneralTest {
 
     @Test
     public void shouldRun() throws Exception {
         try {
-            Runner runner = new SeleniumWebDriverRunner("./exactor-selenium/src/test/resources", new FirefoxDriver());
+            Runner runner = new SeleniumWebDriverRunner(RESOURCES_DIRECTORY, new FirefoxDriver());
             runner.addListener(new SimpleListener());
-            runner.addListener(new HtmlOutputListener(runner.getBaseDir()));
+            runner.addListener(new HtmlOutputListener(new FileWriter(new File(TEMP_DIRECTORY, DEFAULT_HTML)),
+                    new FileWriter(new File(TEMP_DIRECTORY, DEFAULT_STYLE_SHEET)),
+                    runner.getBaseDir()
+            ));
             runner.run();
         } catch (Exception e) {
             System.err.println(e.getMessage());
