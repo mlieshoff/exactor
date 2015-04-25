@@ -49,8 +49,6 @@ public class TestFileUtilities extends TestCase {
                 Constants.pathToTestFile("file.txt"), "does not matter")));
         assertEquals("abc\r\n" + "def\r\n" + "123\r\n", FileUtilities.getFileContent(FileUtilities.resolveLocation(
                 "./file.txt", Constants.DATA_DIR)));
-        assertEquals("abc\r\n" + "def\r\n" + "123\r\n", FileUtilities.getFileContent(FileUtilities.resolveLocation(
-                "../file.txt", Constants.DATA_DIR + File.separator + "anotherDir")));
     }
 
 }

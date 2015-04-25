@@ -6,6 +6,8 @@ import com.exoftware.exactor.Script;
 import junit.framework.TestCase;
 
 import java.io.File;
+import java.text.MessageFormat;
+import java.util.Date;
 
 public class TestHtmlOutputBuilder extends TestCase {
     private static final String NL = System.getProperty("line.separator");
@@ -20,15 +22,15 @@ public class TestHtmlOutputBuilder extends TestCase {
                 "<html xmlns=\"http://www.w3.org/1999/xhtml\">" + NL +
                 "<head>" + NL +
                 "<meta http-equiv=\"content-type\" content=\"text/html; charset=iso-8859-1\"/>" + NL +
-                "<title>Acceptance Test Results</title>" + NL +
+                "<title>Acceptance Test Results ({0,date,long})</title>" + NL +
                 "<style type=\"text/css\" media=\"all\">@import \"style.css\";</style>" + NL +
                 "</head>" + NL +
                 "<body>" + NL;
-        assertEquals(expected, builder.buildHtmlHeader());
+        assertEquals(MessageFormat.format(expected, new Date()), builder.buildHtmlHeader());
     }
 
     public void testBuildHtmlFooter() {
-        String expected = "</body>" + NL +"</html>";
+        String expected = "</body>" + NL + "</html>";
         assertEquals(expected, builder.buildHtmlFooter());
     }
 

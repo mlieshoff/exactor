@@ -108,7 +108,7 @@ public class TestFileCollector extends TestCase {
 
     public void testFindDirectories() {
         files = FileCollector.directories(new File(Constants.DATA_DIR));
-        assertEquals(8, files.length);
+        assertEquals(7, files.length);
         assertContains("multipledirs", files);
         assertContains("dir1", files);
         assertContains("dir2", files);
@@ -117,7 +117,7 @@ public class TestFileCollector extends TestCase {
 
     public void testFindDirectoriesWithIgnored() {
         files = FileCollector.directories(new File(Constants.DATA_DIR), new String[]{"dir1", "dir2"});
-        assertEquals(6, files.length);
+        assertEquals(5, files.length);
         assertContains("multipledirs", files);
         assertContains("multiplefiles", files);
     }
