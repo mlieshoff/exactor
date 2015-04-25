@@ -41,15 +41,26 @@ import com.exoftware.exactor.listener.HtmlOutputListener;
 import com.exoftware.exactor.listener.SimpleListener;
 import junit.framework.TestCase;
 
+import java.io.File;
+import java.io.FileWriter;
+
 /**
  * @author Michael Lieshoff
  */
-public class CoreAcceptanceTest extends TestCase{
+public class CoreAcceptanceTest extends TestCase {
+
+    private static final String RESOURCES_DIRECTORY = System.getProperty("user.dir") + "/src/test/resources/test";
+    private static final File TEMP_DIRECTORY = new File(System.getProperty("java.io.tmpdir"));
+    private static final String DEFAULT_HTML = "out.html";
+    private static final String DEFAULT_STYLE_SHEET = "style.css";
 
     public void testShouldRun() throws Exception {
-        Runner runner = new Runner(System.getProperty("user.dir") + "/src/test/resources/test");
-        runner.addListener(new HtmlOutputListener());
+        Runner runner = new Runner(RESOURCES_DIRECTORY);
         runner.addListener(new SimpleListener());
+        runner.addListener(new HtmlOutputListener(new FileWriter(new File(TEMP_DIRECTORY, DEFAULT_HTML)),
+                new FileWriter(new File(TEMP_DIRECTORY, DEFAULT_STYLE_SHEET)),
+                runner.getBaseDir()
+        ));
         runner.run();
     }
 
