@@ -48,6 +48,20 @@
         </dependency>
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>de.jutzig</groupId>
+                        <artifactId>github-release-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
     <scm>
         <url>git:git@github.com:mlieshoff/exactor.git</url>
         <connection>scm:git:git@github.com:mlieshoff/exactor.git</connection>
