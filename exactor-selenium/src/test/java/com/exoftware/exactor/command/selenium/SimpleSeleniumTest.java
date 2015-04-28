@@ -49,12 +49,12 @@ import static org.junit.Assert.fail;
 /**
  * @author Michael Lieshoff
  */
-public class SimpleSeleniumTest extends GeneralTest {
+public class SimpleSeleniumTest extends GeneralConfig {
 
     @Test
     public void shouldRun() throws Exception {
         try {
-            Runner runner = new SeleniumRunner("localhost", 4444, RESOURCES_DIRECTORY, "firefox", "www.google.de");
+            Runner runner = new SeleniumRunner("localhost", 4444, getTest("web-driver-test.act"), "firefox", "http://www.google.com");
             runner.addListener(new SimpleListener());
             runner.addListener(new HtmlOutputListener(new FileWriter(new File(TEMP_DIRECTORY, DEFAULT_HTML)),
                     new FileWriter(new File(TEMP_DIRECTORY, DEFAULT_STYLE_SHEET)),
@@ -62,7 +62,8 @@ public class SimpleSeleniumTest extends GeneralTest {
             ));
             runner.run();
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            e.printStackTrace();
+            fail(e.getMessage());
         }
     }
 

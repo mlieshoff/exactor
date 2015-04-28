@@ -1,6 +1,7 @@
-#SeleniumWebDriver   webDriverClass=org.openqa.selenium.firefox.FirefoxDriver
+SeleniumWebDriver   webDriverClass=org.openqa.selenium.firefox.FirefoxDriver
 SwdGet              url=http://www.google.de
 SwdSendKeys         by.name="q" keys="abbas"
 SwdSubmit
 
 Pause 2000
+SwdQuit

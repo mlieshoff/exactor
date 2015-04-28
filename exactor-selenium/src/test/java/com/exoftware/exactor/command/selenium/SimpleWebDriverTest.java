@@ -46,15 +46,17 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import java.io.File;
 import java.io.FileWriter;
 
+import static org.junit.Assert.fail;
+
 /**
  * @author Michael Lieshoff
  */
-public class SimpleWebDriverTest extends GeneralTest {
+public class SimpleWebDriverTest extends GeneralConfig {
 
     @Test
     public void shouldRun() throws Exception {
         try {
-            Runner runner = new SeleniumWebDriverRunner(RESOURCES_DIRECTORY, new FirefoxDriver());
+            Runner runner = new SeleniumWebDriverRunner(getTest("simple-test.act"), new FirefoxDriver());
             runner.addListener(new SimpleListener());
             runner.addListener(new HtmlOutputListener(new FileWriter(new File(TEMP_DIRECTORY, DEFAULT_HTML)),
                     new FileWriter(new File(TEMP_DIRECTORY, DEFAULT_STYLE_SHEET)),
@@ -62,7 +64,7 @@ public class SimpleWebDriverTest extends GeneralTest {
             ));
             runner.run();
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            fail(e.getMessage());
         }
     }
 
