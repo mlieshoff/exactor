@@ -203,7 +203,7 @@
             <id>install-abbot</id>
             <activation>
                 <file>
-                    <missing>${user.home}/.m2/repository/abbot/abbot/${version.abbot}/abbot-${version.abbot}.jar
+                    <missing>${settings.localRepository}/abbot/abbot/${version.abbot}/abbot-${version.abbot}.jar
                     </missing>
                 </file>
             </activation>
