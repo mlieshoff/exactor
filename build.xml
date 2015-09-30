@@ -3,7 +3,7 @@
     <description>EXACTOR project.</description>
 
     <property name="release.name" value="exactor"/>
-    <property name="release.version" value="1.1.29.110414"/>
+    <property name="release.version" value="1.1.29"/>
     <property name="release.dir" value="target"/>
 
     <property name="tmp.dir" value="tmp"/>

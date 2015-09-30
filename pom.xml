@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <version>1.1.29.110414</version>
+    <version>1.1.29</version>
     <artifactId>exactor</artifactId>
     <groupId>exactor</groupId>
     <packaging>pom</packaging>
@@ -44,16 +44,19 @@
 
     <properties>
         <version.abbot>0.13.1</version.abbot>
+        <github.global.server>github</github.global.server>
     </properties>
+
     <!--mailingLists> <mailingList> <name>exactor User List</name> <subscribe>
         </subscribe> <unsubscribe> </unsubscribe> <post> </post> <archive> </archive>
         <otherArchives> <otherArchive> </otherArchive> </otherArchives> </mailingList>
         </mailingLists-->
 
     <scm>
-        <url>git:git@github.com:mlieshoff/exactor.git</url>
-        <connection>scm:git:git@github.com:mlieshoff/exactor.git</connection>
-        <developerConnection>scm:git:git@github.com:mlieshoff/exactor.git</developerConnection>
+      <connection>scm:git:https://github.com/mlieshoff/exactor.git</connection>
+      <developerConnection>scm:git:git@github.com:mlieshoff/exactor.git</developerConnection>
+      <url>https://github.com/mlieshoff/exactor</url>
+      <tag>HEAD</tag>
     </scm>
 
     <build>
@@ -147,30 +150,6 @@
                 <version>1.9</version>
             </extension>
         </extensions>
-
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>de.jutzig</groupId>
-                    <artifactId>github-release-plugin</artifactId>
-                    <version>1.1.1</version>
-                    <executions>
-                        <execution>
-                            <phase>install</phase>
-                            <goals>
-                                <goal>release</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <configuration>
-                        <serverId>github</serverId>
-                        <description>Description of the release</description>
-                        <releaseName>Exactor ${project.version}</releaseName>
-                        <tag>exactor-${project.version}</tag>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
     </build>
 
     <modules>
@@ -298,19 +277,11 @@
         </repository>
     </repositories>
 
-    <distributionManagement>
+   <distributionManagement>
         <repository>
-            <id>org-mili-repo-releases</id>
-            <name>Maven Repo for org.mili (releases)</name>
-            <url>svn:https://org-mili-repo.googlecode.com/svn/maven-repo/releases</url>
-            <uniqueVersion>false</uniqueVersion>
+            <id>bintray</id>
+            <url>https://api.bintray.com/maven/mlieshoff/maven/exactor/;publish=1</url>
         </repository>
-        <snapshotRepository>
-            <id>org-mili-repo-snapshots</id>
-            <name>Maven Repo for org.mili (snapshots)</name>
-            <url>svn:https://org-mili-repo.googlecode.com/svn/maven-repo/snapshots</url>
-            <uniqueVersion>false</uniqueVersion>
-        </snapshotRepository>
     </distributionManagement>
 
     <reporting>
