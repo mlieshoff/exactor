@@ -32,8 +32,8 @@
         </developer>
     </developers>
     <issueManagement>
-        <system>Google Code</system>
-        <url>http://code.google.com/p/exactor/issues/list</url>
+        <system>GitHub</system>
+        <url>https://github.com/mlieshoff/exactor/issues</url>
     </issueManagement>
     <licenses>
         <license>
@@ -300,17 +300,9 @@
 
     <distributionManagement>
         <repository>
-            <id>org-mili-repo-releases</id>
-            <name>Maven Repo for org.mili (releases)</name>
-            <url>svn:https://org-mili-repo.googlecode.com/svn/maven-repo/releases</url>
-            <uniqueVersion>false</uniqueVersion>
+            <id>bintray</id>
+            <url>https://api.bintray.com/maven/mlieshoff/maven/exactor/;publish=1</url>
         </repository>
-        <snapshotRepository>
-            <id>org-mili-repo-snapshots</id>
-            <name>Maven Repo for org.mili (snapshots)</name>
-            <url>svn:https://org-mili-repo.googlecode.com/svn/maven-repo/snapshots</url>
-            <uniqueVersion>false</uniqueVersion>
-        </snapshotRepository>
     </distributionManagement>
 
     <reporting>
