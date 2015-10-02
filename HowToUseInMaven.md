@@ -2,9 +2,14 @@ First add the repository information to your Maven pom.xml
 
 ```
 <repository>
-    <id>org-mili-repo-releases</id>
-    <name>Maven Repo for org.mili (releases)</name>
-    <url>svn:https://org-mili-repo.googlecode.com/svn/maven-repo/releases</url>
+    <id>org-mili-repo</id>
+    <url>http://dl.bintray.com/mlieshoff/maven</url>
+    <releases>
+        <enabled>true</enabled>
+    </releases>
+    <snapshots>
+        <enabled>false</enabled>
+    </snapshots>
 </repository>
 ```
 
@@ -20,16 +25,8 @@ Then add following dependency (depends on what you want, as example exactor-core
 </dependency>
 ```
 
-You will need the wagon connector to access the google repo
+Please check out our new versions here:
 
 ```
-<build>
-    <extensions>
-        <extension>
-            <groupId>org.jvnet.wagon-svn</groupId>
-            <artifactId>wagon-svn</artifactId>
-            <version>1.9</version>
-        </extension>
-    </extensions>
-</build>
+https://bintray.com/mlieshoff/maven/exactor/view
 ```
