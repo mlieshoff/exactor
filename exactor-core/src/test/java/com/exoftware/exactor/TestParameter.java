@@ -345,4 +345,10 @@ public class TestParameter extends TestCase {
         }
     }
 
+    public void testGetParametersFunction() {
+        command.addParameter(new Parameter("{40+2}"));
+        int number = command.getParameter(0).intValue();
+        assertEquals(42, number);
+    }
+
 }

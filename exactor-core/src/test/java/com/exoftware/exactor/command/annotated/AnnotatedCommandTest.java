@@ -153,4 +153,11 @@ public class AnnotatedCommandTest extends TestCase {
         assertEquals("bla=hello", fooCommand.getMandatoryString());
     }
 
+    public void testParameterWithFunction() throws Exception {
+        FooCommand fooCommand = new FooCommand();
+        fooCommand.addParameter(new Parameter("string={40+2}"));
+        fooCommand.setUp();
+        assertEquals("42", fooCommand.getMandatoryString());
+    }
+
 }

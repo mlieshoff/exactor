@@ -35,6 +35,7 @@
 package com.exoftware.exactor;
 
 import com.exoftware.exactor.command.annotated.NamedParameter;
+import com.exoftware.util.FunctionResolver;
 import com.exoftware.util.RandomResolver;
 import com.exoftware.util.Require;
 
@@ -108,6 +109,7 @@ public class Parameter {
         String result = replaceSubstitutions(value, getCommand().getScript().getContext());
         result = replaceSubstitutions(result, getCommand().getScript().getExecutionSet().getContext());
         result = RandomResolver.resolveRandoms(result);
+        result = FunctionResolver.resolveFunction(result);
         return result;
     }
 
