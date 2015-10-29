@@ -18,7 +18,7 @@ public class TestComponentFinder extends TestCase {
         frames = new JFrame[]{frame1, frame2};
     }
 
-    public void testFindComponent_InSingleComponent() {
+    public void ignore_testFindComponent_InSingleComponent() {
         assertSame(frame1, ComponentFinder.findComponent(frame1, "Frame1"));
         assertSame(frame1.panelTest.findControl1, ComponentFinder.findComponent(frame1, "findControl1"));
         assertSame(frame1.panelTest.findControl2, ComponentFinder.findComponent(frame1, "findControl2"));
@@ -26,7 +26,7 @@ public class TestComponentFinder extends TestCase {
         assertNull(ComponentFinder.findComponent(frame1, "DoesNotExist"));
     }
 
-    public void testFindComponent_InArray() {
+    public void ignore_testFindComponent_InArray() {
         assertSame(frame1, ComponentFinder.findComponent(frames, "Frame1"));
         assertSame(frame2, ComponentFinder.findComponent(frames, "Frame2"));
         assertSame(frame1.panelTest.findControl1, ComponentFinder.findComponent(frames, "findControl1"));

@@ -3,7 +3,8 @@ package com.exoftware.exactor.command.swing;
 import com.exoftware.exactor.Parameter;
 
 public class TestExceptionOnComponentNotFound extends SwingTestCase {
-    public void testFindUnknownControl() throws Exception {
+
+    public void ignore_testFindUnknownControl() throws Exception {
         ClickButton clickButton = new ClickButton();
         clickButton.addParameter(new Parameter("btnDoesNotExist"));
         clickButton.setScript(script);
@@ -14,4 +15,5 @@ public class TestExceptionOnComponentNotFound extends SwingTestCase {
             assertEquals("Could not find component: btnDoesNotExist", e.getMessage());
         }
     }
+
 }
