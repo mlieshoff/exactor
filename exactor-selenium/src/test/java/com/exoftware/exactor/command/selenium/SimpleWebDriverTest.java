@@ -43,6 +43,7 @@ import com.exoftware.exactor.listener.SimpleListener;
 import org.junit.Test;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 
@@ -55,6 +56,10 @@ public class SimpleWebDriverTest extends GeneralConfig {
 
     @Test
     public void shouldRun() throws Exception {
+        if (GraphicsEnvironment.isHeadless()) {
+            System.out.println("*** TEST IGNORED BECAUSE NO UI AVAILABLE!!!");
+            return;
+        }
         try {
             Runner runner = new SeleniumWebDriverRunner(getTest("simple-test.act"), new FirefoxDriver());
             runner.addListener(new SimpleListener());
