@@ -41,6 +41,7 @@ import com.exoftware.exactor.listener.HtmlOutputListener;
 import com.exoftware.exactor.listener.SimpleListener;
 import org.junit.Test;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 
@@ -53,6 +54,10 @@ public class SimpleSeleniumTest extends GeneralConfig {
 
     @Test
     public void shouldRun() throws Exception {
+        if (GraphicsEnvironment.isHeadless()) {
+            System.out.println("*** TEST IGNORED BECAUSE NO UI AVAILABLE!!!");
+            return;
+        }
         try {
             Runner runner = new SeleniumRunner("localhost", 4444, getTest("web-driver-test.act"), "firefox", "http://www.google.com");
             runner.addListener(new SimpleListener());
