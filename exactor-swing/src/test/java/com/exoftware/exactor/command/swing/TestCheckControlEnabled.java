@@ -5,7 +5,11 @@ import junit.framework.AssertionFailedError;
 
 public class TestCheckControlEnabled extends SwingTestCase {
 
-    public void ignore_testControlEnabled_Enabled() throws Exception {
+    public void testControlEnabled_Enabled() throws Exception {
+        if (headless) {
+            System.out.println("*** TEST IGNORED BECAUSE NO UI AVAILABLE!!!");
+            return;
+        }
         createTestCommand("enabledVisible", "true").doExecute();
         try {
             createTestCommand("enabledVisible", "false").doExecute();
@@ -15,7 +19,11 @@ public class TestCheckControlEnabled extends SwingTestCase {
         }
     }
 
-    public void ignore_testControlEnabled_Disabled() throws Exception {
+    public void testControlEnabled_Disabled() throws Exception {
+        if (headless) {
+            System.out.println("*** TEST IGNORED BECAUSE NO UI AVAILABLE!!!");
+            return;
+        }
         createTestCommand("notEnabled", "false").doExecute();
         try {
             createTestCommand("notEnabled", "true").doExecute();

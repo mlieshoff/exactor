@@ -4,7 +4,11 @@ import com.exoftware.exactor.Parameter;
 
 public class TestClickButton extends SwingTestCase {
 
-    public void ignore_testPustButton() throws Exception {
+    public void testPustButton() throws Exception {
+        if (headless) {
+            System.out.println("*** TEST IGNORED BECAUSE NO UI AVAILABLE!!!");
+            return;
+        }
         ClickButton clickButton = new ClickButton();
         clickButton.addParameter(new Parameter("btnTest"));
         clickButton.setScript(script);
