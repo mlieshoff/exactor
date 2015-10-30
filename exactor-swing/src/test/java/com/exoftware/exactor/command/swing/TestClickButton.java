@@ -2,10 +2,12 @@ package com.exoftware.exactor.command.swing;
 
 import com.exoftware.exactor.Parameter;
 
+import java.awt.*;
+
 public class TestClickButton extends SwingTestCase {
 
     public void testPustButton() throws Exception {
-        if (headless) {
+        if (GraphicsEnvironment.isHeadless()) {
             System.out.println("*** TEST IGNORED BECAUSE NO UI AVAILABLE!!!");
             return;
         }

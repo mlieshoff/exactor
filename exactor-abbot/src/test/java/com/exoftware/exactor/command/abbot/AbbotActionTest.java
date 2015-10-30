@@ -21,6 +21,10 @@ public class AbbotActionTest extends TestCase {
     }
 
     public void testXMLActionCreation() throws Exception {
+        if (GraphicsEnvironment.isHeadless()) {
+            System.out.println("*** TEST IGNORED BECAUSE NO UI AVAILABLE!!!");
+            return;
+        }
         assertActionXml("\"\" \"actionClick\" \"?\" ", "<action method=\"actionClick\" args=\"?\" />");
         assertActionXml("\"\" \"actionClick\" \"High Button\" ", "<action method=\"actionClick\" args=\"High Button\" />");
         assertActionXml("\"\" \"actionClick\" \"Low Button\" ", "<action method=\"actionClick\" args=\"Low Button\" />");

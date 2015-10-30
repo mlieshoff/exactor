@@ -6,26 +6,24 @@ import javax.swing.*;
 import java.awt.*;
 
 public class TestComponentFinder extends TestCase {
-    private boolean headless = false;
     private FrameTest frame1;
     private AnotherTestFrame frame2;
     private JFrame[] frames;
 
     protected void setUp() throws Exception {
         super.setUp();
-        try {
-            frame1 = new FrameTest("Unit Test");
-            frame1.setName("Frame1");
-            frame2 = new AnotherTestFrame("Unit Test");
-            frame2.setName("Frame2");
-            frames = new JFrame[]{frame1, frame2};
-        } catch (HeadlessException e) {
-            headless = true;
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
         }
+        frame1 = new FrameTest("Unit Test");
+        frame1.setName("Frame1");
+        frame2 = new AnotherTestFrame("Unit Test");
+        frame2.setName("Frame2");
+        frames = new JFrame[]{frame1, frame2};
     }
 
     public void testFindComponent_InSingleComponent() {
-        if (headless) {
+        if (GraphicsEnvironment.isHeadless()) {
             System.out.println("*** TEST IGNORED BECAUSE NO UI AVAILABLE!!!");
             return;
         }
@@ -37,7 +35,7 @@ public class TestComponentFinder extends TestCase {
     }
 
     public void testFindComponent_InArray() {
-        if (headless) {
+        if (GraphicsEnvironment.isHeadless()) {
             System.out.println("*** TEST IGNORED BECAUSE NO UI AVAILABLE!!!");
             return;
         }
