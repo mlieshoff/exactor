@@ -9,6 +9,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
 
+import java.awt.*;
+
 public class TestControlSearcher extends GuiAbstractTest {
     private Composite topLevelComposite1;
     private Composite topLevelComposite2;
@@ -24,6 +26,9 @@ public class TestControlSearcher extends GuiAbstractTest {
 
     protected void setUp() throws Exception {
         super.setUp();
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
         topLevelComposite1 = new Composite(shell, SWT.NONE);
         topLevelComposite2 = new Composite(shell, SWT.NONE);
         topLevelComposite3 = new Composite(shell, SWT.NONE);
@@ -52,26 +57,46 @@ public class TestControlSearcher extends GuiAbstractTest {
     }
 
     public void testDoesNotExist() {
+        if (GraphicsEnvironment.isHeadless()) {
+            System.out.println("*** TEST IGNORED BECAUSE NO UI AVAILABLE!!!");
+            return;
+        }
         assertCompositeDoesNotExist("abc");
     }
 
     public void testCompositeDoesExist() {
+        if (GraphicsEnvironment.isHeadless()) {
+            System.out.println("*** TEST IGNORED BECAUSE NO UI AVAILABLE!!!");
+            return;
+        }
         assertCompositeDoesExist("composite1");
         assertCompositeDoesExist("composite2");
         assertCompositeDoesExist("composite4");
     }
 
     public void testSearchForControl() {
+        if (GraphicsEnvironment.isHeadless()) {
+            System.out.println("*** TEST IGNORED BECAUSE NO UI AVAILABLE!!!");
+            return;
+        }
         createSearcher("txtTextBox");
         assertSame(textBox, searcher.searchForControl());
     }
 
     public void testSearchForShells() {
+        if (GraphicsEnvironment.isHeadless()) {
+            System.out.println("*** TEST IGNORED BECAUSE NO UI AVAILABLE!!!");
+            return;
+        }
         assertSearchForControl(childShell, "childShell");
         assertSearchForControl(childShellButton, "childShellButton");
     }
 
     public void testSearchForMenuItem() {
+        if (GraphicsEnvironment.isHeadless()) {
+            System.out.println("*** TEST IGNORED BECAUSE NO UI AVAILABLE!!!");
+            return;
+        }
         assertSearchForControl(subMenu, "subMenu");
     }
 

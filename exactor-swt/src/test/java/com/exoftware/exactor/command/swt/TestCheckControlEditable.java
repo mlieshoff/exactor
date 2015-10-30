@@ -4,14 +4,24 @@ import com.exoftware.exactor.Parameter;
 import com.exoftware.exactor.command.swt.framework.TestSwt;
 import junit.framework.ComparisonFailure;
 
+import java.awt.*;
+
 public class TestCheckControlEditable extends TestSwt {
+
     protected void setUp() throws Exception {
         super.setUp();
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
         command = new CheckControlEditable();
         setScript();
     }
 
     public void testControlEditable() throws Exception {
+        if (GraphicsEnvironment.isHeadless()) {
+            System.out.println("*** TEST IGNORED BECAUSE NO UI AVAILABLE!!!");
+            return;
+        }
         command.addParameter(new Parameter("txtUneditable"));
         command.addParameter(new Parameter("true"));
         try {
@@ -22,4 +32,5 @@ public class TestCheckControlEditable extends TestSwt {
         }
 
     }
+
 }

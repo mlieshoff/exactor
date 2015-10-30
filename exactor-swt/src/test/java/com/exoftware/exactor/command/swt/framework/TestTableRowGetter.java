@@ -7,6 +7,8 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Widget;
 
+import java.awt.*;
+
 public class TestTableRowGetter extends GuiAbstractTest {
     private TableRowGetter tableRowGetter;
     private TableItem regularTableItem;
@@ -16,6 +18,9 @@ public class TestTableRowGetter extends GuiAbstractTest {
 
     protected void setUp() throws Exception {
         super.setUp();
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
         table = new Table(shell, SWT.NONE);
         new TableColumn(table, SWT.NONE);
         new TableColumn(table, SWT.NONE);
@@ -26,15 +31,27 @@ public class TestTableRowGetter extends GuiAbstractTest {
     }
 
     public void testRegularGet() {
+        if (GraphicsEnvironment.isHeadless()) {
+            System.out.println("*** TEST IGNORED BECAUSE NO UI AVAILABLE!!!");
+            return;
+        }
         assertTableRowGetter("abc,def", regularTableItem);
     }
 
     public void testEmptyString() {
+        if (GraphicsEnvironment.isHeadless()) {
+            System.out.println("*** TEST IGNORED BECAUSE NO UI AVAILABLE!!!");
+            return;
+        }
         emptyTableItem.setText(new String[]{});
         assertTableRowGetter("", emptyTableItem);
     }
 
     public void testNonTable() {
+        if (GraphicsEnvironment.isHeadless()) {
+            System.out.println("*** TEST IGNORED BECAUSE NO UI AVAILABLE!!!");
+            return;
+        }
         Button button = new Button(shell, SWT.PUSH);
         assertTableRowGetter("<This is not a table>", button);
     }

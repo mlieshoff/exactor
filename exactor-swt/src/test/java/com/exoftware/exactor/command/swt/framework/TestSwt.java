@@ -9,6 +9,8 @@ import com.exoftware.exactor.command.swt.InputText;
 import junit.framework.AssertionFailedError;
 import junit.framework.ComparisonFailure;
 
+import java.awt.*;
+
 public class TestSwt extends GuiAbstractTest {
     public SwtTestPanel testPanel;
     protected Command command;
@@ -16,6 +18,9 @@ public class TestSwt extends GuiAbstractTest {
 
     protected void setUp() throws Exception {
         super.setUp();
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
         script = new Script();
         testPanel = new SwtTestPanel(shell);
         script.getContext().put("RootComposite", testPanel);
@@ -23,10 +28,17 @@ public class TestSwt extends GuiAbstractTest {
 
     protected void tearDown() throws Exception {
         super.tearDown();
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
         testPanel.dispose();
     }
 
     public void testPushButton() throws Exception {
+        if (GraphicsEnvironment.isHeadless()) {
+            System.out.println("*** TEST IGNORED BECAUSE NO UI AVAILABLE!!!");
+            return;
+        }
         command = new ClickButton();
         setScript();
         command.addParameter(new Parameter("btnTest"));
@@ -35,6 +47,10 @@ public class TestSwt extends GuiAbstractTest {
     }
 
     public void testInputsText() throws Exception {
+        if (GraphicsEnvironment.isHeadless()) {
+            System.out.println("*** TEST IGNORED BECAUSE NO UI AVAILABLE!!!");
+            return;
+        }
         command = new InputText();
         setScript();
         command.addParameter(new Parameter("txtTest"));
@@ -44,6 +60,10 @@ public class TestSwt extends GuiAbstractTest {
     }
 
     public void testTestValueOfText() throws Exception {
+        if (GraphicsEnvironment.isHeadless()) {
+            System.out.println("*** TEST IGNORED BECAUSE NO UI AVAILABLE!!!");
+            return;
+        }
         command = new CheckValueOfText();
         setScript();
         testPanel.txtTest.setText("XXX");
@@ -63,6 +83,10 @@ public class TestSwt extends GuiAbstractTest {
     }
 
     public void testNoRootComposite() throws Exception {
+        if (GraphicsEnvironment.isHeadless()) {
+            System.out.println("*** TEST IGNORED BECAUSE NO UI AVAILABLE!!!");
+            return;
+        }
         command = new InputText();
         command.addParameter(new Parameter("txtTest"));
         command.addParameter(new Parameter("XXX"));
@@ -75,6 +99,10 @@ public class TestSwt extends GuiAbstractTest {
     }
 
     public void testWidgetDoesNotExist() throws Exception {
+        if (GraphicsEnvironment.isHeadless()) {
+            System.out.println("*** TEST IGNORED BECAUSE NO UI AVAILABLE!!!");
+            return;
+        }
         command = new InputText();
         setScript();
         command.addParameter(new Parameter("txtDoesNotExist"));

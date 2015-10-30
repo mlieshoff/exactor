@@ -8,6 +8,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
+import java.awt.*;
+
 
 public class TestSelectControl extends TestSwt {
     private boolean selected;
@@ -15,6 +17,9 @@ public class TestSelectControl extends TestSwt {
 
     protected void setUp() throws Exception {
         super.setUp();
+        if (GraphicsEnvironment.isHeadless()) {
+            return;
+        }
         command = new SelectControl();
         setScript();
         selected = false;
@@ -23,6 +28,10 @@ public class TestSelectControl extends TestSwt {
     }
 
     public void test() throws Exception {
+        if (GraphicsEnvironment.isHeadless()) {
+            System.out.println("*** TEST IGNORED BECAUSE NO UI AVAILABLE!!!");
+            return;
+        }
         GuiEvent.addSelectionListener(button, new Listener() {
             public void handleEvent(Event event) {
                 selected = true;
@@ -32,4 +41,5 @@ public class TestSelectControl extends TestSwt {
         command.execute();
         assertTrue(selected);
     }
+
 }
