@@ -42,10 +42,13 @@ import com.exoftware.util.Require;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * A collection of scripts to be executed together.
@@ -67,8 +70,15 @@ public class ExecutionSet {
     private final Map commands = new HashMap();
     private final Map compositeScripts = new HashMap();
 
+    private final Set<String> blacklistedClasses = new HashSet<>();
+
     public ExecutionSet() {
         context.putAll(System.getProperties());
+        Object blacklist = context.get("exactor.blacklisted.classes");
+        if (blacklist != null) {
+            String[] array = blacklist.toString().split("[,]");
+            blacklistedClasses.addAll(Arrays.asList(array));
+        }
     }
 
     /**
@@ -271,15 +281,21 @@ public class ExecutionSet {
     private Command createCommandInstance(Class c) {
         if (c != null) {
             try {
-                Object result = c.newInstance();
-                if (result instanceof Command) {
-                    return (Command) result;
+                if (!isBlacklisted(c)) {
+                    Object result = c.newInstance();
+                    if (result instanceof Command) {
+                        return (Command) result;
+                    }
                 }
             } catch (Exception ignored) {
                 ignored.printStackTrace();
             }
         }
         return null;
+    }
+
+    private boolean isBlacklisted(Class c) {
+        return blacklistedClasses.contains(c.getName());
     }
 
     private Command createCompositeInstance(File f) {

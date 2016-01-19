@@ -49,6 +49,7 @@ public class TestExecutionSet extends ExecutionSetListenerTestCase {
     private Command command;
 
     protected void setUp() throws Exception {
+        System.setProperty("exactor.blacklisted.classes", "");
         executionSet = new ExecutionSet();
         script = new Script();
         command = new MockCommand();
@@ -184,6 +185,13 @@ public class TestExecutionSet extends ExecutionSetListenerTestCase {
     public void testFindCommand() {
         Command c = executionSet.findCommand("MockCommand");
         assertTrue(c instanceof MockCommand);
+    }
+
+    public void testFindCommandWithActiveBlacklist() {
+        System.setProperty("exactor.blacklisted.classes", "com.exoftware.exactor.MockCommand");
+        executionSet = new ExecutionSet();
+        Command c = executionSet.findCommand("MockCommand");
+        assertNull(c);
     }
 
     public void testFindNonExistantCommand() {
