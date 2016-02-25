@@ -39,6 +39,7 @@ import com.exoftware.exactor.parser.ScriptParser;
 import com.exoftware.util.ClassFinder;
 import com.exoftware.util.FileCollector;
 import com.exoftware.util.Require;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -60,17 +61,19 @@ import java.util.Set;
  */
 public class ExecutionSet {
     public static final String SCRIPT_EXTENSION = ".act";
+
     private static final File USER_DIR = new File(System.getProperty("user.dir"));
-    private static final String CLASSPATH = System.getProperty("java.class.path");
     private static final String COMPOSITE_EXTENSION = ".cmp"; // to maintain backward compatibility
 
     private final Map context = new HashMap();
+
     private final List scripts = new ArrayList();
     private final List listeners = new ArrayList();
     private final Map commands = new HashMap();
     private final Map compositeScripts = new HashMap();
-
     private final Set<String> blacklistedClasses = new HashSet<>();
+
+    private final String classpath;
 
     public ExecutionSet() {
         context.putAll(System.getProperties());
@@ -79,6 +82,15 @@ public class ExecutionSet {
             String[] array = blacklist.toString().split("[,]");
             blacklistedClasses.addAll(Arrays.asList(array));
         }
+        classpath = getClasspath();
+    }
+
+    private String getClasspath() {
+        String classpath = System.getProperty("exactor.class.path");
+        if (StringUtils.isBlank(classpath)) {
+            classpath = System.getProperty("java.class.path");
+        }
+        return classpath;
     }
 
     /**
@@ -255,7 +267,7 @@ public class ExecutionSet {
     }
 
     private File findFirstMatchingInClasspath(String name) {
-        File[] matches = FileCollector.filesWithName(CLASSPATH, name);
+        File[] matches = FileCollector.filesWithName(classpath, name);
         if (matches.length > 0) {
             return matches[0];
         }
@@ -271,7 +283,7 @@ public class ExecutionSet {
     }
 
     private Command findCommandClass(String name) {
-        Command result = createCommandInstance(ClassFinder.findClass(name, CLASSPATH));
+        Command result = createCommandInstance(ClassFinder.findClass(name, classpath));
         if (result != null) {
             addCommandMapping(name, result.getClass());
         }

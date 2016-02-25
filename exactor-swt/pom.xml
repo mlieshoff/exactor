@@ -5,7 +5,7 @@
     <parent>
         <groupId>exactor</groupId>
         <artifactId>exactor</artifactId>
-        <version>1.1.30.101915</version>
+        <version>1.1.30.022516</version>
     </parent>
     <groupId>exactor.swt</groupId>
     <artifactId>exactor-swt</artifactId>
