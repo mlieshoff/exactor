@@ -1,23 +1,23 @@
 /******************************************************************
  * Copyright (c) 2004, Exoftware
  * All rights reserved.
- *
+ * <p/>
  * Redistribution and use in source and binary forms, with or
  * without modification, are permitted provided that the following
  * conditions are met:
- *
- *   * Redistributions of source code must retain the above
- *     copyright notice, this list of conditions and the following
- *     disclaimer.
- *   * Redistributions in binary form must reproduce the above
- *     copyright notice, this list of conditions and the following
- *     disclaimer in the documentation and/or other materials
- *     provided with the distribution.
- *   * Neither the name of the Exoftware, Exactor nor the names
- *     of its contributors may be used to endorse or promote
- *     products derived from this software without specific
- *     prior written permission.
- *
+ * <p/>
+ * * Redistributions of source code must retain the above
+ * copyright notice, this list of conditions and the following
+ * disclaimer.
+ * * Redistributions in binary form must reproduce the above
+ * copyright notice, this list of conditions and the following
+ * disclaimer in the documentation and/or other materials
+ * provided with the distribution.
+ * * Neither the name of the Exoftware, Exactor nor the names
+ * of its contributors may be used to endorse or promote
+ * products derived from this software without specific
+ * prior written permission.
+ * <p/>
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
  * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
  * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
@@ -41,14 +41,7 @@ import com.exoftware.util.FileCollector;
 import com.exoftware.util.Require;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A collection of scripts to be executed together.
@@ -64,11 +57,11 @@ public class ExecutionSet {
     private static final String CLASSPATH = System.getProperty("java.class.path");
     private static final String COMPOSITE_EXTENSION = ".cmp"; // to maintain backward compatibility
 
-    private final Map context = new HashMap();
-    private final List scripts = new ArrayList();
-    private final List listeners = new ArrayList();
-    private final Map commands = new HashMap();
-    private final Map compositeScripts = new HashMap();
+    private final Map<Object, Object> context = new HashMap<>();
+    private final List<Script> scripts = new ArrayList<>();
+    private final List<ExecutionSetListener> listeners = new ArrayList<>();
+    private final Map<String, Class> commands = new HashMap<>();
+    private final Map<String, File> compositeScripts = new HashMap<>();
 
     private final Set<String> blacklistedClasses = new HashSet<>();
 
@@ -202,10 +195,10 @@ public class ExecutionSet {
      */
     public Command findCommand(String name) {
         if (commands.containsKey(name)) {
-            return createCommandInstance((Class) commands.get(name));
+            return createCommandInstance(commands.get(name));
         }
         if (compositeScripts.containsKey(name)) {
-            return createCompositeInstance((File) compositeScripts.get(name));
+            return createCompositeInstance(compositeScripts.get(name));
         }
         Command result = findCommandClass(name);
         if (result == null) {
