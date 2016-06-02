@@ -34,6 +34,8 @@
  *****************************************************************/
 package com.exoftware.exactor;
 
+import com.exoftware.exactor.command.utility.MyVerb;
+
 import java.io.FileNotFoundException;
 
 /**
@@ -83,4 +85,20 @@ public class TestRunner extends ExecutionSetListenerTestCase {
         runner = new Runner(Constants.DATA_DIR + "single.act");
         assertEquals(Constants.DATA_DIR, runner.getBaseDir());
     }
+
+    public void testFailsRegisterNullVerbs() throws Exception {
+        runner = new Runner(Constants.DATA_DIR);
+        try {
+            runner.registerVerbs(null);
+            fail("RuntimeException not thrown");
+        } catch (RuntimeException e) {
+            assertEquals("cannot register null verbs", e.getMessage());
+        }
+    }
+
+    public void testRegisterVerbs() throws Exception {
+        runner = new Runner(Constants.DATA_DIR);
+        runner.registerVerbs(new MyVerb());
+    }
+
 }

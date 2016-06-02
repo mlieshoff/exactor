@@ -35,6 +35,7 @@
 package com.exoftware.exactor;
 
 import com.exoftware.exactor.command.Composite;
+import com.exoftware.exactor.command.utility.Verb;
 import com.exoftware.exactor.parser.ScriptParser;
 import com.exoftware.util.ClassFinder;
 import com.exoftware.util.FileCollector;
@@ -42,7 +43,14 @@ import com.exoftware.util.Require;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * A collection of scripts to be executed together.
@@ -62,9 +70,12 @@ public class ExecutionSet {
     private final List<Script> scripts = new ArrayList<>();
     private final List<ExecutionSetListener> listeners = new ArrayList<>();
     private final Map<String, Class> commands = new HashMap<>();
+    private final Map<String, Verb> verbs = new HashMap<>();
     private final Map<String, File> compositeScripts = new HashMap<>();
 
     private final Set<String> blacklistedClasses = new HashSet<>();
+
+    private final String classpath;
 
     public ExecutionSet() {
         context.putAll(System.getProperties());
@@ -245,6 +256,30 @@ public class ExecutionSet {
         compositeScripts.put(name, scriptFile);
     }
 
+    /**
+     * Gets a verb specified by name.
+     *
+     * @param verbName verbs name
+     * @return verb specified by name
+     */
+    public Verb getVerb(String verbName) {
+        Require.condition(verbName != null, "Verb name cannot be null");
+        Require.condition(verbName.length() > 0, "Verb name cannot be empty");
+        Verb verb = verbs.get(verbName);
+        Require.condition(verb != null, "Verb not existent");
+        return verb;
+    }
+
+    /**
+     * Registers a verb by verb name.
+     *
+     * @param verbName verbs name
+     * @param verb verb instance
+     */
+    public void registerVerb(String verbName, Verb verb) {
+        verbs.put(verbName, verb);
+    }
+
     private Command findComposite(String name) {
         File f = findFirstMatchingInUserDir(name + COMPOSITE_EXTENSION);  // backwards compatibility
         if (f == null) {
@@ -305,4 +340,5 @@ public class ExecutionSet {
         Script s = new ScriptParser(this).parse(f);
         return new Composite(s);
     }
+
 }

@@ -35,6 +35,7 @@
 package com.exoftware.exactor;
 
 import com.exoftware.exactor.command.Composite;
+import com.exoftware.exactor.command.utility.MyVerb;
 
 import java.io.File;
 
@@ -296,6 +297,49 @@ public class TestExecutionSet extends ExecutionSetListenerTestCase {
         assertTrue(System.getProperties().containsKey("user.name"));
         assertTrue(executionSet.getContext().containsKey("user.name"));
         assertEquals(System.getProperty("user.name"), executionSet.getContext().get("user.name").toString());
+    }
+
+    public void testFailsGetNullVerb() {
+        try {
+            executionSet.getVerb(null);
+            fail("RuntimeException not thrown");
+        } catch (RuntimeException e) {
+            assertEquals("Verb name cannot be null", e.getMessage());
+        }
+    }
+
+    public void testFailsGetEmptyVerb() {
+        try {
+            executionSet.getVerb("");
+            fail("RuntimeException not thrown");
+        } catch (RuntimeException e) {
+            assertEquals("Verb name cannot be empty", e.getMessage());
+        }
+    }
+
+    public void testFailsGetNonExistentVerb() {
+        try {
+            executionSet.getVerb("MyVerb");
+            fail("RuntimeException not thrown");
+        } catch (RuntimeException e) {
+            assertEquals("Verb not existent", e.getMessage());
+        }
+    }
+
+    public void testFailsGetNonExistentVerb_CaseSensitivity() {
+        executionSet.registerVerb("MyVerb", new MyVerb());
+        try {
+            executionSet.getVerb("myVerb");
+            fail("RuntimeException not thrown");
+        } catch (RuntimeException e) {
+            assertEquals("Verb not existent", e.getMessage());
+        }
+    }
+
+    public void testGetVerbInstance() {
+        MyVerb myVerb = new MyVerb();
+        executionSet.registerVerb("MyVerb", myVerb);
+        assertEquals(myVerb, executionSet.getVerb("MyVerb"));
     }
 
 }

@@ -34,10 +34,12 @@
  *****************************************************************/
 package com.exoftware.exactor;
 
+import com.exoftware.exactor.command.utility.Verb;
 import com.exoftware.exactor.listener.HtmlOutputListener;
 import com.exoftware.exactor.listener.SimpleListener;
 import com.exoftware.exactor.parser.ScriptParser;
 import com.exoftware.util.FileCollector;
+import com.exoftware.util.Require;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -140,4 +142,18 @@ public class Runner {
         }
         return baseDir;
     }
+
+    /**
+     * Registers verb instance.
+     *
+     * @param verbs verb instances.
+     */
+    public void registerVerbs(Verb... verbs) {
+        Require.condition(verbs != null, "cannot register null verbs");
+        for (Verb verb : verbs) {
+            String verbName = verb.getClass().getSimpleName();
+            executionSet.registerVerb(verbName, verb);
+        }
+    }
+
 }
