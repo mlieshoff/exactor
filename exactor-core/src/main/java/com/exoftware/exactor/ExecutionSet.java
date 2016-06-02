@@ -42,14 +42,7 @@ import com.exoftware.util.Require;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A collection of scripts to be executed together.
@@ -65,15 +58,11 @@ public class ExecutionSet {
     private static final File USER_DIR = new File(System.getProperty("user.dir"));
     private static final String COMPOSITE_EXTENSION = ".cmp"; // to maintain backward compatibility
 
-    private final Map context = new HashMap();
-
-    private final List scripts = new ArrayList();
-    private final List listeners = new ArrayList();
-    private final Map commands = new HashMap();
-    private final Map compositeScripts = new HashMap();
-    private final Set<String> blacklistedClasses = new HashSet<>();
-
-    private final String classpath;
+    private final Map<Object, Object> context = new HashMap<>();
+    private final List<Script> scripts = new ArrayList<>();
+    private final List<ExecutionSetListener> listeners = new ArrayList<>();
+    private final Map<String, Class> commands = new HashMap<>();
+    private final Map<String, File> compositeScripts = new HashMap<>();
 
     private final Set<String> blacklistedClasses = new HashSet<>();
 
@@ -216,10 +205,10 @@ public class ExecutionSet {
      */
     public Command findCommand(String name) {
         if (commands.containsKey(name)) {
-            return createCommandInstance((Class) commands.get(name));
+            return createCommandInstance(commands.get(name));
         }
         if (compositeScripts.containsKey(name)) {
-            return createCompositeInstance((File) compositeScripts.get(name));
+            return createCompositeInstance(compositeScripts.get(name));
         }
         Command result = findCommandClass(name);
         if (result == null) {
