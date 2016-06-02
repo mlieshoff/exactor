@@ -50,6 +50,7 @@ public class TestExecutionSet extends ExecutionSetListenerTestCase {
 
     protected void setUp() throws Exception {
         System.setProperty("exactor.blacklisted.classes", "");
+        System.setProperty("exactor.class.path", "");
         executionSet = new ExecutionSet();
         script = new Script();
         command = new MockCommand();
@@ -192,6 +193,18 @@ public class TestExecutionSet extends ExecutionSetListenerTestCase {
         executionSet = new ExecutionSet();
         Command c = executionSet.findCommand("MockCommand");
         assertNull(c);
+    }
+
+    public void testFindCommandWithActiveExactorClasspath() {
+        System.setProperty("exactor.class.path", "./target/classes");
+        executionSet = new ExecutionSet();
+        assertNotNull(executionSet.findCommand("Print"));
+    }
+
+    public void testFindCommandWithActiveExactorClasspathButCannotFindTestClass() {
+        System.setProperty("exactor.class.path", "./target/classes");
+        executionSet = new ExecutionSet();
+        assertNotNull(executionSet.findCommand("MockCommand"));
     }
 
     public void testFindNonExistantCommand() {
