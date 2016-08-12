@@ -1,5 +1,5 @@
 /******************************************************************
- * Copyright (c) 2012, Exoftware
+ * Copyright (c) 2016, Exoftware
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or
@@ -32,31 +32,25 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************/
-package com.exoftware.exactor.command.annotated;
 
-import com.exoftware.exactor.doc.Description;
+package com.exoftware.exactor.command.utility;
+
+import com.exoftware.exactor.Command;
 
 /**
+ * This class defines a guard.
+ *
  * @author Michael Lieshoff
  */
-@Description(text = "The command defines the classical foo.")
-public class FooCommand extends AnnotatedCommand {
-    @Param(namespace = FooNamespace.class, name = "STRING")
-    private String mandatoryString;
-    @Param(namespace = FooNamespace.class, name = "STRING", type = ParameterType.OPTIONAL)
-    private String optionalString;
+public class Guard extends Command {
 
     public void execute() throws Exception {
-        setUp();
-        getScript().getContext().put("FooCommandExecuted", true);
-    }
-
-    public String getMandatoryString() {
-        return mandatoryString;
-    }
-
-    public String getOptionalString() {
-        return optionalString;
+        String nameOfCommandClass = getParameter(1).stringValue();
+        boolean guard = getParameter(0).booleanValue();
+        if (guard) {
+            Command command = getScript().getExecutionSet().findCommand(nameOfCommandClass);
+            command.execute();
+        }
     }
 
 }
