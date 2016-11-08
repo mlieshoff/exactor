@@ -1,5 +1,7 @@
-SetProperty prop0 $0
-SetProperty prop1 $1
-SetProperty prop2 $2
-AnnotatedNotEquals  message=[prop0]     expected=[prop1]     actual=[prop2]
-AnnotatedNotEquals  message="Other expected!"   expected=$1   actual=[prop2]
+SetProperty a $0
+SetProperty b $1
+SetProperty c $2
+
+AnnotatedEquals  message=[a] expected=[b] actual=[c]
+
+FooInheritCommand   integer=[c] string=[a]

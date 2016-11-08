@@ -14,13 +14,14 @@ public class Composite extends Command {
 
     public Composite(Script s) {
         compositeScript = s;
-        if (compositeScript != null) {
-            getScript().getContext().putAll(compositeScript.getContext());
-        }
     }
 
     public void execute() throws Exception {
-        compositeScript.substituteParameters(getParameters());
+        try {
+            compositeScript.substituteParameters(getParameters());
+        } catch (Exception e) {
+            //
+        }
         for (int i = 0; i < compositeScript.countCommands(); i++) {
             Command c = compositeScript.getCommand(i);
             c.setScript(getScript());
