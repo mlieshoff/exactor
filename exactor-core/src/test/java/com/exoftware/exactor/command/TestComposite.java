@@ -143,6 +143,19 @@ public class TestComposite extends ExecutionSetListenerTestCase {
         assertEquals("Hello World", mockCommand.parametersAsString());
     }
 
+    public void testParametersAsStringWithSubstitutionOfContext() throws Exception {
+        MockCommand mockCommand = new MockCommand();
+        mockCommand.addParameter(new Parameter("$0"));
+        mockCommand.addParameter(new Parameter("[v1]"));
+        script.getContext().put("v1", "You");
+        script.addCommand(mockCommand);
+        Composite composite = new Composite(script);
+        composite.addParameter(new Parameter("Hello"));
+        composite.addParameter(new Parameter("World"));
+        composite.execute();
+        assertEquals("Hello You", mockCommand.parametersAsString());
+    }
+
     private Script createCompositeScript() {
         Script result = new Script();
         MockCommand command1 = new MockCommand();

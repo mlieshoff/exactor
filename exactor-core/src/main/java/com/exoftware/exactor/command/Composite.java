@@ -10,16 +10,19 @@ import java.io.File;
  * Represents a composite command.
  */
 public class Composite extends Command {
-    private final Script script;
+    private final Script compositeScript;
 
     public Composite(Script s) {
-        script = s;
+        compositeScript = s;
+        if (compositeScript != null) {
+            getScript().getContext().putAll(compositeScript.getContext());
+        }
     }
 
     public void execute() throws Exception {
-        script.substituteParameters(getParameters());
-        for (int i = 0; i < script.countCommands(); i++) {
-            Command c = script.getCommand(i);
+        compositeScript.substituteParameters(getParameters());
+        for (int i = 0; i < compositeScript.countCommands(); i++) {
+            Command c = compositeScript.getCommand(i);
             c.setScript(getScript());
             getScript().getExecutionSet().fireCommandStarted(c);
             try {
@@ -36,10 +39,10 @@ public class Composite extends Command {
     }
 
     public Script getCompositeScript() {
-        return script;
+        return compositeScript;
     }
 
     public File getCompositeScriptFile() {
-        return new File(script.getAbsolutePath());
+        return new File(compositeScript.getAbsolutePath());
     }
 }

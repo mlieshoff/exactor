@@ -1,2 +1,5 @@
-AnnotatedNotEquals  message=$0                  expected=$1     actual=$2
-AnnotatedNotEquals  message="Other expected!"   expected=lala   actual=$2
+SetProperty prop0 $0
+SetProperty prop1 $1
+SetProperty prop2 $2
+AnnotatedNotEquals  message=[prop0]     expected=[prop1]     actual=[prop2]
+AnnotatedNotEquals  message="Other expected!"   expected=$1   actual=[prop2]
