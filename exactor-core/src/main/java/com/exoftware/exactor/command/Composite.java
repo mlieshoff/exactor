@@ -14,6 +14,9 @@ public class Composite extends Command {
 
     public Composite(Script s) {
         compositeScript = s;
+        if (compositeScript != null) {
+            getScript().getContext().putAll(compositeScript.getContext());
+        }
     }
 
     public void execute() throws Exception {
