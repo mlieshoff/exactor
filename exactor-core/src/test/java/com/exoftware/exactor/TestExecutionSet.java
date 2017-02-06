@@ -322,7 +322,7 @@ public class TestExecutionSet extends ExecutionSetListenerTestCase {
             executionSet.getVerb("MyVerb");
             fail("RuntimeException not thrown");
         } catch (RuntimeException e) {
-            assertEquals("Verb not existent", e.getMessage());
+            assertEquals("Verb not existent: MyVerb", e.getMessage());
         }
     }
 
@@ -332,7 +332,7 @@ public class TestExecutionSet extends ExecutionSetListenerTestCase {
             executionSet.getVerb("myVerb");
             fail("RuntimeException not thrown");
         } catch (RuntimeException e) {
-            assertEquals("Verb not existent", e.getMessage());
+            assertEquals("Verb not existent: myVerb", e.getMessage());
         }
     }
 
