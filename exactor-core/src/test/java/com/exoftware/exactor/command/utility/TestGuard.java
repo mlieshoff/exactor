@@ -50,9 +50,21 @@ public class TestGuard extends TestCase {
         Guard guard = new Guard();
         guard.addParameter(new Parameter("true"));
         guard.addParameter(new Parameter("FooCommand"));
+        guard.addParameter(new Parameter("string=abc"));
         guard.setScript(script);
         guard.execute();
         assertTrue((Boolean) script.getContext().get("FooCommandExecuted"));
+
+        /*
+        Small suggestion around the implementation...
+        In addition to true/false checks, Guard should accept null/not exists.
+        So if a property or variable doesn't exist or is null it will skip the verb.
+
+        Also, for the syntax can we change to the following:
+        Guard [<somePropertyIHaveSet>] Run24TestSuite
+
+        The <> brackets indicate that a test is being performed and distinguishes it from a regular property.
+         */
     }
 
 }

@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <version>1.1.30.111316</version>
+    <version>1.1.30.170206</version>
     <artifactId>exactor</artifactId>
     <groupId>exactor</groupId>
     <packaging>pom</packaging>
@@ -114,12 +114,12 @@
 
     <modules>
         <module>exactor-core</module>
-        <!--module>exactor-abbot</module>
+        <module>exactor-abbot</module>
         <module>exactor-swing</module>
         <module>exactor-swt</module>
         <module>exactor-web</module>
         <module>exactor-selenium</module>
-        <module>exactor-examples</module-->
+        <module>exactor-examples</module>
     </modules>
 
     <dependencyManagement>
@@ -138,63 +138,6 @@
     </dependencyManagement>
 
     <profiles>
-        <profile>
-            <id>install-abbot</id>
-            <activation>
-                <file>
-                    <missing>${settings.localRepository}/abbot/abbot/${version.abbot}/abbot-${version.abbot}.jar
-                    </missing>
-                </file>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.googlecode.maven-download-plugin</groupId>
-                        <artifactId>download-maven-plugin</artifactId>
-                        <version>1.2.1</version>
-                        <executions>
-                            <execution>
-                                <id>download-abbot</id>
-                                <phase>initialize</phase>
-                                <goals>
-                                    <goal>wget</goal>
-                                </goals>
-                                <configuration>
-                                    <url>
-                                        http://sourceforge.net/projects/abbot/files/abbot/${version.abbot}/abbot-${version.abbot}.zip
-                                    </url>
-                                    <unpack>true</unpack>
-                                    <outputDirectory>${project.build.directory}</outputDirectory>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-install-plugin</artifactId>
-                        <version>2.5.2</version>
-                        <executions>
-                            <execution>
-                                <id>install-dependency</id>
-                                <phase>initialize</phase>
-                                <goals>
-                                    <goal>install-file</goal>
-                                </goals>
-                                <configuration>
-                                    <groupId>abbot</groupId>
-                                    <artifactId>abbot</artifactId>
-                                    <version>${version.abbot}</version>
-                                    <packaging>jar</packaging>
-                                    <file>
-                                        ${project.build.directory}/abbot-${version.abbot}/lib/abbot.jar
-                                    </file>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
         <profile>
             <id>mac</id>
             <activation>

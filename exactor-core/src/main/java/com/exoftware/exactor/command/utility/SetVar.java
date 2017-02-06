@@ -54,7 +54,7 @@ import com.exoftware.exactor.Command;
 public class SetVar extends Command {
 
     public void execute() throws Exception {
-        String verbName = getParameter(1).stringValue();
+        String verbName = getParameter(1).stringValue().replace("[", "").replace("]", "");
         Verb verb = getScript().getExecutionSet().getVerb(verbName);
         getScript().getContext().put(getParameter(0).stringValue(), verb.execute());
     }

@@ -49,6 +49,13 @@ public class Guard extends Command {
         boolean guard = getParameter(0).booleanValue();
         if (guard) {
             Command command = getScript().getExecutionSet().findCommand(nameOfCommandClass);
+            command.setScript(getScript());
+            int numberOfParams = getParameters().length;
+            if (numberOfParams > 2) {
+                for (int i = 2; i < numberOfParams; i ++) {
+                    command.addParameter(getParameter(i));
+                }
+            }
             command.execute();
         }
     }

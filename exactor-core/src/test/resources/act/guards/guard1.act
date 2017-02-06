@@ -1,0 +1,6 @@
+SetVar androidVersion [GetAndroidVersion]
+
+SetProperty isGreaterThan2dot4 "{[androidVersion] > 2.4}"
+
+Guard [isGreaterThan2dot4] Run24TestSuite
+

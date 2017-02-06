@@ -266,7 +266,7 @@ public class ExecutionSet {
         Require.condition(verbName != null, "Verb name cannot be null");
         Require.condition(verbName.length() > 0, "Verb name cannot be empty");
         Verb verb = verbs.get(verbName);
-        Require.condition(verb != null, "Verb not existent");
+        Require.condition(verb != null, "Verb not existent: " + verbName);
         return verb;
     }
 

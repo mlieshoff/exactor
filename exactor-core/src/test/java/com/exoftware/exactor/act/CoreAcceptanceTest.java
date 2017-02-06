@@ -37,6 +37,7 @@
 package com.exoftware.exactor.act;
 
 import com.exoftware.exactor.Runner;
+import com.exoftware.exactor.act.guards.GetAndroidVersion;
 import com.exoftware.exactor.listener.HtmlOutputListener;
 import com.exoftware.exactor.listener.SimpleListener;
 import junit.framework.TestCase;
@@ -49,7 +50,7 @@ import java.io.FileWriter;
  */
 public class CoreAcceptanceTest extends TestCase {
 
-    private static final String RESOURCES_DIRECTORY = System.getProperty("user.dir") + "/src/test/resources/test";
+    private static final String RESOURCES_DIRECTORY = System.getProperty("user.dir") + "/exactor-core/src/test/resources/act/guards/guard1.act";
     private static final File TEMP_DIRECTORY = new File(System.getProperty("java.io.tmpdir"));
     private static final String DEFAULT_HTML = "out.html";
     private static final String DEFAULT_STYLE_SHEET = "style.css";
@@ -61,6 +62,7 @@ public class CoreAcceptanceTest extends TestCase {
                 new FileWriter(new File(TEMP_DIRECTORY, DEFAULT_STYLE_SHEET)),
                 runner.getBaseDir()
         ));
+        runner.registerVerbs(new GetAndroidVersion());
         runner.run();
     }
 
