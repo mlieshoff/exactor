@@ -16,7 +16,7 @@
         <dependency>
             <groupId>abbot</groupId>
             <artifactId>abbot</artifactId>
-            <version>0.13.1</version>
+            <version>${version.abbot}</version>
         </dependency>
         <dependency>
             <groupId>bsh</groupId>

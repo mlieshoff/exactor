@@ -114,7 +114,7 @@
 
     <modules>
         <module>exactor-core</module>
-        <module>exactor-abbot</module>
+        <!--module>exactor-abbot</module-->
         <module>exactor-swing</module>
         <module>exactor-swt</module>
         <module>exactor-web</module>
